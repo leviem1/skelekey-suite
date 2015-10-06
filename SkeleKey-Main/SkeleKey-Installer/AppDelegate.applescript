@@ -3,7 +3,7 @@
 --  SkeleKey-Installer
 --
 --  Created by Mark Hedrick on 9/29/15.
---  Copyright (c) 2015 Mark Hedrick. All rights reserved.
+--  Copyright (c) 2015 Mark Hedrick and Levi Muniz. All rights reserved.
 --
 
 script AppDelegate
@@ -14,10 +14,16 @@ script AppDelegate
     property password1 : missing value
     property password2 : missing value
     property fileName : "Select volume..."
+    property checkpass : "0"
     
     on destvolume:cmd
         set fileName to choose folder default location "/Volumes"
         set fileName to POSIX path of fileName
+        if fileName is not "" then
+            username's setEditable_(true)
+            password1's setEditable_(true)
+            password2's setEditable_(true)
+        end if
         return fileName
     end destvolume:
     
@@ -25,11 +31,13 @@ script AppDelegate
         set username to "" & (stringValue() of username)
         set password1 to "" & (stringValue() of password1)
         set password2 to "" & (stringValue() of password2)
-        
+        if password1 does not equal password2 then
+            display alert "Passwords do not match!"
+        end if
     end buttonClicked_
     
     on checkinfo:a
-        display dialog "Username: " & username & "\nPassword1: " & password1 & "\nPassword2: " & password2 & "\nFile: " & fileName
+        display dialog "Username: " & username & "\nPassword1: " & password1 & "\nPassword2: " & password2 & "\nFile: " & fileName & "\nEditable: " & editable
     end checkinfo:
     
     --Quit cocoa application when activated

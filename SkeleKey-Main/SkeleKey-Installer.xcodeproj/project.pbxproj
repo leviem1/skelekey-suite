@@ -12,6 +12,7 @@
 		1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */; };
 		1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451661BBB3E840079F9E4 /* Images.xcassets */; };
 		1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451681BBB3E840079F9E4 /* MainMenu.xib */; };
+		1DFDACEA1BBD7C5200404221 /* tickmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DFDACE91BBD7C5200404221 /* tickmark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
 		1D4451661BBB3E840079F9E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1DFDACE91BBD7C5200404221 /* tickmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tickmark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 		1D4451601BBB3E840079F9E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1DFDACE91BBD7C5200404221 /* tickmark.png */,
 				1D4451611BBB3E840079F9E4 /* Info.plist */,
 				1D4451621BBB3E840079F9E4 /* main.m */,
 			);
@@ -108,7 +111,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = "Mark Hedrick";
+				ORGANIZATIONNAME = SEBS;
 				TargetAttributes = {
 					1D4451591BBB3E840079F9E4 = {
 						CreatedOnToolsVersion = 6.4;
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */,
+				1DFDACEA1BBD7C5200404221 /* tickmark.png in Resources */,
 				1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +293,7 @@
 				1D44516F1BBB3E840079F9E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
