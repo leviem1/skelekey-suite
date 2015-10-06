@@ -13,18 +13,20 @@ script AppDelegate
     property username : missing value
     property password1 : missing value
     property password2 : missing value
-    property fileName : "Select volume..."
+    property fileName : missing value
+    property fileName2 : missing value
     property checkpass : "0"
     
     on destvolume:cmd
-        set fileName to choose folder default location "/Volumes"
-        set fileName to POSIX path of fileName
-        if fileName is not "" then
+        set fileName2 to choose folder default location "/Volumes"
+        set fileName2 to POSIX path of fileName2
+        if fileName2 is not "" then
             username's setEditable_(true)
             password1's setEditable_(true)
             password2's setEditable_(true)
+            fileName's setStringValue_(fileName2)
+            fileName's setToolTip_(fileName2)
         end if
-        return fileName
     end destvolume:
     
     on buttonClicked_(sender)
