@@ -14,6 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="fileName" destination="tYT-vI-e10" id="mtj-VM-mig"/>
+                <outlet property="modeNumber" destination="f9j-gp-Y4H" id="RHp-E7-wAQ"/>
                 <outlet property="password1" destination="Gib-ki-GlL" id="Apc-Ab-Jui"/>
                 <outlet property="password2" destination="tDW-JK-IJ7" id="bm9-tf-EAM"/>
                 <outlet property="theWindow" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -837,7 +838,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="radioSelect:" target="Voe-Tx-rLC" id="QoI-a2-48q"/>
-                            <binding destination="Voe-Tx-rLC" name="value" keyPath="modeNumber" id="NC6-c1-cpm"/>
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORE-ox-r59">
@@ -849,7 +849,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="radioSelect:" target="Voe-Tx-rLC" id="VQc-bR-FHT"/>
-                            <binding destination="Voe-Tx-rLC" name="value" keyPath="modeNumber" id="v7g-DB-eqk"/>
                         </connections>
                     </button>
                 </subviews>

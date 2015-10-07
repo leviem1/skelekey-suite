@@ -31,8 +31,7 @@ script AppDelegate
     end destvolume:
     
     on radioSelect_(sender)
-        set modeNumber to modeNumber's selectedColumn as integer --broken part, looking into it, don't think this will work :(
-        log modeNumber
+        set modeString to sender's |title| as text
     end radioSelect:
     
     on buttonClicked_(sender)
