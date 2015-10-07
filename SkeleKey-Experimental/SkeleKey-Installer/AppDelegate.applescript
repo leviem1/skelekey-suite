@@ -15,6 +15,7 @@ script AppDelegate
     property password2 : missing value
     property fileName : missing value
     property fileName2 : missing value
+    property modeNumber : missing value
     property checkpass : "0"
     
     on destvolume:cmd
@@ -29,6 +30,11 @@ script AppDelegate
         end if
     end destvolume:
     
+    on radioSelect_(sender)
+        set modeNumber to modeNumber's selectedColumn as integer --broken part, looking into it, don't think this will work :(
+        log modeNumber
+    end radioSelect:
+    
     on buttonClicked_(sender)
         set username to "" & (stringValue() of username)
         set password1 to "" & (stringValue() of password1)
@@ -37,10 +43,6 @@ script AppDelegate
             display alert "Passwords do not match!"
         end if
     end buttonClicked_
-    
-    on checkinfo:a
-        display dialog "Username: " & username & "\nPassword1: " & password1 & "\nPassword2: " & password2 & "\nFile: " & fileName & "\nEditable: " & editable
-    end checkinfo:
     
     --Quit cocoa application when activated
     on quitbutton:quit_

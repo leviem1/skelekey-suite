@@ -795,17 +795,6 @@
                             <action selector="destvolume:" target="Voe-Tx-rLC" id="zSK-ST-AZG"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilf-fE-hGI">
-                        <rect key="frame" x="175" y="-1" width="116" height="19"/>
-                        <animations/>
-                        <buttonCell key="cell" type="recessed" title="Check Info" bezelStyle="recessed" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DvG-vB-AAO">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                            <font key="font" metaFont="systemBold" size="12"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="checkinfo:" target="Voe-Tx-rLC" id="W6R-nv-t55"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Prx-pI-fX4">
                         <rect key="frame" x="382" y="13" width="70" height="32"/>
                         <animations/>
@@ -835,10 +824,34 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="Voe-Tx-rLC" name="toolTip" keyPath="fileName2" id="qQr-b4-61u"/>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="fileName2" id="RGX-hi-CaM"/>
+                            <binding destination="Voe-Tx-rLC" name="toolTip" keyPath="fileName2" id="qQr-b4-61u"/>
                         </connections>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f9j-gp-Y4H">
+                        <rect key="frame" x="96" y="21" width="122" height="18"/>
+                        <animations/>
+                        <buttonCell key="cell" type="radio" title="Installed Version" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="0pQ-NB-3u1">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="radioSelect:" target="Voe-Tx-rLC" id="QoI-a2-48q"/>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="modeNumber" id="NC6-c1-cpm"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORE-ox-r59">
+                        <rect key="frame" x="237" y="21" width="145" height="18"/>
+                        <animations/>
+                        <buttonCell key="cell" type="radio" title="Stand Alone Version" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dbD-Ci-6As">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="radioSelect:" target="Voe-Tx-rLC" id="VQc-bR-FHT"/>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="modeNumber" id="v7g-DB-eqk"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>
