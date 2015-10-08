@@ -18,7 +18,7 @@ script AppDelegate
     property modeNumber : missing value
     property checkpass : "0"
     
-    on destvolume:cmd
+    on destvolume:choosevolume
         set fileName2 to choose folder default location "/Volumes"
         set fileName2 to POSIX path of fileName2
         if fileName2 is not "" then
@@ -41,6 +41,13 @@ script AppDelegate
         if password1 does not equal password2 then
             display alert "Passwords do not match!"
         end if
+        set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}' | base64"
+        try
+        do shell script "echo \"" & password2 & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & ".p.bin -pass pass:" & uuid
+        display dialog "Sucessfully created SkeleKey at location: " & fileName2
+        on error
+        display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0
+        end try
     end buttonClicked_
     
     --Quit cocoa application when activated

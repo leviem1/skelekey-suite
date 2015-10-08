@@ -717,7 +717,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTG-1Z-rdV">
-                        <rect key="frame" x="18" y="258" width="311" height="17"/>
+                        <rect key="frame" x="78" y="260" width="311" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Please choose the target drive for the application:" id="5Lg-3P-9Mi">
                             <font key="font" metaFont="system"/>
@@ -765,7 +765,7 @@
                         </secureTextFieldCell>
                     </secureTextField>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tDW-JK-IJ7">
-                        <rect key="frame" x="124" y="61" width="219" height="22"/>
+                        <rect key="frame" x="124" y="60" width="219" height="22"/>
                         <animations/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jGU-8h-IIq">
                             <font key="font" metaFont="system"/>
@@ -785,17 +785,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HhR-VV-qUI">
-                        <rect key="frame" x="354" y="249" width="98" height="32"/>
-                        <animations/>
-                        <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tp1-Pc-SwY">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="destvolume:" target="Voe-Tx-rLC" id="zSK-ST-AZG"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Prx-pI-fX4">
                         <rect key="frame" x="382" y="13" width="70" height="32"/>
                         <animations/>
@@ -817,7 +806,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tYT-vI-e10">
-                        <rect key="frame" x="57" y="228" width="352" height="22"/>
+                        <rect key="frame" x="35" y="230" width="305" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="B6Y-25-KUU">
                             <font key="font" metaFont="system"/>
@@ -849,6 +838,17 @@
                         </buttonCell>
                         <connections>
                             <action selector="radioSelect:" target="Voe-Tx-rLC" id="VQc-bR-FHT"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HhR-VV-qUI">
+                        <rect key="frame" x="346" y="223" width="98" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tp1-Pc-SwY">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="destvolume:" target="Voe-Tx-rLC" id="zSK-ST-AZG"/>
                         </connections>
                     </button>
                 </subviews>
