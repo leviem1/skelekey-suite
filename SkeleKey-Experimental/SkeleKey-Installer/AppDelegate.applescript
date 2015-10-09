@@ -23,11 +23,11 @@ script AppDelegate
         try
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"   #Implementation of old volume system
         on error
-        display alert "No valid volume found! Please (re)insert the USB and try again!"
+        display alert "No valid destination found! Please (re)insert the USB and try again!"
         return
         end try
             get paragraphs of discoverVol
-            set fileName2 to choose from list discoverVol with title "Choose disk..."
+            set fileName2 to choose from list discoverVol with title "SkeleKey-Installer" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         if fileName2 is not "/Volumes/False/" then
             username's setEditable_(true)
@@ -71,9 +71,9 @@ script AppDelegate
         set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}' | base64"
         try
         do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & ".p.bin -pass pass:" & uuid
-        display dialog "Sucessfully created SkeleKey at location: " & fileName2 buttons "Continue"
+        display dialog "Sucessfully created SkeleKey at location: " & fileName2 buttons "Continue" with title "SkeleKey-Installer"
         on error
-        display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Quit"
+        display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Quit" with title "SkeleKey-Installer"
         end try
         housekeeping_()
     end buttonClicked_
