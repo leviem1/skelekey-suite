@@ -85,10 +85,10 @@ script AppDelegate
     
     on applicationWillFinishLaunching_(aNotification)
         try
-            set cmd to do shell script "whoami" with administrator privileges
-            if cmd is not "root" then
-                display alert "SkeleKey needs administrator privileges to run!" buttons "Quit"
-            end if
+            do shell script "sudo echo elevate" with administrator privileges   #attempt to gain admin before screen
+        on error
+            display alert "SkeleKey needs administrator privileges to run!" buttons "Quit"
+            quit
         end try
     end applicationWillFinishLaunching_
 	
