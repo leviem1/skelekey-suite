@@ -49,11 +49,11 @@ script AppDelegate
         fileName's setStringValue_("")
         fileName's setToolTip_("")
         startButton's setEnabled_(false)
-        set fileName2 to missing value
-        set discoverVol to missing value
-        set username to missing value
-        set password1 to missing value
-        set password2 to missing value
+        set fileName2 to ""
+        set discoverVol to ""
+        set usernameValue to ""
+        set password1Value to ""
+        set password2Value to ""
     end housekeeping_
 (*
     on radioSelect_(sender)
