@@ -84,12 +84,27 @@ script AppDelegate
     end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification)
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp"}
+        set notInstalledString to ""
+
         try
             do shell script "sudo echo elevate" with administrator privileges   #attempt to gain admin before screen
         on error
             display alert "SkeleKey needs administrator privileges to run!" buttons "Quit"
             quit
         end try
+        
+        repeat with i in dependencies
+            set status to do shell script i & "; echo $?"
+            if status is "127" then
+                set notInstalledString to notInstalledString & i & "\n"
+            end if
+        end repeat
+        
+        if notInstalledString is not "" then
+            display alert "The following required items are not installed:\n\n" & notInstalledString buttons "Quit"
+            quit
+        end if
     end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
