@@ -84,9 +84,8 @@ script AppDelegate
     end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash"}
         set notInstalledString to ""
-
         try
             do shell script "sudo echo elevate" with administrator privileges   #attempt to gain admin before screen
         on error
