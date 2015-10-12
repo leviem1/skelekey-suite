@@ -16,13 +16,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D44515A1BBB3E840079F9E4 /* SkeleKey-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		1D4451611BBB3E840079F9E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4451621BBB3E840079F9E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
 		1D4451661BBB3E840079F9E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1DF6E7691BCB581000672C67 /* SkeleKey-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "SkeleKey-Installer.app"; path = "/Users/markhedrick/Desktop/skelekey/Installer/SkeleKey-Experimental/build/Debug/SkeleKey-Installer.app"; sourceTree = "<absolute>"; };
 		1DFDACE91BBD7C5200404221 /* tickmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tickmark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -43,16 +43,7 @@
 			children = (
 				1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */,
 				1D44515C1BBB3E840079F9E4 /* Frameworks */,
-				1D44515B1BBB3E840079F9E4 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		1D44515B1BBB3E840079F9E4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1D44515A1BBB3E840079F9E4 /* SkeleKey-Installer.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		1D44515C1BBB3E840079F9E4 /* Frameworks */ = {
@@ -101,7 +92,7 @@
 			);
 			name = "SkeleKey-Installer";
 			productName = "SkeleKey-Installer";
-			productReference = 1D44515A1BBB3E840079F9E4 /* SkeleKey-Installer.app */;
+			productReference = 1DF6E7691BCB581000672C67 /* SkeleKey-Installer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -127,7 +118,7 @@
 				Base,
 			);
 			mainGroup = 1D4451511BBB3E840079F9E4;
-			productRefGroup = 1D44515B1BBB3E840079F9E4 /* Products */;
+			productRefGroup = 1D4451511BBB3E840079F9E4;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
