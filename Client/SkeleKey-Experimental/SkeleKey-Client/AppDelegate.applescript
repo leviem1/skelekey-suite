@@ -31,22 +31,12 @@ script AppDelegate
     end decryptinfo
     
     on assistiveaccess(username, passwd)
-        do shell script "sw_vers -productVersion"
-        if result is "10.11" then --check for OS version because TCC.db is different on elcap
-            try
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-                on error
-                display alert "Failed to set accessibility permissions!"
-                quit
-            end try
-            else --preform regular assistive services modification, hasent changed since prob. lion
-            try
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
-                on error
-                display alert "Failed to set accessibility permissions!"
-                quit
-            end try
-        end if
+        try
+            do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
+            on error
+            display alert "Failed to set accessibility permissions!"
+            quit
+        end try
     end assistiveaccess
     
     on checkadmin(username, passwd)
@@ -60,7 +50,6 @@ script AppDelegate
     
     on auth(username, passwd)
         try
-            display dialog username & space & passwd
             tell application "System Events" to tell process "SecurityAgent"
             set value of text field 1 of window 1 to username
             set value of text field 2 of window 1 to passwd
