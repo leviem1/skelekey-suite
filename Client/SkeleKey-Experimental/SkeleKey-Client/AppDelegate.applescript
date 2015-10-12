@@ -32,6 +32,29 @@ script AppDelegate
         set decpasswd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '2q;d'")
     end decryptinfo:
     
+    on assistiveaccess:tccutil
+        try
+            set assacc to do shell script "chmod +x " & tccutil & " ; sudo " & tccutil & " -i org.district70.sebs.SkeleKey-Client" user name decusername password decpasswd with administrator privileges
+            on error
+            display alert "Failed to set assistive access permissions!" with title "SkeleKey"
+            quit
+        end try
+    end assistiveaccess:
+        
+    
+    on auth:main
+        try
+            tell application "System Events" to tell process "SecurityAgent"
+            set value of text field 1 of window 1 to decusername
+            set value of text field 2 of window 1 to decpasswd
+            keystroke return
+        end tell
+        on error
+            display alert "Error! Please try again! Now quitting...." buttons {"Ok", "Quit"} with title "SkeleKey"
+            quit
+        end try
+    end auth:
+    
 	on applicationWillFinishLaunching_(aNotification)
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python"}
         set notInstalledString to ""
