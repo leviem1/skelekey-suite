@@ -66,12 +66,14 @@ script AppDelegate
         set password2Value to "" & (stringValue() of password2)
         if password1Value does not equal password2Value then
             display alert "Passwords do not match!"
+            password1's setStringValue_("")
+            password2's setStringValue_("")
             return
         end if
         set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}' | base64"
         try
-        do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & ".p.bin -pass pass:" & uuid
-        display dialog "Sucessfully created SkeleKey at location: " & fileName2 buttons "Continue" with title "SkeleKey-Installer"
+        do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & ".p.enc.bin -pass pass:" & uuid
+        display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer"
         on error
         display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Quit" with title "SkeleKey-Installer"
         end try
