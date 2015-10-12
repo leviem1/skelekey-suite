@@ -23,7 +23,8 @@ script AppDelegate
     end replace_chars
     
     on decryptinfo(volumepath, authinfobin)
-        set epass to (do shell script "diskutil info \"" & volumepath & "\" | grep 'Volume UUID' | awk '{print $3}' | base64")
+        set uuid to do shell script "diskutil info \"" & volumepath & "\" | grep 'Volume UUID' | awk '{print $3}'"
+        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '2q;d'")
         set username to username
@@ -31,12 +32,22 @@ script AppDelegate
     end decryptinfo
     
     on assistiveaccess(username, passwd)
-        try
-            do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-            on error
-            display alert "Failed to set accessibility permissions!"
-            quit
-        end try
+        do shell script "sw_vers -productVersion"
+        if result is "10.11" then
+            try
+                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
+                on error
+                display alert "Failed to set accessibility permissions!"
+                quit
+            end try
+            else
+            try
+                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
+                on error
+                display alert "Failed to set accessibility permissions!"
+                quit
+            end try
+        end if
     end assistiveaccess
     
     on checkadmin(username, passwd)
