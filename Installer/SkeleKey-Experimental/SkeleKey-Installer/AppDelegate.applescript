@@ -71,12 +71,12 @@ script AppDelegate
             password2's setStringValue_("")
             return
         end if
-        do shell script "cp " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & FileName2
+        do shell script "cp -R " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & FileName2
         set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}'"
         set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
         
         try
-        do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/Files/.p.enc.bin -pass pass:" & epass
+        do shell script "echo '" & usernameValue & "\n" & password2Value & "' | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/Files/.p.enc.bin -pass pass:" & epass
         display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer"
         on error
         display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Quit" with title "SkeleKey-Installer"
