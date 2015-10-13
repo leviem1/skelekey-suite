@@ -8,8 +8,6 @@
 
 script AppDelegate
     property parent : class "NSObject"
-    property username : ""
-    property passwd : ""
     
     -- IBOutlets
     property theWindow : missing value
@@ -27,8 +25,7 @@ script AppDelegate
         set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '2q;d'")
-        set username to username
-        set passwd to passwd
+        return {username, passwd}
     end decryptinfo
     
     on assistiveaccess(username, passwd)
@@ -81,10 +78,11 @@ script AppDelegate
         set authinfobin to UnixPath & "Contents/Resources/Files/.p.enc.bin"
         set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
+        set authcred to decryptinfo(volumepath, authinfobin)
         decryptinfo(volumepath, authinfobin)
-        checkadmin(username, passwd)
-        assistiveaccess(username, passwd)
-        auth(username, passwd)
+        checkadmin(item 1 of authcred, item 2 of authcred)
+        assistiveaccess(item 1 of authcred, item 2 of authcred)
+        auth(item 1 of authcred, item 2 of authcred)
         quit
     end main
     on applicationWillFinishLaunching:aNotification
