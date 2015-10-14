@@ -30,28 +30,23 @@ script AppDelegate
     
     on assistiveaccess(username, passwd)
         do shell script "sw_vers -productVersion"
-        if result is "10.11" then
-            try
+        try
+            if result is "10.11" then
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-                on error
-                display alert "Failed to set accessibility permissions!"
-                quit
-            end try
             else
-            try
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
-                on error
-                display alert "Failed to set accessibility permissions!"
-                quit
-            end try
-        end if
+            end if
+        on error
+            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            quit
+        end try
     end assistiveaccess
     
     on checkadmin(username, passwd)
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
-            on error
-            display alert "SkeleKey only authenticates users with admin privileges" buttons "Quit"
+        on error
+            display dialog "SkeleKey only authenticates users with admin privileges" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
     end checkadmin
@@ -59,12 +54,12 @@ script AppDelegate
     on auth(username, passwd)
         try
             tell application "System Events" to tell process "SecurityAgent"
-            set value of text field 1 of window 1 to username
-            set value of text field 2 of window 1 to passwd
-            keystroke return
-        end tell
+                set value of text field 1 of window 1 to username
+                set value of text field 2 of window 1 to passwd
+                keystroke return
+            end tell
         on error
-            display alert "Error! Please try again! Now quitting...." buttons {"Ok", "Quit"}
+            display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
     end auth
@@ -84,6 +79,7 @@ script AppDelegate
         auth(item 1 of authcred, item 2 of authcred)
         quit
     end main
+    
     on applicationWillFinishLaunching:aNotification
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python"}
         set notInstalledString to ""
