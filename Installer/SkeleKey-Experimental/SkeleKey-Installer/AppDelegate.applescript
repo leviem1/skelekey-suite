@@ -35,7 +35,7 @@ script AppDelegate
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
         end try
-            get paragraphs of discoverVol
+            set discoverVol to get paragraphs of discoverVol
             set fileName2 to choose from list discoverVol with title "SkeleKey-Installer" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         if fileName2 is not "/Volumes/False/" then
