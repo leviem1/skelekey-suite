@@ -79,7 +79,6 @@ script AppDelegate
         set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
         set authcred to decryptinfo(volumepath, authinfobin)
-        decryptinfo(volumepath, authinfobin)
         checkadmin(item 1 of authcred, item 2 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
         auth(item 1 of authcred, item 2 of authcred)
