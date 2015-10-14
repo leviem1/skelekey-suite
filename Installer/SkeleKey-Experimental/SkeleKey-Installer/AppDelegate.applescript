@@ -19,6 +19,15 @@ script AppDelegate
     property startButton : missing value
     property checkpass : "0"
 
+    on replace_chars(this_text, search_string, replacement_string)
+        set AppleScript's text item delimiters to the search_string
+        set the item_list to every text item of this_text
+        set AppleScript's text item delimiters to the replacement_string
+        set this_text to the item_list as string
+        set AppleScript's text item delimiters to ""
+        return this_text
+    end replace_chars
+
     on destvolume:choosevolume
         try
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
@@ -61,9 +70,12 @@ script AppDelegate
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
-        set usernameValue to quoted form of usernameValue
-        set password1Value to quoted form of password1Value
-        set password2Value to quoted form of password2Value
+        set usernameValue to replace_chars(usernameValue, "`", "\\`")
+        set usernameValue to replace_chars(usernameValue, "\"", "\\\"")
+        set password1Value to replace_chars(password1Value, "`", "\\`")
+        set password1Value to replace_chars(password1Value, "\"", "\\\"")
+        set password2Value to replace_chars(password2Value, "`", "\\`")
+        set password2Value to replace_chars(password2Value, "\"", "\\\"")
         
         if usernameValue is "" then
             display dialog "Please enter username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
