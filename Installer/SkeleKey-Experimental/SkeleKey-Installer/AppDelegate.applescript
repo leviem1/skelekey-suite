@@ -29,15 +29,23 @@ script AppDelegate
     end replace_chars
 
     on destvolume:choosevolume
+        set validVols to {}
         try
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+            set discoverVol to get paragraphs of discoverVol
+            repeat with vol in discoverVol
+                set vol to replace_chars(vol, " ", "\\ ")
+                set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+                if isValid is "USB" then
+                    set validVols to validVols & {vol}
+                end if
+            end repeat
+            set fileName2 to choose from list validVols with title "SkeleKey-Installer" with prompt "Please choose a destination:"
+            set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         on error
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
         end try
-            set discoverVol to get paragraphs of discoverVol
-            set fileName2 to choose from list discoverVol with title "SkeleKey-Installer" with prompt "Please choose a destination:"
-            set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         if fileName2 is not "/Volumes/False/" then
             username's setEditable_(true)
             password1's setEditable_(true)

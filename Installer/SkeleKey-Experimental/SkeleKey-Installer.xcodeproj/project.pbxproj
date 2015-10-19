@@ -12,6 +12,7 @@
 		1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */; };
 		1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451661BBB3E840079F9E4 /* Images.xcassets */; };
 		1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451681BBB3E840079F9E4 /* MainMenu.xib */; };
+		2F71DA241BD580C800D79DF3 /* SkeleKeyUtilities.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
 		1D4451661BBB3E840079F9E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkeleKeyUtilities.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */,
 				1D4451661BBB3E840079F9E4 /* Images.xcassets */,
 				1D4451681BBB3E840079F9E4 /* MainMenu.xib */,
+				2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */,
 				1D4451601BBB3E840079F9E4 /* Supporting Files */,
 			);
 			path = "SkeleKey-Installer";
@@ -131,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */,
+				2F71DA241BD580C800D79DF3 /* SkeleKeyUtilities.xib in Resources */,
 				1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
