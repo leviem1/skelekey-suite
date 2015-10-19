@@ -22,9 +22,11 @@ script AppDelegate
     
     on decryptinfo(volumepath, authinfobin)
         set uuid to do shell script "diskutil info \"" & volumepath & "\" | grep 'Volume UUID' | awk '{print $3}'"
-        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
-        set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '1q;d'")
-        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:" & epass & " | sed '2q;d'")
+        set epass1 to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
+        set epass2 to epass1 & (do shell script "echo " & epass1 & " | base64") & (do shell script "echo " & epass1 & " | md5") & (do shell script "echo 'S3bs3nc0d3r' | md5 | base64 | md5")
+        set epass to epass2
+        set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
+        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
         return {username, passwd}
     end decryptinfo
     
