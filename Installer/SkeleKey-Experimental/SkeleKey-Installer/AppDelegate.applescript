@@ -115,6 +115,15 @@ script AppDelegate
         housekeeping_()
     end buttonClicked_
     
+    on update_()
+        set pingtime to do shell script "ping -t 10 -c4 skelekey.district70.org | awk '/round-trip/{x=$4} END{print x}' | sed 's/\\// /g' | awk '{print $2}'"
+        if pingTime is less than 300 and pingTime is not 0 then
+            #update stuff here
+        else
+            display dialog "Skipping SkeleKey Update! High Network Latency Detected!"
+        end if
+    end update_
+    
     --Quit cocoa application when activated
     on quitbutton:quit_
         quit
