@@ -35,7 +35,11 @@ script AppDelegate
             set discoverVol to get paragraphs of discoverVol
             repeat with vol in discoverVol
                 set vol to replace_chars(vol, " ", "\\ ")
-                set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+                try
+                    set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+                on error
+                    set isValid to "False"
+                end try
                 if isValid is "USB" then
                     set validVols to validVols & {vol}
                 end if
