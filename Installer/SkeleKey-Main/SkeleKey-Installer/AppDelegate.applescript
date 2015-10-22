@@ -18,17 +18,38 @@ script AppDelegate
     property modeNumber : missing value
     property startButton : missing value
     property checkpass : "0"
-    
+
+    on replace_chars(this_text, search_string, replacement_string)
+        set AppleScript's text item delimiters to the search_string
+        set the item_list to every text item of this_text
+        set AppleScript's text item delimiters to the replacement_string
+        set this_text to the item_list as string
+        set AppleScript's text item delimiters to ""
+        return this_text
+    end replace_chars
+
     on destvolume:choosevolume
+        set validVols to {}
         try
-            set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"   #Implementation of old volume system
-        on error
-        display alert "No valid destination found! Please (re)insert the USB and try again!"
-        return
-        end try
-            get paragraphs of discoverVol
-            set fileName2 to choose from list discoverVol with title "SkeleKey-Installer" with prompt "Please choose a destination:"
+            set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+            set discoverVol to get paragraphs of discoverVol
+            repeat with vol in discoverVol
+                set vol to replace_chars(vol, " ", "\\ ")
+                try
+                    set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+                on error
+                    set isValid to "False"
+                end try
+                if isValid is "USB" then
+                    set validVols to validVols & {vol}
+                end if
+            end repeat
+            set fileName2 to choose from list validVols with title "SkeleKey-Installer" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
+        on error
+            display alert "No valid destination found! Please (re)insert the USB and try again!"
+            return
+        end try
         if fileName2 is not "/Volumes/False/" then
             username's setEditable_(true)
             password1's setEditable_(true)
@@ -55,27 +76,41 @@ script AppDelegate
         set password1Value to ""
         set password2Value to ""
     end housekeeping_
-(*
-    on radioSelect_(sender)
-        set modeString to sender's |title| as text
-    end radioSelect:
-*)
+
     on buttonClicked_(sender)
+        set UnixPath to POSIX path of (path to current application as text)
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
+        set usernameValue to replace_chars(usernameValue, "`", "\\`")
+        set usernameValue to replace_chars(usernameValue, "\"", "\\\"")
+        set password1Value to replace_chars(password1Value, "`", "\\`")
+        set password1Value to replace_chars(password1Value, "\"", "\\\"")
+        set password2Value to replace_chars(password2Value, "`", "\\`")
+        set password2Value to replace_chars(password2Value, "\"", "\\\"")
+        
+        if usernameValue is "" then
+            display dialog "Please enter username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+            return
+        end if
+        
         if password1Value does not equal password2Value then
             display alert "Passwords do not match!"
             password1's setStringValue_("")
             password2's setStringValue_("")
             return
         end if
-        set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}' | base64"
         try
-        do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & ".p.enc.bin -pass pass:" & uuid
-        display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer"
+            do shell script "cp -R " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & FileName2
+            set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}'"
+            set epass1 to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
+            set epass2 to epass1 & (do shell script "echo " & epass1 & " | base64") & (do shell script "echo " & epass1 & " | md5") & (do shell script "echo 'S3bs3nc0d3r' | md5 | base64 | md5")
+            set epass to epass2
+            do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/Files/.p.enc.bin -pass pass:\"" & epass & "\""
+            do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
+            display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer" default button 1
         on error
-        display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Quit" with title "SkeleKey-Installer"
+            display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
         housekeeping_()
     end buttonClicked_
@@ -86,12 +121,12 @@ script AppDelegate
     end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm"}
         set notInstalledString to ""
         try
-            do shell script "sudo echo elevate" with administrator privileges   #attempt to gain admin before screen
+            do shell script "sudo echo elevate" with administrator privileges
         on error
-            display alert "SkeleKey needs administrator privileges to run!" buttons "Quit"
+            display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Installer" with icon 0
             quit
         end try
         
@@ -112,5 +147,8 @@ script AppDelegate
 		-- Insert code here to do any housekeeping before your application quits 
 		return current application's NSTerminateNow
 	end applicationShouldTerminate_
-	
+    on applicationShouldTerminateAfterLastWindowClosed_(sender)
+        return true
+    end applicationShouldTerminateAfterLastWindowClosed_
+	--latest
 end script
