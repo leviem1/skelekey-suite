@@ -22,9 +22,7 @@ script AppDelegate
     
     on decryptinfo(volumepath, authinfobin)
         set uuid to do shell script "diskutil info \"" & volumepath & "\" | grep 'Volume UUID' | awk '{print $3}'"
-        set epass1 to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "uname | md5")
-        set epass2 to epass1 & (do shell script "echo " & epass1 & " | base64") & (do shell script "echo " & epass1 & " | md5") & (do shell script "echo 'S3bs3nc0d3r' | md5 | base64 | md5")
-        set epass to epass2
+        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
         return {username, passwd}
@@ -33,7 +31,7 @@ script AppDelegate
     on assistiveaccess(username, passwd)
         do shell script "sw_vers -productVersion"
         try
-            if result is "10.11" then
+            if result contains "10.11" then
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
             else
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
