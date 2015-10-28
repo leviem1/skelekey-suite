@@ -90,7 +90,7 @@ script AppDelegate
         set password2Value to replace_chars(password2Value, "\"", "\\\"")
         
         if usernameValue is "" then
-            display dialog "Please enter username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+            display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
             return
         end if
         
@@ -120,7 +120,7 @@ script AppDelegate
     end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5"}
         set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
@@ -137,7 +137,7 @@ script AppDelegate
         end repeat
         
         if notInstalledString is not "" then
-            display alert "The following required items are not installed:\n\n" & notInstalledString buttons "Quit"
+            display alert "The following required resources are not installed:\n\n" & notInstalledString buttons "Quit"
             quit
         end if
     end applicationWillFinishLaunching_
