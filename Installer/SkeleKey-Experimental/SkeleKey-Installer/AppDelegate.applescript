@@ -102,7 +102,7 @@ script AppDelegate
         end if
         try
             do shell script "cp -R " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & FileName2
-            set uuid to do shell script "diskutil info \"" & fileName2 & "\" | grep 'Volume UUID' | awk '{print $3}'"
+            set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}'"
             set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
             do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/Files/.p.enc.bin -pass pass:\"" & epass & "\""
             do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
@@ -113,14 +113,6 @@ script AppDelegate
         housekeeping_()
     end buttonClicked_
     
-    on update_()
-        set pingtime to do shell script "ping -t 10 -c4 skelekey.district70.org | awk '/round-trip/{x=$4} END{print x}' | sed 's/\\// /g' | awk '{print $2}'"
-        if pingTime is less than 300 and pingTime is not 0 then
-            #update stuff here
-        else
-            display dialog "Skipping SkeleKey Update! High Network Latency Detected!"
-        end if
-    end update_
     
     --Quit cocoa application when activated
     on quitbutton:quit_
@@ -128,7 +120,7 @@ script AppDelegate
     end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "ping"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm"}
         set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
@@ -154,6 +146,7 @@ script AppDelegate
 		-- Insert code here to do any housekeeping before your application quits 
 		return current application's NSTerminateNow
 	end applicationShouldTerminate_
+    
     on applicationShouldTerminateAfterLastWindowClosed_(sender)
         return true
     end applicationShouldTerminateAfterLastWindowClosed_
