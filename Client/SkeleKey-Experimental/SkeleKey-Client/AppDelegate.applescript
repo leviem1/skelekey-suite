@@ -33,10 +33,10 @@ script AppDelegate
         try
             if result contains "10.11" then
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-            else
+                else
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
-        on error
+            on error
             display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
@@ -45,7 +45,7 @@ script AppDelegate
     on checkadmin(username, passwd)
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
-        on error
+            on error
             display dialog "SkeleKey only authenticates users with admin privileges" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
@@ -54,10 +54,10 @@ script AppDelegate
     on auth(username, passwd)
         try
             tell application "System Events" to tell process "SecurityAgent"
-                set value of text field 1 of window 1 to username
-                set value of text field 2 of window 1 to passwd
-                keystroke return
-            end tell
+            set value of text field 1 of window 1 to username
+            set value of text field 2 of window 1 to passwd
+            keystroke return
+        end tell
         on error
             display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
@@ -73,6 +73,7 @@ script AppDelegate
         set authinfobin to UnixPath & "Contents/Resources/Files/.p.enc.bin"
         set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
+        set volumepath to replace_chars(volumepath, " ", "\\ ")
         set authcred to decryptinfo(volumepath, authinfobin)
         checkadmin(item 1 of authcred, item 2 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
