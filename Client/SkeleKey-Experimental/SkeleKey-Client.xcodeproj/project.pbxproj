@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D4B0A261BE71A7000735CFF /* SkeleKey-Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "SkeleKey-Client.entitlements"; sourceTree = "<group>"; };
 		1D858BCD1BCB5597001F6AC6 /* SkeleKey-Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D858BD01BCB5597001F6AC6 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		1D858BD41BCB5598001F6AC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		1D858BD21BCB5598001F6AC6 /* SkeleKey-Client */ = {
 			isa = PBXGroup;
 			children = (
+				1D4B0A261BE71A7000735CFF /* SkeleKey-Client.entitlements */,
 				1D858BD61BCB5598001F6AC6 /* AppDelegate.applescript */,
 				1D858BD81BCB5598001F6AC6 /* Assets.xcassets */,
 				1D858BDA1BCB5598001F6AC6 /* MainMenu.xib */,
@@ -112,6 +114,11 @@
 				TargetAttributes = {
 					1D858BCC1BCB5597001F6AC6 = {
 						CreatedOnToolsVersion = 7.0.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -252,6 +259,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SkeleKey-Client/SkeleKey-Client.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "SkeleKey-Client/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -264,6 +272,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SkeleKey-Client/SkeleKey-Client.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "SkeleKey-Client/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
