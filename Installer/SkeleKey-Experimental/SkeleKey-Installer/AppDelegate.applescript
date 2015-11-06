@@ -9,16 +9,20 @@
 script AppDelegate
 	property parent : class "NSObject"
 	-- IBOutlets
-	property theWindow : missing value
+    property mainWindow : missing value
+	property installWindow : missing value
+    property removeWindow : missing value
     property username : missing value
     property password1 : missing value
     property password2 : missing value
     property fileName : missing value
     property fileName2 : missing value
-    property modeNumber : missing value
+    property delFileName : missing value
     property startButton : missing value
+    property delButton : missing value
+    property modeString : "Install a SkeleKey"
     property checkpass : "0"
-
+    
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -27,8 +31,13 @@ script AppDelegate
         set AppleScript's text item delimiters to ""
         return this_text
     end replace_chars
+    
+    on radioOption_(sender) --get mode
+        set modeString to sender's title as text
+    end radioOption_
 
-    on destvolume:choosevolume
+    on destvolume:choosevolume --choose volume to install
+        global fileName3
         set validVols to {}
         try
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
@@ -46,39 +55,84 @@ script AppDelegate
             end repeat
             set fileName2 to choose from list validVols with title "SkeleKey-Installer" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
+            set fileName3 to replace_chars(fileName2, "\\ ", " ")
         on error
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
         end try
         if fileName2 is not "/Volumes/False/" then
-            username's setEditable_(true)
-            password1's setEditable_(true)
-            password2's setEditable_(true)
+            startButton's setEnabled_(true)
             fileName's setStringValue_(fileName2)
             fileName's setToolTip_(fileName2)
-            startButton's setEnabled_(true)
         end if
     end destvolume:
     
-    on housekeeping_()
-        username's setEditable_(false)
-        username's setStringValue_("")
-        password1's setEditable_(false)
-        password1's setStringValue_("")
-        password2's setEditable_(false)
-        password2's setStringValue_("")
+    on buttonClicked_(sender) -- "Start!" button
+        if modeString is "Install a SkeleKey" then
+            mainWindow's orderOut_(sender)
+            installWindow's makeKeyAndOrderFront_(me)
+        else if modeString is "Remove a SkeleKey" then
+            mainWindow's orderOut_(sender)
+            removeWindow's makeKeyAndOrderFront_(me)
+        end if
+    end buttonClicked_
+            
+    on housekeeping_(sender) --remove main window's info
         fileName's setStringValue_("")
         fileName's setToolTip_("")
         startButton's setEnabled_(false)
         set fileName2 to ""
-        set discoverVol to ""
+    end housekeeping_
+    
+    on houseKeepingInstall_(sender) --remove install window's info
+        username's setStringValue_("")
+        password1's setStringValue_("")
+        password2's setStringValue_("")
         set usernameValue to ""
         set password1Value to ""
         set password2Value to ""
-    end housekeeping_
+        mainWindow's makeKeyAndOrderFront_(me)
+        installWindow's orderOut_(sender)
+    end houseKeepingInstall_
+    
+    on houseKeepingDel_(sender) --remove del window's info
+        global delApp
+        delFileName's setStringValue_("")
+        delFileName's setToolTip_("")
+        delButton's setEnabled_(false)
+        set delApp to ""
+        mainWindow's makeKeyAndOrderFront_(me)
+        removeWindow's orderOut_(sender)
+    end housekeepingDel_
+    
+    on destApp_(sender) --choose app to remove
+        global delApp
+        global fileName3
+        try
+            set delApp to choose file of type "com.apple.application-bundle" default location fileName3
+            set delApp to POSIX path of delApp
+            set delApp to replace_chars(delApp, " ", "\\ ")
+            delFileName's setStringValue_(delApp)
+            delFileName's setToolTip_(delApp)
+            delButton's setEnabled_(true)
+        end try
+    end destApp_
 
-    on buttonClicked_(sender)
+    on delButton_(sender) --remove button action
+        global delApp
+        try
+            do shell script "srm -rf " & delApp
+            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Installer" default button 1
+        on error
+            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+        end try
+        housekeeping_(sender)
+        houseKeepingDel_(sender)
+    end delButton_
+
+    on installButton_(sender) --install button action
         set UnixPath to POSIX path of (path to current application as text)
+        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
@@ -101,7 +155,7 @@ script AppDelegate
             return
         end if
         try
-            do shell script "cp -R " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & FileName2
+            do shell script "cp -R " & UnixPath & "/Contents/Resources/Files/SkeleKey-Client.app " & fileName2
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}'"
             set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
             do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/Files/.p.enc.bin -pass pass:\"" & epass & "\""
@@ -110,8 +164,10 @@ script AppDelegate
         on error
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
-        housekeeping_()
-    end buttonClicked_
+        housekeeping_(sender)
+        installWindow's orderOut_(sender)
+        mainWindow's makeKeyAndOrderFront_(me)
+    end installButton_
     
     
     --Quit cocoa application when activated
@@ -119,8 +175,8 @@ script AppDelegate
         quit
     end quitbutton:
     
-    on applicationWillFinishLaunching_(aNotification)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5"}
+    on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm"}
         set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
@@ -150,5 +206,4 @@ script AppDelegate
     on applicationShouldTerminateAfterLastWindowClosed_(sender)
         return true
     end applicationShouldTerminateAfterLastWindowClosed_
-	--latest
 end script
