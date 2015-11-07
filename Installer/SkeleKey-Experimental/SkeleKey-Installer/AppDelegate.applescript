@@ -165,6 +165,7 @@ script AppDelegate
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
         housekeeping_(sender)
+        houseKeepingInstall_(sender)
         installWindow's orderOut_(sender)
         mainWindow's makeKeyAndOrderFront_(me)
     end installButton_

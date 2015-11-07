@@ -767,6 +767,17 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FoC-SS-TN7">
+                        <rect key="frame" x="11" y="13" width="70" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UYE-fu-azJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="houseKeepingInstall:" target="Voe-Tx-rLC" id="ZK6-BZ-00j"/>
+                        </connections>
+                    </button>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tDW-JK-IJ7">
                         <rect key="frame" x="98" y="73" width="286" height="22"/>
                         <animations/>
@@ -779,20 +790,9 @@
                             </allowedInputSourceLocales>
                         </secureTextFieldCell>
                         <connections>
-                            <action selector="buttonClicked:" target="Voe-Tx-rLC" id="pKm-vD-qx1"/>
+                            <action selector="installButton:" target="Voe-Tx-rLC" id="XDY-bs-N68"/>
                         </connections>
                     </secureTextField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FoC-SS-TN7">
-                        <rect key="frame" x="11" y="13" width="70" height="32"/>
-                        <animations/>
-                        <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UYE-fu-azJ">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="houseKeepingInstall:" target="Voe-Tx-rLC" id="ZK6-BZ-00j"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <animations/>
             </view>
