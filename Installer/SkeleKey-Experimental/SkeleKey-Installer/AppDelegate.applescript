@@ -105,6 +105,7 @@ script AppDelegate
         set delApp to ""
         mainWindow's makeKeyAndOrderFront_(me)
         loadingWindow's orderOut_(sender)
+        removeWindow's orderOut_(sender)
     end housekeepingDel_
     
     on destApp_(sender) --choose app to remove
