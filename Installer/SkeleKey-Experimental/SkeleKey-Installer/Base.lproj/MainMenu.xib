@@ -18,6 +18,7 @@
                 <outlet property="delFileName" destination="Kfj-Tb-Emz" id="9Ci-M2-vXM"/>
                 <outlet property="fileName" destination="tYT-vI-e10" id="mtj-VM-mig"/>
                 <outlet property="installWindow" destination="QvC-M9-y7g" id="5Aq-cd-Ej6"/>
+                <outlet property="loadingWindow" destination="OgB-vw-X4M" id="qNq-um-nTu"/>
                 <outlet property="mainWindow" destination="Gog-6h-Zbx" id="pVX-XE-4yJ"/>
                 <outlet property="password1" destination="Gib-ki-GlL" id="Apc-Ab-Jui"/>
                 <outlet property="password2" destination="tDW-JK-IJ7" id="bm9-tf-EAM"/>
@@ -735,6 +736,9 @@
                         <buttonCell key="cell" type="push" title="Install" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fcV-28-no5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="installButton:" target="Voe-Tx-rLC" id="vXm-ft-eJ5"/>
@@ -773,6 +777,9 @@
                         <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UYE-fu-azJ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="houseKeepingInstall:" target="Voe-Tx-rLC" id="ZK6-BZ-00j"/>
@@ -789,9 +796,6 @@
                                 <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                             </allowedInputSourceLocales>
                         </secureTextFieldCell>
-                        <connections>
-                            <action selector="installButton:" target="Voe-Tx-rLC" id="XDY-bs-N68"/>
-                        </connections>
                     </secureTextField>
                 </subviews>
                 <animations/>
@@ -822,6 +826,7 @@
                         <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tp1-Pc-SwY">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">b</string>
                         </buttonCell>
                         <connections>
                             <action selector="destvolume:" target="Voe-Tx-rLC" id="uhN-Ps-11Q"/>
@@ -869,6 +874,9 @@
                         <buttonCell key="cell" type="push" title="Start!" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V0T-Hs-sxr">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="buttonClicked:" target="Voe-Tx-rLC" id="NQt-ZP-4OQ"/>
@@ -898,6 +906,7 @@
                         <buttonCell key="cell" type="radio" title="Install a SkeleKey" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gz5-Lw-5PO">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">i</string>
                         </buttonCell>
                         <connections>
                             <action selector="radioOption:" target="Voe-Tx-rLC" id="syu-jf-gNW"/>
@@ -909,6 +918,7 @@
                         <buttonCell key="cell" type="radio" title="Remove a SkeleKey" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="H6P-MZ-zTc">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">r</string>
                         </buttonCell>
                         <connections>
                             <action selector="radioOption:" target="Voe-Tx-rLC" id="cRO-Yr-zRR"/>
@@ -942,6 +952,7 @@
                         <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9F8-mo-eih">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">b</string>
                         </buttonCell>
                         <connections>
                             <action selector="destApp:" target="Voe-Tx-rLC" id="mFz-Xn-R9C"/>
@@ -953,6 +964,9 @@
                         <buttonCell key="cell" type="push" title="Securely Remove" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y7q-pt-j5Z">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="delButton:" target="Voe-Tx-rLC" id="GdW-An-qcF"/>
@@ -964,6 +978,9 @@
                         <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZBQ-3U-AvN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="houseKeepingDel:" target="Voe-Tx-rLC" id="h8d-Yc-uRW"/>
@@ -981,7 +998,33 @@
                 </subviews>
                 <animations/>
             </view>
-            <point key="canvasLocation" x="-54" y="503.5"/>
+            <point key="canvasLocation" x="-54" y="506.5"/>
+        </window>
+        <window title="SkeleKey-Installer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="OgB-vw-X4M">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="100"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <view key="contentView" id="8bl-Zt-NKj">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ylT-aa-d8V">
+                        <rect key="frame" x="18" y="63" width="133" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Removing SkeleKey..." id="TfO-tS-N7P">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="EGD-XZ-PCu">
+                        <rect key="frame" x="20" y="35" width="440" height="20"/>
+                        <animations/>
+                    </progressIndicator>
+                </subviews>
+                <animations/>
+            </view>
+            <point key="canvasLocation" x="473" y="498"/>
         </window>
     </objects>
 </document>

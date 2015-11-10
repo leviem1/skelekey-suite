@@ -12,6 +12,7 @@ script AppDelegate
     property mainWindow : missing value
 	property installWindow : missing value
     property removeWindow : missing value
+    property loadingWindow : missing value
     property username : missing value
     property password1 : missing value
     property password2 : missing value
@@ -71,6 +72,7 @@ script AppDelegate
         if modeString is "Install a SkeleKey" then
             mainWindow's orderOut_(sender)
             installWindow's makeKeyAndOrderFront_(me)
+            installWindow's makeFirstResponder_(username)
         else if modeString is "Remove a SkeleKey" then
             mainWindow's orderOut_(sender)
             removeWindow's makeKeyAndOrderFront_(me)
@@ -102,7 +104,7 @@ script AppDelegate
         delButton's setEnabled_(false)
         set delApp to ""
         mainWindow's makeKeyAndOrderFront_(me)
-        removeWindow's orderOut_(sender)
+        loadingWindow's orderOut_(sender)
     end housekeepingDel_
     
     on destApp_(sender) --choose app to remove
@@ -120,7 +122,10 @@ script AppDelegate
 
     on delButton_(sender) --remove button action
         global delApp
+        loadingWindow's makeKeyAndOrderFront_(me)
+        removeWindow's orderOut_(sender)
         try
+            delay .1
             do shell script "srm -rf " & delApp
             display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Installer" default button 1
         on error
