@@ -17,12 +17,11 @@ script AppDelegate
     property password1 : missing value
     property password2 : missing value
     property fileName : missing value
-    property fileName2 : missing value
+    property fileName2 : missing value --to be removed
     property delFileName : missing value
     property startButton : missing value
     property delButton : missing value
     property modeString : "Install a SkeleKey"
-    property checkpass : "0"
     
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
@@ -146,8 +145,10 @@ script AppDelegate
         set usernameValue to replace_chars(usernameValue, "\"", "\\\"")
         set password1Value to replace_chars(password1Value, "`", "\\`")
         set password1Value to replace_chars(password1Value, "\"", "\\\"")
+        set password1Value to replace_chars(password2Value, "$", "\\$")
         set password2Value to replace_chars(password2Value, "`", "\\`")
         set password2Value to replace_chars(password2Value, "\"", "\\\"")
+        set password2Value to replace_chars(password2Value, "$", "\\$")
         
         if usernameValue is "" then
             display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
