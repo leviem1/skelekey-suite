@@ -17,7 +17,6 @@ script AppDelegate
     property password1 : missing value
     property password2 : missing value
     property fileName : missing value
-    property fileName2 : missing value --to be removed
     property delFileName : missing value
     property startButton : missing value
     property delButton : missing value
@@ -35,8 +34,20 @@ script AppDelegate
     on radioOption_(sender) --get mode
         set modeString to sender's title as text
     end radioOption_
+    
+    on buttonClicked_(sender) -- "Start!" button
+        if modeString is "Install a SkeleKey" then
+            mainWindow's orderOut_(sender)
+            installWindow's makeKeyAndOrderFront_(me)
+            installWindow's makeFirstResponder_(username)
+        else if modeString is "Remove a SkeleKey" then
+            mainWindow's orderOut_(sender)
+            removeWindow's makeKeyAndOrderFront_(me)
+        end if
+    end buttonClicked_
 
     on destvolume:choosevolume --choose volume to install
+        global fileName2
         global fileName3
         set validVols to {}
         try
@@ -67,75 +78,8 @@ script AppDelegate
         end if
     end destvolume:
     
-    on buttonClicked_(sender) -- "Start!" button
-        if modeString is "Install a SkeleKey" then
-            mainWindow's orderOut_(sender)
-            installWindow's makeKeyAndOrderFront_(me)
-            installWindow's makeFirstResponder_(username)
-        else if modeString is "Remove a SkeleKey" then
-            mainWindow's orderOut_(sender)
-            removeWindow's makeKeyAndOrderFront_(me)
-        end if
-    end buttonClicked_
-            
-    on housekeeping_(sender) --remove main window's info
-        fileName's setStringValue_("")
-        fileName's setToolTip_("")
-        startButton's setEnabled_(false)
-        set fileName2 to ""
-    end housekeeping_
-    
-    on houseKeepingInstall_(sender) --remove install window's info
-        username's setStringValue_("")
-        password1's setStringValue_("")
-        password2's setStringValue_("")
-        set usernameValue to ""
-        set password1Value to ""
-        set password2Value to ""
-        mainWindow's makeKeyAndOrderFront_(me)
-        installWindow's orderOut_(sender)
-    end houseKeepingInstall_
-    
-    on houseKeepingDel_(sender) --remove del window's info
-        global delApp
-        delFileName's setStringValue_("")
-        delFileName's setToolTip_("")
-        delButton's setEnabled_(false)
-        set delApp to ""
-        mainWindow's makeKeyAndOrderFront_(me)
-        loadingWindow's orderOut_(sender)
-        removeWindow's orderOut_(sender)
-    end housekeepingDel_
-    
-    on destApp_(sender) --choose app to remove
-        global delApp
-        global fileName3
-        try
-            set delApp to choose file of type "com.apple.application-bundle" default location fileName3
-            set delApp to POSIX path of delApp
-            set delApp to replace_chars(delApp, " ", "\\ ")
-            delFileName's setStringValue_(delApp)
-            delFileName's setToolTip_(delApp)
-            delButton's setEnabled_(true)
-        end try
-    end destApp_
-
-    on delButton_(sender) --remove button action
-        global delApp
-        loadingWindow's makeKeyAndOrderFront_(me)
-        removeWindow's orderOut_(sender)
-        try
-            delay .1
-            do shell script "srm -rf " & delApp
-            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Installer" default button 1
-        on error
-            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
-        end try
-        housekeeping_(sender)
-        houseKeepingDel_(sender)
-    end delButton_
-
     on installButton_(sender) --install button action
+        global fileName2
         set UnixPath to POSIX path of (path to current application as text)
         set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set usernameValue to "" & (stringValue() of username)
@@ -177,6 +121,63 @@ script AppDelegate
         mainWindow's makeKeyAndOrderFront_(me)
     end installButton_
     
+    on destApp_(sender) --choose app to remove
+        global delApp
+        global fileName3
+        try
+            set delApp to choose file of type "com.apple.application-bundle" default location fileName3
+            set delApp to POSIX path of delApp
+            set delApp to replace_chars(delApp, " ", "\\ ")
+            delFileName's setStringValue_(delApp)
+            delFileName's setToolTip_(delApp)
+            delButton's setEnabled_(true)
+        end try
+    end destApp_
+    
+    on delButton_(sender) --remove button action
+        global delApp
+        loadingWindow's makeKeyAndOrderFront_(me)
+        removeWindow's orderOut_(sender)
+        try
+            delay .1
+            do shell script "srm -rf " & delApp
+            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Installer" default button 1
+        on error
+            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+        end try
+        housekeeping_(sender)
+        houseKeepingDel_(sender)
+    end delButton_
+            
+    on housekeeping_(sender) --remove main window's info
+        global fileName2
+        fileName's setStringValue_("")
+        fileName's setToolTip_("")
+        startButton's setEnabled_(false)
+        set fileName2 to ""
+    end housekeeping_
+    
+    on houseKeepingInstall_(sender) --remove install window's info
+        username's setStringValue_("")
+        password1's setStringValue_("")
+        password2's setStringValue_("")
+        set usernameValue to ""
+        set password1Value to ""
+        set password2Value to ""
+        mainWindow's makeKeyAndOrderFront_(me)
+        installWindow's orderOut_(sender)
+    end houseKeepingInstall_
+    
+    on houseKeepingDel_(sender) --remove del window's info
+        global delApp
+        delFileName's setStringValue_("")
+        delFileName's setToolTip_("")
+        delButton's setEnabled_(false)
+        set delApp to ""
+        mainWindow's makeKeyAndOrderFront_(me)
+        loadingWindow's orderOut_(sender)
+        removeWindow's orderOut_(sender)
+    end housekeepingDel_
     
     --Quit cocoa application when activated
     on quitbutton:quit_
