@@ -31,6 +31,16 @@ script AppDelegate
         return this_text
     end replace_chars
     
+    on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
+        set origin to origin of window1's frame()
+        set windowSize to |size| of window1's frame()
+        set x to x of origin
+        set y to y of origin
+        set yAdd to height of windowSize
+        set y to y + yAdd
+        window2's setFrameTopLeftPoint_({x,y})
+    end windowMath
+    
     on radioOption_(sender) --get mode
         set modeString to sender's title as text
     end radioOption_
@@ -40,9 +50,11 @@ script AppDelegate
             mainWindow's orderOut_(sender)
             installWindow's makeKeyAndOrderFront_(me)
             installWindow's makeFirstResponder_(username)
+            windowMath(mainWindow, installWindow)
         else if modeString is "Remove a SkeleKey" then
             mainWindow's orderOut_(sender)
             removeWindow's makeKeyAndOrderFront_(me)
+            windowMath(mainWindow, removeWindow)
         end if
     end buttonClicked_
 
@@ -119,6 +131,7 @@ script AppDelegate
         houseKeepingInstall_(sender)
         installWindow's orderOut_(sender)
         mainWindow's makeKeyAndOrderFront_(me)
+        windowMath(installWindow, mainWindow)
     end installButton_
     
     on destApp_(sender) --choose app to remove
@@ -136,8 +149,9 @@ script AppDelegate
     
     on delButton_(sender) --remove button action
         global delApp
-        loadingWindow's makeKeyAndOrderFront_(me)
         removeWindow's orderOut_(sender)
+        loadingWindow's makeKeyAndOrderFront_(me)
+        windowMath(removeWindow, loadingWindow)
         try
             delay .1
             do shell script "srm -rf " & delApp
@@ -146,7 +160,7 @@ script AppDelegate
             display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
         housekeeping_(sender)
-        houseKeepingDel_(sender)
+        finishedDel_(sender)
     end delButton_
             
     on housekeeping_(sender) --remove main window's info
@@ -164,20 +178,32 @@ script AppDelegate
         set usernameValue to ""
         set password1Value to ""
         set password2Value to ""
-        mainWindow's makeKeyAndOrderFront_(me)
         installWindow's orderOut_(sender)
+        mainWindow's makeKeyAndOrderFront_(me)
+        windowMath(installWindow, mainWindow)
     end houseKeepingInstall_
     
-    on houseKeepingDel_(sender) --remove del window's info
+    on cancelDel_(sender) --when removal is canceled
+        houseKeepingDel_()
+        removeWindow's orderOut_(sender)
+        mainWindow's makeKeyAndOrderFront_(me)
+        windowMath(removeWindow, mainWindow)
+    end cancelDel_
+    
+    on finishedDel_(sender) --when removal has finished
+        houseKeepingDel_()
+        loadingWindow's orderOut_(sender)
+        mainWindow's makeKeyAndOrderFront_(me)
+        windowMath(loadingWindow, mainWindow)
+    end finishedDel_
+    
+    on houseKeepingDel_() --remove del window's info
         global delApp
         delFileName's setStringValue_("")
         delFileName's setToolTip_("")
         delButton's setEnabled_(false)
         set delApp to ""
-        mainWindow's makeKeyAndOrderFront_(me)
-        loadingWindow's orderOut_(sender)
-        removeWindow's orderOut_(sender)
-    end housekeepingDel_
+    end houseKeepingDel_
     
     --Quit cocoa application when activated
     on quitbutton:quit_

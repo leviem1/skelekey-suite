@@ -60,6 +60,7 @@
 			children = (
 				1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */,
 				1D44515C1BBB3E840079F9E4 /* Frameworks */,
+				2F7560401BE01186009C9E4D /* Resources */,
 				1D1905AC1BCC945A000CC1DD /* SkeleKey-Installer.app */,
 			);
 			sourceTree = "<group>";
@@ -76,7 +77,6 @@
 		1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */ = {
 			isa = PBXGroup;
 			children = (
-				2F7560401BE01186009C9E4D /* Resources */,
 				1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */,
 				1D4451661BBB3E840079F9E4 /* Images.xcassets */,
 				1D4451681BBB3E840079F9E4 /* MainMenu.xib */,
@@ -100,7 +100,6 @@
 				2F7560411BE011C4009C9E4D /* dsa_pub.pem */,
 			);
 			name = Resources;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
