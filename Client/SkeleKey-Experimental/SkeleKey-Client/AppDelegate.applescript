@@ -68,7 +68,7 @@ script AppDelegate
         set UnixPath to replace_chars(UnixPath, "//", "/")
         set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set volumepath to POSIX path of ((path to current application as text) & "::")
-        set authinfobin to UnixPath & "Contents/Resources/Files/.p.enc.bin"
+        set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
         set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
         set volumepath to replace_chars(volumepath, " ", "\\ ")
