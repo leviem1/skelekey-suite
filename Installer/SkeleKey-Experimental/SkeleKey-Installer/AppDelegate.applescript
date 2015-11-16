@@ -13,6 +13,7 @@ script AppDelegate
 	property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
+    property quitItem : missing value
     property username : missing value
     property password1 : missing value
     property password2 : missing value
@@ -152,6 +153,7 @@ script AppDelegate
         removeWindow's orderOut_(sender)
         loadingWindow's makeKeyAndOrderFront_(me)
         windowMath(removeWindow, loadingWindow)
+        quitItem's setEnabled_(false)
         try
             delay .1
             do shell script "srm -rf " & delApp
@@ -159,6 +161,7 @@ script AppDelegate
         on error
             display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
+        quitItem's setEnabled_(true)
         housekeeping_(sender)
         finishedDel_(sender)
     end delButton_
@@ -204,11 +207,6 @@ script AppDelegate
         delButton's setEnabled_(false)
         set delApp to ""
     end houseKeepingDel_
-    
-    --Quit cocoa application when activated
-    on quitbutton:quit_
-        quit
-    end quitbutton:
     
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm"}

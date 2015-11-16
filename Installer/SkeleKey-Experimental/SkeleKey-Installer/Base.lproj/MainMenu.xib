@@ -22,6 +22,7 @@
                 <outlet property="mainWindow" destination="Gog-6h-Zbx" id="pVX-XE-4yJ"/>
                 <outlet property="password1" destination="Gib-ki-GlL" id="Apc-Ab-Jui"/>
                 <outlet property="password2" destination="tDW-JK-IJ7" id="bm9-tf-EAM"/>
+                <outlet property="quitItem" destination="4sb-4s-VLi" id="UdY-QH-8gr"/>
                 <outlet property="removeWindow" destination="iNL-cc-7Ug" id="u9T-lN-Ad6"/>
                 <outlet property="startButton" destination="HL4-7q-nYT" id="deh-xr-kc0"/>
                 <outlet property="username" destination="i5T-GM-hdG" id="Jgt-x3-l7F"/>
@@ -748,7 +749,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="quitbutton:" target="Voe-Tx-rLC" id="ZFI-Gc-Lav"/>
+                            <action selector="terminate:" target="-1" id="Fbe-g1-9q3"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HL4-7q-nYT">
