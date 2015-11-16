@@ -9,8 +9,6 @@
 script AppDelegate
     property parent : class "NSObject"
     
-    -- IBOutlets
-    property theWindow : missing value
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
