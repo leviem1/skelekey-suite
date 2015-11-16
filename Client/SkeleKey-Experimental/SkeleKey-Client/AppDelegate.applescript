@@ -44,7 +44,7 @@ script AppDelegate
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
         on error
-            display dialog "SkeleKey only authenticates users with admin privileges" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
     end checkadmin
