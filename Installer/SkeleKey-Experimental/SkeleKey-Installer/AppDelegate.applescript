@@ -100,6 +100,10 @@ script AppDelegate
             startButton's setEnabled_(true)
             fileName's setStringValue_(fileName2)
             fileName's setToolTip_(fileName2)
+        else
+            startButton's setEnabled_(false)
+            fileName's setStringValue_("")
+            fileName's setToolTip_("")
         end if
     end destvolume:
     
@@ -159,6 +163,10 @@ script AppDelegate
             delFileName's setStringValue_(delApp)
             delFileName's setToolTip_(delApp)
             delButton's setEnabled_(true)
+        on error
+            delFileName's setStringValue_("")
+            delFileName's setToolTip_("")
+            delButton's setEnabled_(false)
         end try
     end destApp_
     
