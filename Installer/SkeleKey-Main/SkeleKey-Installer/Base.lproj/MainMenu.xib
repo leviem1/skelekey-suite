@@ -687,9 +687,9 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTG-1Z-rdV">
-                        <rect key="frame" x="18" y="99" width="296" height="17"/>
+                        <rect key="frame" x="18" y="99" width="299" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please choose the destination for the SkeleKey:" id="5Lg-3P-9Mi">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Please choose the destination for the SkeleKey:" id="5Lg-3P-9Mi">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -726,7 +726,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ra-M9-H8o">
-                        <rect key="frame" x="54" y="143" width="127" height="18"/>
+                        <rect key="frame" x="54" y="143" width="134" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="radio" title="Install a SkeleKey" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gz5-Lw-5PO">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -738,7 +738,7 @@ DQ
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h28-It-h2r">
-                        <rect key="frame" x="267" y="143" width="140" height="18"/>
+                        <rect key="frame" x="267" y="143" width="149" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="radio" title="Remove a SkeleKey" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="H6P-MZ-zTc">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -946,7 +946,7 @@ Gw
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5De-1a-0cp">
-                        <rect key="frame" x="18" y="108" width="417" height="17"/>
+                        <rect key="frame" x="18" y="108" width="427" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Please choose the SkeleKey client that you wish to securely remove:" id="4ma-OL-EV7">
                             <font key="font" metaFont="system"/>
