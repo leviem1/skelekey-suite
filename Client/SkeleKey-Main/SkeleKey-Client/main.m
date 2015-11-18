@@ -3,7 +3,7 @@
 //  SkeleKey-Client
 //
 //  Created by Mark Hedrick on 10/11/15.
-//  Copyright © 2015 SEBS. All rights reserved.
+//  Copyright © 2015 Mark Hedrick and Levi Muniz. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

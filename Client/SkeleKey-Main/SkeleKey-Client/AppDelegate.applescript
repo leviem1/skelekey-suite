@@ -9,8 +9,6 @@
 script AppDelegate
     property parent : class "NSObject"
     
-    -- IBOutlets
-    property theWindow : missing value
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -21,7 +19,7 @@ script AppDelegate
     end replace_chars
     
     on decryptinfo(volumepath, authinfobin)
-        set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}'"
+        set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}' | rev"
         set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
@@ -46,7 +44,7 @@ script AppDelegate
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
         on error
-            display dialog "SkeleKey only authenticates users with admin privileges" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
             quit
         end try
     end checkadmin
@@ -70,9 +68,10 @@ script AppDelegate
         set UnixPath to replace_chars(UnixPath, "//", "/")
         set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set volumepath to POSIX path of ((path to current application as text) & "::")
-        set authinfobin to UnixPath & "Contents/Resources/Files/.p.enc.bin"
+        set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
         set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
+        set volumepath to replace_chars(volumepath, " ", "\\ ")
         set authcred to decryptinfo(volumepath, authinfobin)
         checkadmin(item 1 of authcred, item 2 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
@@ -81,7 +80,7 @@ script AppDelegate
     end main
     
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5"}
         set notInstalledString to ""
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"

@@ -12,10 +12,9 @@
 		1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */; };
 		1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451661BBB3E840079F9E4 /* Images.xcassets */; };
 		1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451681BBB3E840079F9E4 /* MainMenu.xib */; };
-		2F71DA241BD580C800D79DF3 /* SkeleKeyUtilities.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */; settings = {ASSET_TAGS = (); }; };
-		2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
+		2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; };
 		2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2F7560411BE011C4009C9E4D /* dsa_pub.pem */; settings = {ASSET_TAGS = (); }; };
+		2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2F7560411BE011C4009C9E4D /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,7 +38,6 @@
 		1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
 		1D4451661BBB3E840079F9E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkeleKeyUtilities.xib; sourceTree = "<group>"; };
 		2F75603C1BDFFA13009C9E4D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		2F7560411BE011C4009C9E4D /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +60,7 @@
 			children = (
 				1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */,
 				1D44515C1BBB3E840079F9E4 /* Frameworks */,
+				2F7560401BE01186009C9E4D /* Resources */,
 				1D1905AC1BCC945A000CC1DD /* SkeleKey-Installer.app */,
 			);
 			sourceTree = "<group>";
@@ -78,11 +77,9 @@
 		1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */ = {
 			isa = PBXGroup;
 			children = (
-				2F7560401BE01186009C9E4D /* Resources */,
 				1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */,
 				1D4451661BBB3E840079F9E4 /* Images.xcassets */,
 				1D4451681BBB3E840079F9E4 /* MainMenu.xib */,
-				2F71DA231BD580C800D79DF3 /* SkeleKeyUtilities.xib */,
 				1D4451601BBB3E840079F9E4 /* Supporting Files */,
 			);
 			path = "SkeleKey-Installer";
@@ -103,7 +100,6 @@
 				2F7560411BE011C4009C9E4D /* dsa_pub.pem */,
 			);
 			name = Resources;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,7 +162,6 @@
 			files = (
 				1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */,
 				2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */,
-				2F71DA241BD580C800D79DF3 /* SkeleKeyUtilities.xib in Resources */,
 				1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,7 +209,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -257,7 +252,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
