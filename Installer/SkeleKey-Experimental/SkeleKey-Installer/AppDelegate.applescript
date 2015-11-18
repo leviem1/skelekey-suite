@@ -24,6 +24,7 @@ script AppDelegate
     property fileName : missing value
     property delFileName : missing value
     property startButton : missing value
+    property installButton : missing value
     property delButton : missing value
     property modeString : "Install a SkeleKey"
     
@@ -51,10 +52,14 @@ script AppDelegate
     end radioOption_
     
     on controlTextDidChange_(aNotification) --check if both passwords are equal
-        if (stringValue() of password1) equal (stringValue() of password2) then
+        set password1String to (stringValue() of password1) as string
+        set password2String to (stringValue() of password2) as string
+        if password1String equals password2String then
             checkIcon's setImage_(NSImage's imageNamed_("NSStatusAvailable"))
-        else if (stringValue() of password1) does not equal (stringValue() of password2) then
+            installButton's setEnabled_(true)
+        else if password1String does not equal password2String then
             checkIcon's setImage_(NSImage's imageNamed_("NSStatusUnavailable"))
+            installButton's setEnabled_(false)
         end if
     end controlTextDidChange_
     

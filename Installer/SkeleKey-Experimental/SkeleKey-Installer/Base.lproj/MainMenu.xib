@@ -19,6 +19,7 @@
                 <outlet property="delFileName" destination="Kfj-Tb-Emz" id="9Ci-M2-vXM"/>
                 <outlet property="dontShow" destination="P4a-ns-BlW" id="CL6-Qj-fGJ"/>
                 <outlet property="fileName" destination="tYT-vI-e10" id="mtj-VM-mig"/>
+                <outlet property="installButton" destination="Prx-pI-fX4" id="mhh-Cw-fCY"/>
                 <outlet property="installWindow" destination="QvC-M9-y7g" id="5Aq-cd-Ej6"/>
                 <outlet property="loadingWindow" destination="OgB-vw-X4M" id="qNq-um-nTu"/>
                 <outlet property="mainWindow" destination="Gog-6h-Zbx" id="pVX-XE-4yJ"/>
