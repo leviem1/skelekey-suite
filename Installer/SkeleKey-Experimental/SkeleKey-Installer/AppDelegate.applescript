@@ -8,12 +8,15 @@
 
 script AppDelegate
 	property parent : class "NSObject"
+    property NSImage : class "NSImage"
 	-- IBOutlets
     property mainWindow : missing value
 	property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
     property welcomeWindow : missing value
+    property checkIcon : missing value
+    property dontShow : missing value
     property quitItem : missing value
     property username : missing value
     property password1 : missing value
@@ -46,6 +49,14 @@ script AppDelegate
     on radioOption_(sender) --get mode
         set modeString to sender's title as text
     end radioOption_
+    
+    on controlTextDidChange_(aNotification) --check if both passwords are equal
+        if (stringValue() of password1) equal (stringValue() of password2) then
+            checkIcon's setImage_(NSImage's imageNamed_("NSStatusAvailable"))
+        else if (stringValue() of password1) does not equal (stringValue() of password2) then
+            checkIcon's setImage_(NSImage's imageNamed_("NSStatusUnavailable"))
+        end if
+    end controlTextDidChange_
     
     on buttonClicked_(sender) -- "Start!" button
         if modeString is "Install a SkeleKey" then
@@ -94,6 +105,8 @@ script AppDelegate
     
     on installButton_(sender) --install button action
         global fileName2
+        global password1Value
+        global password2Value
         set UnixPath to POSIX path of (path to current application as text)
         set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set usernameValue to "" & (stringValue() of username)
@@ -168,9 +181,16 @@ script AppDelegate
     end delButton_
     
     on gotit_(sender) --welcomescreen button action
-        #welcomeWindow's orderOut_(sender)
+        if (dontShow's state()) is 1 then
+            try
+                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool true"
+            end try
+        else if (dontShow's state()) is 0 then
+            try
+                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool false"
+            end try
+        end if
         welcomeWindow's orderOut_(sender)
-        mainWindow's makeKeyAndOrderFront_(me)
     end gotit_
             
     on housekeeping_(sender) --remove main window's info
@@ -215,6 +235,10 @@ script AppDelegate
         set delApp to ""
     end houseKeepingDel_
     
+    on doOpenWelcome_(sender)
+        welcomeWindow's makeKeyAndOrderFront_(me)
+    end doOpenWelcome_
+    
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm"}
         set notInstalledString to ""
@@ -236,6 +260,15 @@ script AppDelegate
             display alert "The following required resources are not installed:\n\n" & notInstalledString buttons "Quit"
             quit
         end if
+        try
+            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow"
+        on error
+            set dontShowValue to "0"
+        end try
+        if dontShowValue is "0" then
+            welcomeWindow's makeKeyAndOrderFront_(me)
+        end if
+        
     end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
