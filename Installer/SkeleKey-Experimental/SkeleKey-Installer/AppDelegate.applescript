@@ -13,6 +13,7 @@ script AppDelegate
 	property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
+    property welcomeWindow : missing value
     property quitItem : missing value
     property username : missing value
     property password1 : missing value
@@ -165,6 +166,12 @@ script AppDelegate
         housekeeping_(sender)
         finishedDel_(sender)
     end delButton_
+    
+    on gotit_(sender) --welcomescreen button action
+        #welcomeWindow's orderOut_(sender)
+        welcomeWindow's orderOut_(sender)
+        mainWindow's makeKeyAndOrderFront_(me)
+    end gotit_
             
     on housekeeping_(sender) --remove main window's info
         global fileName2
