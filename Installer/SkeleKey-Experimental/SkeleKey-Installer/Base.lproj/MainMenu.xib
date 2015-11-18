@@ -811,6 +811,9 @@ DQ
                                 <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                             </allowedInputSourceLocales>
                         </secureTextFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="QfR-cw-Lyg"/>
+                        </connections>
                     </secureTextField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5T-GM-hdG">
                         <rect key="frame" x="98" y="144" width="332" height="22"/>
