@@ -27,6 +27,7 @@ script AppDelegate
     property installButton : missing value
     property delButton : missing value
     property modeString : "Install a SkeleKey"
+    property isBusy : false
     
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
@@ -181,6 +182,7 @@ script AppDelegate
         loadingWindow's makeKeyAndOrderFront_(me)
         windowMath(removeWindow, loadingWindow)
         quitItem's setEnabled_(false)
+        set isBusy to true
         try
             delay .1
             do shell script "srm -rf " & delApp
@@ -188,6 +190,7 @@ script AppDelegate
         on error
             display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
         end try
+        set isBusy to false
         quitItem's setEnabled_(true)
         housekeeping_(sender)
         finishedDel_(sender)
@@ -253,7 +256,7 @@ script AppDelegate
     end doOpenWelcome_
     
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults"}
         set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
@@ -285,8 +288,10 @@ script AppDelegate
     end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
-		-- Insert code here to do any housekeeping before your application quits 
-		return current application's NSTerminateNow
+        if isBusy is true then
+            return NSTerminateCancel
+        end if
+        return current application's NSTerminateNow
 	end applicationShouldTerminate_
     
     on applicationShouldTerminateAfterLastWindowClosed_(sender)
