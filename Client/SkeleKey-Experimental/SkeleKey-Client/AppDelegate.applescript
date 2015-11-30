@@ -54,7 +54,7 @@ script AppDelegate
             tell application "System Events" to tell process "SecurityAgent"
                 set value of text field 1 of window 1 to username
                 set value of text field 2 of window 1 to passwd
-                keystroke return
+                click button "Unlock" of window 1
             end tell
         on error
             display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
