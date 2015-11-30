@@ -258,6 +258,7 @@ script AppDelegate
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults"}
         set notInstalledString to ""
+        
         try
             do shell script "sudo echo elevate" with administrator privileges
         on error
@@ -276,21 +277,24 @@ script AppDelegate
             display alert "The following required resources are not installed:\n\n" & notInstalledString buttons "Quit"
             quit
         end if
+        
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow"
         on error
             set dontShowValue to "0"
         end try
+        
         if dontShowValue is "0" then
             welcomeWindow's makeKeyAndOrderFront_(me)
         end if
-        
     end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
+        
         if isBusy is true then
             return NSTerminateCancel
         end if
+        
         return current application's NSTerminateNow
 	end applicationShouldTerminate_
     
