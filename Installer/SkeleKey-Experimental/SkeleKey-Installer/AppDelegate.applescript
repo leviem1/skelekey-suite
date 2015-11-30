@@ -207,11 +207,13 @@ script AppDelegate
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool false"
             end try
         end if
-        welcomeWindow's orderOut_(sender)
+        tutorialWindow's orderOut_(sender)
     end gotit_
     
     on tutorialnext_(sender)
-        windowMath(tutorialWindow, welcomeWindow)
+        welcomeWindow's orderOut_(sender)
+        tutorialWindow's makeKeyAndOrderFront_(me)
+        windowMath(welcomeWindow, tutorialWindow)
     end tutorialnext_
             
     on housekeeping_(sender) --remove main window's info
@@ -257,7 +259,7 @@ script AppDelegate
     end houseKeepingDel_
     
     on doOpenWelcome_(sender)
-        welcomeWindow's makeKeyAndOrderFront_(me)
+        tutorialWindow's makeKeyAndOrderFront_(me)
     end doOpenWelcome_
     
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
@@ -288,25 +290,24 @@ script AppDelegate
         on error
             set dontShowValue to "0"
         end try
-        if hasWelcomed is "0"
-            welcomeWindow's makeKeyAndOrderFront_(me)
-            if dontShowValue is "0" then
-                welcomeWindow's makeKeyAndOrderFront_(me)
-            end if
-        end if
-    end applicationWillFinishLaunching_
-    
-    on applicationDidFinishLaunching_(aNotification)
+        
         try
             set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed"
-        on error
+            on error
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
-    end applicationDidFinishLaunching_
+        
+        if hasWelcomed is "0"
+            welcomeWindow's makeKeyAndOrderFront_(me)
+        else
+            if dontShowValue is "0" then
+                tutorialWindow's makeKeyAndOrderFront_(me)
+            end if
+        end if
+    end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
-        
         if isBusy is true then
             return NSTerminateCancel
         end if
