@@ -15,6 +15,7 @@ script AppDelegate
     property removeWindow : missing value
     property loadingWindow : missing value
     property welcomeWindow : missing value
+    property tutorialWindow : missing value
     property checkIcon : missing value
     property dontShow : missing value
     property quitItem : missing value
@@ -208,6 +209,10 @@ script AppDelegate
         end if
         welcomeWindow's orderOut_(sender)
     end gotit_
+    
+    on tutorialnext_(sender)
+        windowMath(tutorialWindow, welcomeWindow)
+    end tutorialnext_
             
     on housekeeping_(sender) --remove main window's info
         global fileName2
@@ -283,11 +288,22 @@ script AppDelegate
         on error
             set dontShowValue to "0"
         end try
-        
-        if dontShowValue is "0" then
+        if hasWelcomed is "0"
             welcomeWindow's makeKeyAndOrderFront_(me)
+            if dontShowValue is "0" then
+                welcomeWindow's makeKeyAndOrderFront_(me)
+            end if
         end if
     end applicationWillFinishLaunching_
+    
+    on applicationDidFinishLaunching_(aNotification)
+        try
+            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed"
+        on error
+            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed -bool true"
+            set hasWelcomed to "0"
+        end try
+    end applicationDidFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
         
