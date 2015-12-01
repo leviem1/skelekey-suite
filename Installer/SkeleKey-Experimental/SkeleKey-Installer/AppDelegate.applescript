@@ -148,8 +148,23 @@ script AppDelegate
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
             set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
             do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
-            do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
-            display notification "Created SkeleKey for user account: " & usernameValue
+            
+            try
+                set theNumber to 1
+                do shell script "test -e " & fileName2 & usernameValue & "-SkeleKey-Client.app"
+                repeat
+                    try
+                        set theNumber to theNumber + 1
+                        do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Client.app"
+                    on error
+                        do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Client.app"
+                        exit repeat
+                    end try
+                end repeat
+            on error
+                do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
+            end try
+
             display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer" default button 1
         on error
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
@@ -198,7 +213,7 @@ script AppDelegate
         finishedDel_(sender)
     end delButton_
     
-    on gotit_(sender) --welcomescreen button action
+    on gotit_(sender) --tutorialScreen button action
         if (dontShow's state()) is 1 then
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool true"
