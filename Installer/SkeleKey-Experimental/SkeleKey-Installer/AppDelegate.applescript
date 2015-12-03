@@ -29,6 +29,7 @@ script AppDelegate
     property delButton : missing value
     property modeString : "Install a SkeleKey"
     property isBusy : false
+    property fromStart : true
     
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
@@ -226,11 +227,13 @@ script AppDelegate
         tutorialWindow's orderOut_(sender)
     end gotit_
     
-    on tutorialnext_(sender)
+    on welcomeNext_(sender)
         welcomeWindow's orderOut_(sender)
-        tutorialWindow's makeKeyAndOrderFront_(me)
-        windowMath(welcomeWindow, tutorialWindow)
-    end tutorialnext_
+        if fromStart is true
+            tutorialWindow's makeKeyAndOrderFront_(me)
+            windowMath(welcomeWindow, tutorialWindow)
+        end if
+    end welcomeNext_
             
     on housekeeping_(sender) --remove main window's info
         global fileName2
@@ -274,8 +277,13 @@ script AppDelegate
         set delApp to ""
     end houseKeepingDel_
     
-    on doOpenWelcome_(sender)
+    on doOpenTutorial_(sender)
         tutorialWindow's makeKeyAndOrderFront_(me)
+    end doOpenTutorial_
+    
+    on doOpenWelcome_(sender)
+        welcomeWindow's makeKeyAndOrderFront_(me)
+        set fromStart to false
     end doOpenWelcome_
     
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking

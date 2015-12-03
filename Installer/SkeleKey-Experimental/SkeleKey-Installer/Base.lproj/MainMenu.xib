@@ -637,7 +637,12 @@
                         <items>
                             <menuItem title="Tutorial" keyEquivalent="H" id="SBF-8d-xrD">
                                 <connections>
-                                    <action selector="doOpenWelcome:" target="Voe-Tx-rLC" id="LdB-Vb-KVJ"/>
+                                    <action selector="doOpenTutorial:" target="Voe-Tx-rLC" id="lvz-Ab-Bv5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Welcome" keyEquivalent="W" id="OQe-Bt-Dbl">
+                                <connections>
+                                    <action selector="doOpenWelcome:" target="Voe-Tx-rLC" id="EgV-Sx-8GB"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -1200,7 +1205,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="tutorialnext:" target="Voe-Tx-rLC" id="lWA-6t-bKJ"/>
+                            <action selector="welcomeNext:" target="Voe-Tx-rLC" id="cgk-ZC-6qC"/>
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqy-AW-9VS">
