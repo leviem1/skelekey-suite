@@ -1,6 +1,6 @@
 --
 --  AppDelegate.applescript
---  SkeleKey-Installer
+--  SkeleKey-Manager
 --
 --  Created by Mark Hedrick on 9/29/15.
 --  Copyright (c) 2015 Mark Hedrick and Levi Muniz. All rights reserved.
@@ -96,7 +96,7 @@ script AppDelegate
                     set validVols to validVols & {vol}
                 end if
             end repeat
-            set fileName2 to choose from list validVols with title "SkeleKey-Installer" with prompt "Please choose a destination:"
+            set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
             set fileName3 to replace_chars(fileName2, "\\ ", " ")
         on error
@@ -133,7 +133,7 @@ script AppDelegate
         set password2Value to replace_chars(password2Value, "$", "\\$")
         
         if usernameValue is "" then
-            display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+            display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
             return
         end if
         
@@ -165,9 +165,9 @@ script AppDelegate
                 do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
             end try
 
-            display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Installer" default button 1
+            display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
         on error
-            display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+            display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         housekeeping_(sender)
         houseKeepingInstall_(sender)
@@ -203,9 +203,9 @@ script AppDelegate
         try
             delay .1
             do shell script "srm -rf " & delApp
-            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Installer" default button 1
+            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
         on error
-            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Installer" default button 1
+            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         set isBusy to false
         quitItem's setEnabled_(true)
@@ -216,11 +216,11 @@ script AppDelegate
     on gotit_(sender) --tutorialScreen button action
         if (dontShow's state()) is 1 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool true"
+                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
             end try
         else if (dontShow's state()) is 0 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow -bool false"
+                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool false"
             end try
         end if
         tutorialWindow's orderOut_(sender)
@@ -285,7 +285,7 @@ script AppDelegate
         try
             do shell script "sudo echo elevate" with administrator privileges
         on error
-            display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Installer" with icon 0
+            display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
         
@@ -302,15 +302,15 @@ script AppDelegate
         end if
         
         try
-            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist dontShow"
+            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
         on error
             set dontShowValue to "0"
         end try
         
         try
-            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed"
+            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
             on error
-            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Installer.plist hasWelcomed -bool true"
+            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
         

@@ -33,7 +33,7 @@
 
 /* Begin PBXFileReference section */
 		1D0408FD1C0D47AA00B7BD47 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		1D1905AC1BCC945A000CC1DD /* SkeleKey-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		1D4451611BBB3E840079F9E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4451621BBB3E840079F9E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 				1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */,
 				1D44515C1BBB3E840079F9E4 /* Frameworks */,
 				2F7560401BE01186009C9E4D /* Resources */,
-				1D1905AC1BCC945A000CC1DD /* SkeleKey-Installer.app */,
+				1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D4451591BBB3E840079F9E4 /* SkeleKey-Installer */ = {
+		1D4451591BBB3E840079F9E4 /* SkeleKey-Manager */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Installer" */;
+			buildConfigurationList = 1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */;
 			buildPhases = (
 				1D4451561BBB3E840079F9E4 /* Sources */,
 				1D4451571BBB3E840079F9E4 /* Frameworks */,
@@ -121,9 +121,9 @@
 			);
 			dependencies = (
 			);
-			name = "SkeleKey-Installer";
+			name = "SkeleKey-Manager";
 			productName = "SkeleKey-Installer";
-			productReference = 1D1905AC1BCC945A000CC1DD /* SkeleKey-Installer.app */;
+			productReference = 1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -145,7 +145,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Installer" */;
+			buildConfigurationList = 1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Manager" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -158,7 +158,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D4451591BBB3E840079F9E4 /* SkeleKey-Installer */,
+				1D4451591BBB3E840079F9E4 /* SkeleKey-Manager */,
 			);
 		};
 /* End PBXProject section */
@@ -292,7 +292,7 @@
 				);
 				INFOPLIST_FILE = "SkeleKey-Installer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SkeleKey-Manager";
 			};
 			name = Debug;
 		};
@@ -308,14 +308,14 @@
 				);
 				INFOPLIST_FILE = "SkeleKey-Installer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SkeleKey-Manager";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Installer" */ = {
+		1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Manager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D44516B1BBB3E840079F9E4 /* Debug */,
@@ -324,7 +324,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Installer" */ = {
+		1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D44516E1BBB3E840079F9E4 /* Debug */,
