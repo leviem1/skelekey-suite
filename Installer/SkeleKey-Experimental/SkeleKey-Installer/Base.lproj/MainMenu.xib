@@ -1011,7 +1011,7 @@ Gw
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FTd-7M-NkK">
                         <rect key="frame" x="18" y="276" width="525" height="36"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="SkeleKey Quick Start" id="oub-KR-EjX">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Quick Start" id="oub-KR-EjX">
                             <font key="font" size="19" name=".AppleSystemUIFont"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1075,21 +1075,7 @@ Gw
 client from the USB
 on a device with the
 specified credentials
-to verify that it works!</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="28g-9j-c8f">
-                        <rect key="frame" x="213" y="54" width="134" height="92"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="D6R-O7-mML">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">Enter the account
-credentials that you 
-wish to create a 
-SkeleKey for. Please
-verify their accuracy!</string>
+to verify that it works.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1117,15 +1103,32 @@ DQ
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hgg-wp-oCa">
-                        <rect key="frame" x="18" y="61" width="149" height="85"/>
+                        <rect key="frame" x="6" y="49" width="173" height="102"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="F9c-dy-N1l">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Select the USB device
+                            <string key="title">Select any USB device
 that you wish to create
 the SkeleKey client on.
 Make sure the mode of
-operation is correct.</string>
+operation on the next
+screen is correct.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="28g-9j-c8f">
+                        <rect key="frame" x="206" y="39" width="148" height="119"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="D6R-O7-mML">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Enter the administrator
+ account credentials
+that you wish to create
+a SkeleKey for at the
+installer page. Please
+verify the accuracy of
+this information.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1179,7 +1182,7 @@ Levi Muniz
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NYF-Pc-I7R">
-                        <rect key="frame" x="163" y="57" width="5" height="217"/>
+                        <rect key="frame" x="163" y="57" width="4" height="217"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
