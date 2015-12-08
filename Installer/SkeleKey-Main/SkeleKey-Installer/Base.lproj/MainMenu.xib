@@ -28,19 +28,20 @@
                 <outlet property="quitItem" destination="4sb-4s-VLi" id="UdY-QH-8gr"/>
                 <outlet property="removeWindow" destination="iNL-cc-7Ug" id="u9T-lN-Ad6"/>
                 <outlet property="startButton" destination="HL4-7q-nYT" id="deh-xr-kc0"/>
+                <outlet property="tutorialWindow" destination="NvU-gz-m4G" id="Kkp-nM-O1L"/>
                 <outlet property="username" destination="i5T-GM-hdG" id="Jgt-x3-l7F"/>
-                <outlet property="welcomeWindow" destination="NvU-gz-m4G" id="Stn-Oj-cJl"/>
+                <outlet property="welcomeWindow" destination="77G-L5-kqe" id="dDm-lq-Ci2"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="p4Q-s4-PTg" customClass="SUUpdater"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="SkeleKey-Installer" id="1Xt-HY-uBw">
+                <menuItem title="SkeleKey-Manager" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="SkeleKey-Installer" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="SkeleKey-Manager" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About SkeleKey-Installer" id="5kV-Vb-QxS">
+                            <menuItem title="About SkeleKey-Manager" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
@@ -59,7 +60,7 @@
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide SkeleKey-Installer" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem title="Hide SkeleKey-Manager" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
@@ -77,7 +78,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Quit SkeleKey-Installer" keyEquivalent="q" id="4sb-4s-VLi">
+                            <menuItem title="Quit SkeleKey-Manager" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
                                 </connections>
@@ -634,9 +635,14 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
-                            <menuItem title="Welcome" keyEquivalent="H" id="SBF-8d-xrD">
+                            <menuItem title="Tutorial" keyEquivalent="H" id="SBF-8d-xrD">
                                 <connections>
-                                    <action selector="doOpenWelcome:" target="Voe-Tx-rLC" id="LdB-Vb-KVJ"/>
+                                    <action selector="doOpenTutorial:" target="Voe-Tx-rLC" id="lvz-Ab-Bv5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Welcome" keyEquivalent="W" id="OQe-Bt-Dbl">
+                                <connections>
+                                    <action selector="doOpenWelcome:" target="Voe-Tx-rLC" id="EgV-Sx-8GB"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -669,7 +675,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="SkeleKey - Utilities" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="Gog-6h-Zbx">
+        <window title="SkeleKey - Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="Gog-6h-Zbx">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="886" y="0.0" width="480" height="200"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
@@ -689,7 +695,7 @@
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTG-1Z-rdV">
                         <rect key="frame" x="18" y="99" width="299" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Please choose the destination for the SkeleKey:" id="5Lg-3P-9Mi">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please choose the destination for the SkeleKey:" id="5Lg-3P-9Mi">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -703,9 +709,9 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HL4-7q-nYT">
-                        <rect key="frame" x="392" y="13" width="74" height="32"/>
+                        <rect key="frame" x="394" y="13" width="70" height="32"/>
                         <animations/>
-                        <buttonCell key="cell" type="push" title="Start!" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V0T-Hs-sxr">
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V0T-Hs-sxr">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -766,7 +772,7 @@ DQ
             </view>
             <point key="canvasLocation" x="-54" y="265"/>
         </window>
-        <window title="SkeleKey - Creator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="SkeleKey - Creator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="441" y="273" width="480" height="217"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
@@ -858,9 +864,9 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Prx-pI-fX4">
-                        <rect key="frame" x="390" y="13" width="76" height="32"/>
+                        <rect key="frame" x="388" y="13" width="81" height="32"/>
                         <animations/>
-                        <buttonCell key="cell" type="push" title="Install" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fcV-28-no5">
+                        <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fcV-28-no5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -948,7 +954,7 @@ Gw
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5De-1a-0cp">
                         <rect key="frame" x="18" y="108" width="427" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Please choose the SkeleKey client that you wish to securely remove:" id="4ma-OL-EV7">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please choose the SkeleKey client that you wish to securely remove:" id="4ma-OL-EV7">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -968,7 +974,7 @@ Gw
             </view>
             <point key="canvasLocation" x="-54" y="506.5"/>
         </window>
-        <window title="SkeleKey - Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="OgB-vw-X4M">
+        <window title="SkeleKey - Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="OgB-vw-X4M">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="100"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
@@ -976,26 +982,26 @@ Gw
                 <rect key="frame" x="0.0" y="0.0" width="480" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ylT-aa-d8V">
-                        <rect key="frame" x="18" y="63" width="133" height="17"/>
+                    <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="EGD-XZ-PCu">
+                        <rect key="frame" x="20" y="35" width="440" height="20"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Removing SkeleKey..." id="TfO-tS-N7P">
+                    </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ylT-aa-d8V">
+                        <rect key="frame" x="18" y="62" width="213" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Removing SkeleKey... Please wait." id="TfO-tS-N7P">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="EGD-XZ-PCu">
-                        <rect key="frame" x="20" y="35" width="440" height="20"/>
-                        <animations/>
-                    </progressIndicator>
                 </subviews>
                 <animations/>
             </view>
             <point key="canvasLocation" x="473" y="498"/>
         </window>
-        <window title="SkeleKey - Welcome" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="NvU-gz-m4G" userLabel="Welcome Window">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+        <window title="SkeleKey - Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="NvU-gz-m4G" userLabel="Tutorial Window">
+            <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="332"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="py7-sE-eBE">
@@ -1005,7 +1011,7 @@ Gw
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FTd-7M-NkK">
                         <rect key="frame" x="18" y="276" width="525" height="36"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to SkeleKey Installer!" id="oub-KR-EjX">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Quick Start" id="oub-KR-EjX">
                             <font key="font" size="19" name=".AppleSystemUIFont"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1060,34 +1066,6 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uME-UX-lvD">
-                        <rect key="frame" x="403" y="54" width="140" height="92"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="6Xm-yD-iDX">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">Run the SkeleKey 
-client from the USB
-on a device with the
-specified credentials
-to verify that it works!</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="28g-9j-c8f">
-                        <rect key="frame" x="213" y="54" width="134" height="92"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="D6R-O7-mML">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">Enter the account
-credentials that you 
-wish to create a 
-SkeleKey for. Please
-verify their accuracy!</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e1D-K9-z1t">
                         <rect key="frame" x="470" y="13" width="78" height="32"/>
                         <animations/>
@@ -1103,23 +1081,53 @@ DQ
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P4a-ns-BlW">
-                        <rect key="frame" x="18" y="18" width="174" height="18"/>
+                        <rect key="frame" x="18" y="18" width="184" height="18"/>
                         <animations/>
-                        <buttonCell key="cell" type="check" title="Don't show me this again" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ovD-at-6mU">
+                        <buttonCell key="cell" type="check" title="Don't show me this again" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ovD-at-6mU">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hgg-wp-oCa">
-                        <rect key="frame" x="18" y="61" width="149" height="85"/>
+                        <rect key="frame" x="6" y="39" width="173" height="119"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="F9c-dy-N1l">
                             <font key="font" metaFont="system"/>
                             <string key="title">Select the USB device
+ on the next screen 
 that you wish to create
-the SkeleKey client on.
+the SkeleKey applet on.
 Make sure the mode of
 operation is correct.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="28g-9j-c8f">
+                        <rect key="frame" x="189" y="39" width="183" height="119"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="D6R-O7-mML">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Enter the administrator
+ account credentials
+that you want to create
+a SkeleKey applet for. Please
+verify the accuracy of
+this information.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uME-UX-lvD">
+                        <rect key="frame" x="392" y="66" width="163" height="92"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="6Xm-yD-iDX">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Run the installed 
+SkeleKey applet from the
+ USB on a device with the
+specified credentials
+to verify that it works.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1129,8 +1137,174 @@ operation is correct.</string>
             </view>
             <point key="canvasLocation" x="-13.5" y="814"/>
         </window>
+        <window title="SkeleKey - Welcome" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="77G-L5-kqe" userLabel="Welcome Window">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="196" y="207" width="561" height="332"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <view key="contentView" id="khZ-k4-jDD">
+                <rect key="frame" x="0.0" y="0.0" width="561" height="332"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WU8-iv-oQ7">
+                        <rect key="frame" x="24" y="172" width="128" height="128"/>
+                        <animations/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIcon" id="dcb-Y0-UGR"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VYn-pP-FNo">
+                        <rect key="frame" x="18" y="152" width="141" height="28"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SkeleKey Manager" id="WJH-ki-MwH">
+                            <font key="font" size="13" name="Arial-Black"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPC-vg-dJS">
+                        <rect key="frame" x="51" y="122" width="84" height="22"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Created By:" id="0QZ-en-XMa">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-YD-xSk">
+                        <rect key="frame" x="42" y="68" width="93" height="51"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="NOA-lM-Zta">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Mark Hedrick 
+Levi Muniz
+© 2015</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NYF-Pc-I7R">
+                        <rect key="frame" x="163" y="57" width="5" height="217"/>
+                        <animations/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="deT-Fp-1Zi">
+                        <rect key="frame" x="478" y="13" width="69" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pGD-q2-10H">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="welcomeNext:" target="Voe-Tx-rLC" id="cgk-ZC-6qC"/>
+                        </connections>
+                    </button>
+                    <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqy-AW-9VS">
+                        <rect key="frame" x="184" y="57" width="340" height="219"/>
+                        <clipView key="contentView" ambiguous="YES" id="Ui4-cd-B4K">
+                            <rect key="frame" x="1" y="1" width="338" height="217"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="I26-oJ-K8q">
+                                    <rect key="frame" x="0.0" y="0.0" width="338" height="252"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="338" height="217"/>
+                                    <size key="maxSize" width="463" height="10000000"/>
+                                    <attributedString key="textStorage">
+                                        <fragment>
+                                            <mutableString key="content">Greetings from the SkeleKey Team! 
+
+We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another. 
+
+Although it may seem like a daunting task to protect your organizations passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey applet on a portable USB device. The portable SkeleKey applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
+
+-Thank You from the SkeleKey Team</mutableString>
+                                            <attributes>
+                                                <font key="NSFont" metaFont="system"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                    <tabStops>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
+                                                    </tabStops>
+                                                </paragraphStyle>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="338" height="217"/>
+                                    <size key="maxSize" width="463" height="10000000"/>
+                                </textView>
+                            </subviews>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </clipView>
+                        <animations/>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="rP7-pV-u6I">
+                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="97o-ds-vUY">
+                            <rect key="frame" x="323" y="1" width="16" height="217"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </scroller>
+                    </scrollView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9gc-nh-fWe">
+                        <rect key="frame" x="18" y="282" width="525" height="36"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to SkeleKey Manager!" id="neP-Rv-Iwh">
+                            <font key="font" size="19" name=".AppleSystemUIFont"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <animations/>
+            </view>
+            <point key="canvasLocation" x="594.5" y="814"/>
+        </window>
     </objects>
     <resources>
+        <image name="AppIcon" width="512" height="512"/>
         <image name="NSComputer" width="32" height="32"/>
         <image name="NSLockUnlockedTemplate" width="10" height="14"/>
         <image name="NSStatusAvailable" width="16" height="16"/>

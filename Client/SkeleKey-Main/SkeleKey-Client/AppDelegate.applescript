@@ -1,6 +1,6 @@
 --
 --  AppDelegate.applescript
---  SkeleKey-Client
+--  SkeleKey-Applet
 --
 --  Created by Mark Hedrick on 10/11/15.
 --  Copyright (c) 2015 Mark Hedrick and Levi Muniz. All rights reserved.
@@ -30,12 +30,12 @@ script AppDelegate
         do shell script "sw_vers -productVersion"
         try
             if result contains "10.11" then
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
+                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
             else
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Client',0,1,1,NULL)\"" user name username password passwd with administrator privileges
+                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
         on error
-            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
     end assistiveaccess
@@ -44,7 +44,7 @@ script AppDelegate
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
         on error
-            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
     end checkadmin
@@ -54,10 +54,10 @@ script AppDelegate
             tell application "System Events" to tell process "SecurityAgent"
                 set value of text field 1 of window 1 to username
                 set value of text field 2 of window 1 to passwd
-                keystroke return
+                click button "Unlock" of window 1
             end tell
         on error
-            display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Installer" default button 1
+            display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
     end auth
