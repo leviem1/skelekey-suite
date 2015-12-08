@@ -1146,7 +1146,7 @@ to verify that it works.</string>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WU8-iv-oQ7">
-                        <rect key="frame" x="24" y="168" width="128" height="128"/>
+                        <rect key="frame" x="24" y="172" width="128" height="128"/>
                         <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIcon" id="dcb-Y0-UGR"/>
                     </imageView>
