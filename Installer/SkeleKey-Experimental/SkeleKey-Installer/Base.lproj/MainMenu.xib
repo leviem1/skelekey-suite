@@ -1182,7 +1182,7 @@ Levi Muniz
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NYF-Pc-I7R">
-                        <rect key="frame" x="163" y="57" width="4" height="217"/>
+                        <rect key="frame" x="163" y="57" width="5" height="217"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

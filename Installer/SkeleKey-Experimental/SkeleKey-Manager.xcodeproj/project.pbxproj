@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D0408FE1C0D47AA00B7BD47 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1D0408FD1C0D47AA00B7BD47 /* AppIcon.icns */; };
 		1D44515E1BBB3E840079F9E4 /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */; };
 		1D4451631BBB3E840079F9E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451621BBB3E840079F9E4 /* main.m */; };
 		1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */; };
@@ -16,6 +15,7 @@
 		2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; };
 		2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2F7560411BE011C4009C9E4D /* dsa_pub.pem */; };
+		2FEBCACC1C1684DC00CAFCAF /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2FEBCACB1C1684DC00CAFCAF /* AppIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +32,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D0408FD1C0D47AA00B7BD47 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		1D4451611BBB3E840079F9E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2F75603C1BDFFA13009C9E4D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		2F7560411BE011C4009C9E4D /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		2FEBCACB1C1684DC00CAFCAF /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				2F7560411BE011C4009C9E4D /* dsa_pub.pem */,
-				1D0408FD1C0D47AA00B7BD47 /* AppIcon.icns */,
+				2FEBCACB1C1684DC00CAFCAF /* AppIcon.icns */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */,
-				1D0408FE1C0D47AA00B7BD47 /* AppIcon.icns in Resources */,
+				2FEBCACC1C1684DC00CAFCAF /* AppIcon.icns in Resources */,
 				2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */,
 				1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */,
 			);
