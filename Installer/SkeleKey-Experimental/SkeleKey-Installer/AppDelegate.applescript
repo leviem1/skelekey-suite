@@ -145,25 +145,25 @@ script AppDelegate
             return
         end if
         try
-            do shell script "cp -R " & UnixPath & "/Contents/Resources/SkeleKey-Client.app " & fileName2
+            do shell script "cp -R " & UnixPath & "/Contents/Resources/SkeleKey-Applet.app " & fileName2
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
             set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
-            do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Client.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+            do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             
             try
                 set theNumber to 1
-                do shell script "test -e " & fileName2 & usernameValue & "-SkeleKey-Client.app"
+                do shell script "test -e " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
                 repeat
                     try
                         set theNumber to theNumber + 1
-                        do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Client.app"
+                        do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
                     on error
-                        do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Client.app"
+                        do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
                         exit repeat
                     end try
                 end repeat
             on error
-                do shell script "mv -f " & fileName2 & "SkeleKey-Client.app " & fileName2 & usernameValue & "-SkeleKey-Client.app"
+                do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
 
             display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
