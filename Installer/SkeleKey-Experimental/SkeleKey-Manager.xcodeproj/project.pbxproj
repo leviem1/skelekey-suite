@@ -14,7 +14,7 @@
 		1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451661BBB3E840079F9E4 /* Images.xcassets */; };
 		1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451681BBB3E840079F9E4 /* MainMenu.xib */; };
 		2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; };
-		2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2F7560411BE011C4009C9E4D /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
