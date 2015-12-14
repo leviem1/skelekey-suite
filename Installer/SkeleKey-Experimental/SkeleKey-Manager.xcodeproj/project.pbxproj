@@ -7,145 +7,149 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3235921C1686630044254B /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1D3235911C1686630044254B /* AppIcon.icns */; };
-		1D44515E1BBB3E840079F9E4 /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */; };
-		1D4451631BBB3E840079F9E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451621BBB3E840079F9E4 /* main.m */; };
-		1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */; };
-		1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451661BBB3E840079F9E4 /* Images.xcassets */; };
-		1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4451681BBB3E840079F9E4 /* MainMenu.xib */; };
-		2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; };
-		2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F75603C1BDFFA13009C9E4D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2F7560411BE011C4009C9E4D /* dsa_pub.pem */; };
+		2FA8FD5A1C1E72C00034522C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FD939911C1BA9F200B3F46D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2FD9397E1C1AC25E00B3F46D /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD9397D1C1AC25E00B3F46D /* AppleScriptObjC.framework */; };
+		2FD939821C1AC25E00B3F46D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD939811C1AC25E00B3F46D /* main.m */; };
+		2FD939841C1AC25E00B3F46D /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 2FD939831C1AC25E00B3F46D /* AppDelegate.applescript */; };
+		2FD939861C1AC25E00B3F46D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD939851C1AC25E00B3F46D /* Assets.xcassets */; };
+		2FD939891C1AC25E00B3F46D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FD939871C1AC25E00B3F46D /* MainMenu.xib */; };
+		2FD939921C1BA9F200B3F46D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD939911C1BA9F200B3F46D /* Sparkle.framework */; };
+		2FD939941C1BAAC500B3F46D /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2FD939931C1BAAC500B3F46D /* AppIcon.icns */; };
+		2FD939961C1BADCB00B3F46D /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2FD939951C1BADCB00B3F46D /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2F75603E1BDFFA19009C9E4D /* CopyFiles */ = {
+		2FA8FD591C1E72B20034522C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2F75603F1BDFFA23009C9E4D /* Sparkle.framework in CopyFiles */,
+				2FA8FD5A1C1E72C00034522C /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D3235911C1686630044254B /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
-		1D4451611BBB3E840079F9E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1D4451621BBB3E840079F9E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
-		1D4451661BBB3E840079F9E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1D4451691BBB3E840079F9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		2F75603C1BDFFA13009C9E4D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		2F7560411BE011C4009C9E4D /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		2FD9397A1C1AC25E00B3F46D /* SkeleKey-Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD9397D1C1AC25E00B3F46D /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
+		2FD939811C1AC25E00B3F46D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2FD939831C1AC25E00B3F46D /* AppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = AppDelegate.applescript; sourceTree = "<group>"; };
+		2FD939851C1AC25E00B3F46D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2FD939881C1AC25E00B3F46D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2FD9398A1C1AC25E00B3F46D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2FD939911C1BA9F200B3F46D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		2FD939931C1BAAC500B3F46D /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		2FD939951C1BADCB00B3F46D /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1D4451571BBB3E840079F9E4 /* Frameworks */ = {
+		2FD939771C1AC25E00B3F46D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D44515E1BBB3E840079F9E4 /* AppleScriptObjC.framework in Frameworks */,
-				2F75603D1BDFFA13009C9E4D /* Sparkle.framework in Frameworks */,
+				2FD9397E1C1AC25E00B3F46D /* AppleScriptObjC.framework in Frameworks */,
+				2FD939921C1BA9F200B3F46D /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D4451511BBB3E840079F9E4 = {
+		2FD939711C1AC25E00B3F46D = {
 			isa = PBXGroup;
 			children = (
-				1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */,
-				1D44515C1BBB3E840079F9E4 /* Frameworks */,
-				2F7560401BE01186009C9E4D /* Resources */,
-				1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */,
+				2FD9397F1C1AC25E00B3F46D /* SkeleKey-Manager */,
+				2FD939901C1BA9CA00B3F46D /* Resources */,
+				2FD9397C1C1AC25E00B3F46D /* Frameworks */,
+				2FD9397B1C1AC25E00B3F46D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		1D44515C1BBB3E840079F9E4 /* Frameworks */ = {
+		2FD9397B1C1AC25E00B3F46D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2F75603C1BDFFA13009C9E4D /* Sparkle.framework */,
-				1D44515D1BBB3E840079F9E4 /* AppleScriptObjC.framework */,
+				2FD9397A1C1AC25E00B3F46D /* SkeleKey-Manager.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2FD9397C1C1AC25E00B3F46D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2FD939911C1BA9F200B3F46D /* Sparkle.framework */,
+				2FD9397D1C1AC25E00B3F46D /* AppleScriptObjC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1D44515F1BBB3E840079F9E4 /* SkeleKey-Installer */ = {
+		2FD9397F1C1AC25E00B3F46D /* SkeleKey-Manager */ = {
 			isa = PBXGroup;
 			children = (
-				1D4451641BBB3E840079F9E4 /* AppDelegate.applescript */,
-				1D4451661BBB3E840079F9E4 /* Images.xcassets */,
-				1D4451681BBB3E840079F9E4 /* MainMenu.xib */,
-				1D4451601BBB3E840079F9E4 /* Supporting Files */,
+				2FD939831C1AC25E00B3F46D /* AppDelegate.applescript */,
+				2FD939851C1AC25E00B3F46D /* Assets.xcassets */,
+				2FD939871C1AC25E00B3F46D /* MainMenu.xib */,
+				2FD9398A1C1AC25E00B3F46D /* Info.plist */,
+				2FD939801C1AC25E00B3F46D /* Supporting Files */,
 			);
-			path = "SkeleKey-Installer";
+			path = "SkeleKey-Manager";
 			sourceTree = "<group>";
 		};
-		1D4451601BBB3E840079F9E4 /* Supporting Files */ = {
+		2FD939801C1AC25E00B3F46D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D4451611BBB3E840079F9E4 /* Info.plist */,
-				1D4451621BBB3E840079F9E4 /* main.m */,
+				2FD939811C1AC25E00B3F46D /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2F7560401BE01186009C9E4D /* Resources */ = {
+		2FD939901C1BA9CA00B3F46D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1D3235911C1686630044254B /* AppIcon.icns */,
-				2F7560411BE011C4009C9E4D /* dsa_pub.pem */,
+				2FD939931C1BAAC500B3F46D /* AppIcon.icns */,
+				2FD939951C1BADCB00B3F46D /* dsa_pub.pem */,
 			);
 			name = Resources;
+			path = "SkeleKey-Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D4451591BBB3E840079F9E4 /* SkeleKey-Manager */ = {
+		2FD939791C1AC25E00B3F46D /* SkeleKey-Manager */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */;
+			buildConfigurationList = 2FD9398D1C1AC25E00B3F46D /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */;
 			buildPhases = (
-				1D4451561BBB3E840079F9E4 /* Sources */,
-				1D4451571BBB3E840079F9E4 /* Frameworks */,
-				1D4451581BBB3E840079F9E4 /* Resources */,
-				2F75603E1BDFFA19009C9E4D /* CopyFiles */,
+				2FD939761C1AC25E00B3F46D /* Sources */,
+				2FD939771C1AC25E00B3F46D /* Frameworks */,
+				2FD939781C1AC25E00B3F46D /* Resources */,
+				2FA8FD591C1E72B20034522C /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "SkeleKey-Manager";
-			productName = "SkeleKey-Installer";
-			productReference = 1D1905AC1BCC945A000CC1DD /* SkeleKey-Manager.app */;
+			productName = "SkeleKey-Manager";
+			productReference = 2FD9397A1C1AC25E00B3F46D /* SkeleKey-Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		1D4451521BBB3E840079F9E4 /* Project object */ = {
+		2FD939721C1AC25E00B3F46D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = SEBS;
 				TargetAttributes = {
-					1D4451591BBB3E840079F9E4 = {
-						CreatedOnToolsVersion = 6.4;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 0;
-							};
-						};
+					2FD939791C1AC25E00B3F46D = {
+						CreatedOnToolsVersion = 7.1.1;
 					};
 				};
 			};
-			buildConfigurationList = 1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Manager" */;
+			buildConfigurationList = 2FD939751C1AC25E00B3F46D /* Build configuration list for PBXProject "SkeleKey-Manager" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -153,47 +157,47 @@
 				en,
 				Base,
 			);
-			mainGroup = 1D4451511BBB3E840079F9E4;
-			productRefGroup = 1D4451511BBB3E840079F9E4;
+			mainGroup = 2FD939711C1AC25E00B3F46D;
+			productRefGroup = 2FD9397B1C1AC25E00B3F46D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D4451591BBB3E840079F9E4 /* SkeleKey-Manager */,
+				2FD939791C1AC25E00B3F46D /* SkeleKey-Manager */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1D4451581BBB3E840079F9E4 /* Resources */ = {
+		2FD939781C1AC25E00B3F46D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D4451671BBB3E840079F9E4 /* Images.xcassets in Resources */,
-				1D3235921C1686630044254B /* AppIcon.icns in Resources */,
-				2F7560421BE011C4009C9E4D /* dsa_pub.pem in Resources */,
-				1D44516A1BBB3E840079F9E4 /* MainMenu.xib in Resources */,
+				2FD939861C1AC25E00B3F46D /* Assets.xcassets in Resources */,
+				2FD939961C1BADCB00B3F46D /* dsa_pub.pem in Resources */,
+				2FD939891C1AC25E00B3F46D /* MainMenu.xib in Resources */,
+				2FD939941C1BAAC500B3F46D /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1D4451561BBB3E840079F9E4 /* Sources */ = {
+		2FD939761C1AC25E00B3F46D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D4451651BBB3E840079F9E4 /* AppDelegate.applescript in Sources */,
-				1D4451631BBB3E840079F9E4 /* main.m in Sources */,
+				2FD939841C1AC25E00B3F46D /* AppDelegate.applescript in Sources */,
+				2FD939821C1AC25E00B3F46D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1D4451681BBB3E840079F9E4 /* MainMenu.xib */ = {
+		2FD939871C1AC25E00B3F46D /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1D4451691BBB3E840079F9E4 /* Base */,
+				2FD939881C1AC25E00B3F46D /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -201,7 +205,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1D44516B1BBB3E840079F9E4 /* Debug */ = {
+		2FD9398B1C1AC25E00B3F46D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -222,6 +226,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -230,7 +235,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -244,7 +248,7 @@
 			};
 			name = Debug;
 		};
-		1D44516C1BBB3E840079F9E4 /* Release */ = {
+		2FD9398C1C1AC25E00B3F46D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -280,7 +284,7 @@
 			};
 			name = Release;
 		};
-		1D44516E1BBB3E840079F9E4 /* Debug */ = {
+		2FD9398E1C1AC25E00B3F46D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -289,13 +293,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "SkeleKey-Installer/Info.plist";
+				INFOPLIST_FILE = "SkeleKey-Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		1D44516F1BBB3E840079F9E4 /* Release */ = {
+		2FD9398F1C1AC25E00B3F46D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -304,8 +309,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "SkeleKey-Installer/Info.plist";
+				INFOPLIST_FILE = "SkeleKey-Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -313,25 +319,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D4451551BBB3E840079F9E4 /* Build configuration list for PBXProject "SkeleKey-Manager" */ = {
+		2FD939751C1AC25E00B3F46D /* Build configuration list for PBXProject "SkeleKey-Manager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D44516B1BBB3E840079F9E4 /* Debug */,
-				1D44516C1BBB3E840079F9E4 /* Release */,
+				2FD9398B1C1AC25E00B3F46D /* Debug */,
+				2FD9398C1C1AC25E00B3F46D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D44516D1BBB3E840079F9E4 /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */ = {
+		2FD9398D1C1AC25E00B3F46D /* Build configuration list for PBXNativeTarget "SkeleKey-Manager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D44516E1BBB3E840079F9E4 /* Debug */,
-				1D44516F1BBB3E840079F9E4 /* Release */,
+				2FD9398E1C1AC25E00B3F46D /* Debug */,
+				2FD9398F1C1AC25E00B3F46D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 1D4451521BBB3E840079F9E4 /* Project object */;
+	rootObject = 2FD939721C1AC25E00B3F46D /* Project object */;
 }

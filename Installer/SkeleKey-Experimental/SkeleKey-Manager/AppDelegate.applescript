@@ -7,11 +7,11 @@
 --
 
 script AppDelegate
-	property parent : class "NSObject"
+    property parent : class "NSObject"
     property NSImage : class "NSImage"
-	-- IBOutlets
+    -- IBOutlets
     property mainWindow : missing value
-	property installWindow : missing value
+    property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
     property welcomeWindow : missing value
@@ -78,7 +78,7 @@ script AppDelegate
             windowMath(mainWindow, removeWindow)
         end if
     end buttonClicked_
-
+    
     on destvolume:choosevolume --choose volume to install
         global fileName2
         global fileName3
@@ -162,10 +162,10 @@ script AppDelegate
                         exit repeat
                     end try
                 end repeat
-            on error
+                on error
                 do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
-
+            
             display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
         on error
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
@@ -234,7 +234,7 @@ script AppDelegate
             windowMath(welcomeWindow, tutorialWindow)
         end if
     end welcomeNext_
-            
+
     on housekeeping_(sender) --remove main window's info
         global fileName2
         fileName's setStringValue_("")
@@ -242,7 +242,7 @@ script AppDelegate
         startButton's setEnabled_(false)
         set fileName2 to ""
     end housekeeping_
-    
+
     on houseKeepingInstall_(sender) --remove install window's info
         username's setStringValue_("")
         password1's setStringValue_("")
@@ -254,21 +254,21 @@ script AppDelegate
         mainWindow's makeKeyAndOrderFront_(me)
         windowMath(installWindow, mainWindow)
     end houseKeepingInstall_
-    
+
     on cancelDel_(sender) --when removal is canceled
         houseKeepingDel_()
         removeWindow's orderOut_(sender)
         mainWindow's makeKeyAndOrderFront_(me)
         windowMath(removeWindow, mainWindow)
     end cancelDel_
-    
+
     on finishedDel_(sender) --when removal has finished
         houseKeepingDel_()
         loadingWindow's orderOut_(sender)
         mainWindow's makeKeyAndOrderFront_(me)
         windowMath(loadingWindow, mainWindow)
     end finishedDel_
-    
+
     on houseKeepingDel_() --remove del window's info
         global delApp
         delFileName's setStringValue_("")
@@ -276,52 +276,52 @@ script AppDelegate
         delButton's setEnabled_(false)
         set delApp to ""
     end houseKeepingDel_
-    
+
     on doOpenTutorial_(sender)
         tutorialWindow's makeKeyAndOrderFront_(me)
     end doOpenTutorial_
-    
+
     on doOpenWelcome_(sender)
         welcomeWindow's makeKeyAndOrderFront_(me)
         set fromStart to false
     end doOpenWelcome_
-    
+
     on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults"}
         set notInstalledString to ""
-        
+    
         try
             do shell script "sudo echo elevate" with administrator privileges
         on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
-        
+    
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
             if status is "127" then
                 set notInstalledString to notInstalledString & i & "\n"
             end if
         end repeat
-        
+    
         if notInstalledString is not "" then
             display alert "The following required resources are not installed:\n\n" & notInstalledString buttons "Quit"
             quit
         end if
-        
+    
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
         on error
             set dontShowValue to "0"
         end try
-        
+    
         try
             set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
-            on error
+        on error
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
-        
+    
         if hasWelcomed is "0"
             welcomeWindow's makeKeyAndOrderFront_(me)
         else
@@ -330,15 +330,15 @@ script AppDelegate
             end if
         end if
     end applicationWillFinishLaunching_
-	
-	on applicationShouldTerminate_(sender)
+
+    on applicationShouldTerminate_(sender)
         if isBusy is true then
             return NSTerminateCancel
         end if
-        
-        return current application's NSTerminateNow
-	end applicationShouldTerminate_
     
+        return current application's NSTerminateNow
+    end applicationShouldTerminate_
+
     on applicationShouldTerminateAfterLastWindowClosed_(sender)
         return true
     end applicationShouldTerminateAfterLastWindowClosed_
