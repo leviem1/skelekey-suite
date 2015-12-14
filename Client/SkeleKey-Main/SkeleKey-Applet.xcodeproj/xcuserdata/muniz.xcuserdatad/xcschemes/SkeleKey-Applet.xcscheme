@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1D4451591BBB3E840079F9E4"
-               BuildableName = "SkeleKey-Manager.app"
-               BlueprintName = "SkeleKey-Manager"
-               ReferencedContainer = "container:SkeleKey-Manager.xcodeproj">
+               BlueprintIdentifier = "2FA8FD631C1E9BD80034522C"
+               BuildableName = "SkeleKey-Applet.app"
+               BlueprintName = "SkeleKey-Applet"
+               ReferencedContainer = "container:SkeleKey-Applet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D4451591BBB3E840079F9E4"
-            BuildableName = "SkeleKey-Manager.app"
-            BlueprintName = "SkeleKey-Manager"
-            ReferencedContainer = "container:SkeleKey-Manager.xcodeproj">
+            BlueprintIdentifier = "2FA8FD631C1E9BD80034522C"
+            BuildableName = "SkeleKey-Applet.app"
+            BlueprintName = "SkeleKey-Applet"
+            ReferencedContainer = "container:SkeleKey-Applet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D4451591BBB3E840079F9E4"
-            BuildableName = "SkeleKey-Manager.app"
-            BlueprintName = "SkeleKey-Manager"
-            ReferencedContainer = "container:SkeleKey-Manager.xcodeproj">
+            BlueprintIdentifier = "2FA8FD631C1E9BD80034522C"
+            BuildableName = "SkeleKey-Applet.app"
+            BlueprintName = "SkeleKey-Applet"
+            ReferencedContainer = "container:SkeleKey-Applet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D4451591BBB3E840079F9E4"
-            BuildableName = "SkeleKey-Manager.app"
-            BlueprintName = "SkeleKey-Manager"
-            ReferencedContainer = "container:SkeleKey-Manager.xcodeproj">
+            BlueprintIdentifier = "2FA8FD631C1E9BD80034522C"
+            BuildableName = "SkeleKey-Applet.app"
+            BlueprintName = "SkeleKey-Applet"
+            ReferencedContainer = "container:SkeleKey-Applet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

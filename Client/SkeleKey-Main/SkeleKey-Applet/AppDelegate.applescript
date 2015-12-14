@@ -100,7 +100,7 @@ script AppDelegate
     end applicationWillFinishLaunching:
     
     on applicationShouldTerminate:sender
-        -- Insert code here to do any housekeeping before your application quits 
+        -- Insert code here to do any housekeeping before your application quits
         return current application's NSTerminateNow
     end applicationShouldTerminate:
     

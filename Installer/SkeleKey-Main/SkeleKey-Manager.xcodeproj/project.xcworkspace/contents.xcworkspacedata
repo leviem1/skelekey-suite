@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/muniz/Desktop/Apps/Xcode Apps/SkeleKey/Installer/SkeleKey-Experimental/SkeleKey-Manager.xcodeproj">
+      location = "self:SkeleKey-Manager.xcodeproj">
    </FileRef>
 </Workspace>
