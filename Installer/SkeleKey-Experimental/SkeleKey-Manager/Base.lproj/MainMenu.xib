@@ -866,6 +866,14 @@ DQ
                             <action selector="welcomeNext:" target="Voe-Tx-rLC" id="5Ji-yu-mWb"/>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEo-M1-5oy">
+                        <rect key="frame" x="18" y="282" width="525" height="36"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to SkeleKey Manager!" id="dX2-8U-ECp">
+                            <font key="font" size="19" name=".AppleSystemUIFont"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-Pv-g6s">
                         <rect key="frame" x="184" y="57" width="340" height="219"/>
                         <clipView key="contentView" ambiguous="YES" id="F9I-ZN-ysH">
@@ -884,7 +892,7 @@ DQ
 
 We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another. 
 
-Although it may seem like a daunting task to protect your organizations passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey applet on a portable USB device. The portable SkeleKey applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
+Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey applet on a portable USB device. The portable SkeleKey applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
 
 -Thank You from the SkeleKey Team</mutableString>
                                             <attributes>
@@ -948,14 +956,6 @@ Although it may seem like a daunting task to protect your organizations password
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEo-M1-5oy">
-                        <rect key="frame" x="18" y="282" width="525" height="36"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to SkeleKey Manager!" id="dX2-8U-ECp">
-                            <font key="font" size="19" name=".AppleSystemUIFont"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="594.5" y="814"/>
