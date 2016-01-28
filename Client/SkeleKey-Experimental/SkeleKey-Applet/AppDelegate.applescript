@@ -20,7 +20,7 @@ script AppDelegate
     
     on decryptinfo(volumepath, authinfobin)
         set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}' | rev"
-        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
+        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'X∑n!∫W!¬$ø∏!…' | md5 | rev | md5 | rev | md5 | rev | md5 | md5 | md5 | rev | md5")
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
         return {username, passwd}
@@ -80,7 +80,7 @@ script AppDelegate
     end main
     
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev"}
         set notInstalledString to ""
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"

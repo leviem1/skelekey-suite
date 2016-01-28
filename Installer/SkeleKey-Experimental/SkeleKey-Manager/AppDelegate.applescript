@@ -147,7 +147,7 @@ script AppDelegate
         try
             do shell script "cp -R " & UnixPath & "/Contents/Resources/SkeleKey-Applet.app " & fileName2
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
-            set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
+            set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'X∑n!∫W!¬$ø∏!…' | md5 | rev | md5 | rev | md5 | rev | md5 | md5 | md5 | rev | md5")
             do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             
             try
