@@ -18,9 +18,64 @@ script AppDelegate
         return this_text
     end replace_chars
     
+    on returnNumbersInString(inputString)
+        set inputString to quoted form of inputString
+        do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
+        set nums to the result
+        set numlist to {}
+        repeat with i from 1 to length of nums
+            set certain_char to character i of nums
+            try
+                set certain_char to certain_char as number
+                set the end of numlist to certain_char
+            end try
+        end repeat
+        return numlist
+    end returnNumbersInString
+    
     on decryptinfo(volumepath, authinfobin)
+        set md5 to " md5 | "
+        set md5_e to " md5"
+        set base64 to " base64 | "
+        set base64_e to " base64"
+        set rev to "rev | "
+        set rev_e to "rev"
+        set sha224 to "shasum -a 224 | awk '{print $1}' | "
+        set sha224_e to "shasum -a 224 | awk '{print $1}'"
+        set sha256 to "shasum -a 256 | awk '{print $1}' | "
+        set sha256_e to "shasum -a 256 | awk '{print $1}'"
+        set sha384 to "shasum -a 384 | awk '{print $1}' | "
+        set sha384_e to "shasum -a 384 | awk '{print $1}'"
+        set sha512 to "shasum -a 512 | awk '{print $1}' | "
+        set sha512_e to "shasum -a 512 | awk '{print $1}'"
+        set sha512224 to "shasum -a 512224 | awk '{print $1}' | "
+        set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
+        set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
+        set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
+        set zero to md5 & base64_e
+        set one to sha256 & sha512256_e
+        set two to sha224 & sha384_e
+        set three to base64 & rev & sha256_e
+        set four to sha512 & rev_e
+        set five to sha512224 & md5_e
+        set six to sha384 & rev_e
+        set seven to sha384 & base64_e
+        set eight to base64 & md5_e
+        set nine to sha512256 & md5 & rev_e
+        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+        set encstring to ""
+        set epass to ""
         set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}' | rev"
-        set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'X∑n!∫W!¬$ø∏!…' | md5 | rev | md5 | rev | md5 | rev | md5 | md5 | md5 | rev | md5")
+        set nums to returnNumbersInString(uuid)
+        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+        repeat with char in nums
+            set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+            set epass to epass & encstring
+        end repeat
+        set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+        if (length of epass) is greater than 2048 then
+            set epass to (characters 1 thru 2047 of epass) as string
+        end if
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
         return {username, passwd}
@@ -31,10 +86,10 @@ script AppDelegate
         try
             if result contains "10.11" then
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-            else
+                else
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
-        on error
+            on error
             display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
@@ -43,7 +98,7 @@ script AppDelegate
     on checkadmin(username, passwd)
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
-        on error
+            on error
             display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
@@ -52,10 +107,10 @@ script AppDelegate
     on auth(username, passwd)
         try
             tell application "System Events" to tell process "SecurityAgent"
-                set value of text field 1 of window 1 to username
-                set value of text field 2 of window 1 to passwd
-                click button 2 of window 1
-            end tell
+            set value of text field 1 of window 1 to username
+            set value of text field 2 of window 1 to passwd
+            click button 2 of window 1
+        end tell
         on error
             display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
@@ -80,7 +135,7 @@ script AppDelegate
     end main
     
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers"}
         set notInstalledString to ""
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
