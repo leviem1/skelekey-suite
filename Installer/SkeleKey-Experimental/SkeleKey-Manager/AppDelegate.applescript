@@ -65,7 +65,7 @@ script AppDelegate
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
             theDate's setHidden:false
-            else if (dateEnabled's state()) is 1 then
+        else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:true
         end if
@@ -99,11 +99,14 @@ script AppDelegate
     on controlTextDidChange:aNotification --check if both passwords are equal
         set password1String to (stringValue() of password1) as string
         set password2String to (stringValue() of password2) as string
-        if password1String is equal to password2String then
+        if password1String is equal to password2String and password1String is not "" then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusAvailable")
             installButton's setEnabled:true
-            else if password1String is not equal to password2String then
+        else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            installButton's setEnabled:false
+        else
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
         end if
     end controlTextDidChange:
@@ -372,6 +375,21 @@ script AppDelegate
         welcomeWindow's makeKeyAndOrderFront:me
         set fromStart to false
     end doOpenWelcome:
+    
+    on windowExpand:sender
+        set origin to origin of installWindow's frame()
+        set windowSize to |size| of installWindow's frame()
+        log windowSize
+        set x to x of origin
+        set y to y of origin
+        set y to y - 214
+        set newOrigin to {x, y}
+        installWindow's setFrame_display_animate_({newOrigin, {480, 455}}, true, true)
+        set origin to origin of installWindow's frame()
+        set windowSize to |size| of installWindow's frame()
+        log windowSize
+
+    end windowExpand
     
     on applicationWillFinishLaunching:aNotification --dependency and admin checking
         set currDate to current date
