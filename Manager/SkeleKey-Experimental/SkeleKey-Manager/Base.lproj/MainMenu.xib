@@ -875,13 +875,14 @@ Levi Muniz
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-Pv-g6s">
                         <rect key="frame" x="184" y="57" width="340" height="219"/>
                         <clipView key="contentView" ambiguous="YES" id="F9I-ZN-ysH">
-                            <rect key="frame" x="1" y="1" width="0.0" height="0.0"/>
+                            <rect key="frame" x="1" y="1" width="338" height="217"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="0.0" height="252"/>
+                                    <rect key="frame" x="0.0" y="180" width="338" height="414"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="338" height="217"/>
                                     <size key="maxSize" width="646" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -938,6 +939,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="338" height="217"/>
                                     <size key="maxSize" width="646" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -948,7 +950,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
-                            <rect key="frame" x="1" y="1" width="15" height="0.0"/>
+                            <rect key="frame" x="323" y="1" width="16" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -1324,11 +1326,11 @@ to verify that it works.</string>
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="NtL-w0-ZSX">
-                            <rect key="frame" x="-8" y="-15" width="0.0" height="15"/>
+                            <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="bpR-VY-zbb">
-                            <rect key="frame" x="-15" y="-8" width="15" height="0.0"/>
+                            <rect key="frame" x="-16" y="0.0" width="16" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
