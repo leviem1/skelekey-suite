@@ -16,6 +16,7 @@ script AppDelegate
     property loadingWindow : missing value
     property acknowledgements : missing value
     property welcomeWindow : missing value
+    property registrationWindow: missing value
     property tutorialWindow : missing value
     property checkIcon : missing value
     property dontShow : missing value
@@ -27,14 +28,25 @@ script AppDelegate
     property delFileName : missing value
     property startButton : missing value
     property installButton : missing value
+    property registrationButton: missing value
     property delButton : missing value
-    property modeString : "Install a SkeleKey"
     property isBusy : false
     property fromStart : true
     property theDate : missing value
     property theTime : missing value
     property displayDate : missing value
     property dateEnabled : missing value
+    property regFirstName : missing value
+    property regEmail : missing value
+    property regOrg : missing value
+    property regSerial : missing value
+    property regSerialString : missing value
+    property modeString : "Install a SkeleKey"
+    property isLicensed : false
+    property regorgexists : missing value
+    property lickey : missing value
+    property regFirstNameString : missing value
+    property bye : missing value
     
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
@@ -96,18 +108,85 @@ script AppDelegate
         set modeString to sender's title as text
     end radioOption:
     
-    on controlTextDidChange:aNotification --check if both passwords are equal
+    on checkPasswords()
         set password1String to (stringValue() of password1) as string
         set password2String to (stringValue() of password2) as string
         if password1String is equal to password2String and password1String is not "" then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusAvailable")
-            installButton's setEnabled:true
-        else if password1String is not equal to password2String then
+            if isLicensed is true then
+                installButton's setEnabled:true
+            end if
+            else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             installButton's setEnabled:false
-        else
+            else
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
+        end if
+    end checkPasswords
+    
+    on licensekeygen(myname, myemail, myorg, regorgexists)
+        set e_mn to do shell script "echo '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
+        set e_mn to characters 7 thru 11 of e_mn
+        set e_me to do shell script "echo '" & myemail & "' | base64 | rev | md5| fold -w3 | paste -sd'4' - "
+        set e_me to characters ((length of e_me) - 4) thru (length of e_me) of e_me
+        set e_mo to do shell script "echo '" & myorg & "' | base64 | md5 | rev | fold -w3 | paste -sd'K' - "
+        set e_mo to characters 4 thru 8 of e_mo
+        
+        set e_me2 to do shell script "echo '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
+        set e_me2 to characters ((length of e_me2) - 4) thru (length of e_me2) of e_me2
+        
+        if regorgexists is equal to "1" then
+            set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
+            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+            else
+            set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
+            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+        end if
+        return lickey
+    end licensekeygen
+    
+    on checkRegistration()
+        global lickey
+        global regSerialString
+        global regFirstNameString
+        set regFirstNameString to (stringValue() of regFirstName) as string
+        set regEmailString to (stringValue() of regEmail) as string
+        set regOrgString to (stringValue() of regOrg) as string
+        set regSerialString to (stringValue() of regSerial) as string
+        if regOrgString is not equal to "" then
+            set regorgexists to "1"
+        end if
+        set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString, regorgexists)
+        if regFirstNameString is not "" and regEmailString is not "" and regSerialString is not "" then
+            registrationButton's setEnabled:true
+        else
+            registrationButton's setEnabled:false
+        end if
+    end checkRegistration
+    
+    on checkLicenseKey()
+        global bye
+        if regSerialString is not equal to lickey then
+            display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
+            registrationButton's setEnabled:false
+        else
+            registrationButton's setEnabled:true
+            set isLicensed to true
+            set succ_lic to display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString with title "SkeleKey Manager" buttons {"OK"}
+            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed -bool true"
+            if button returned of succ_lic is "OK"
+                set bye to "1"
+            end if
+        end if
+    end checkLicenseKey
+    
+    on controlTextDidChange:aNotification --check if both passwords are equal
+        set theObj to tag of object of aNotification
+        if theObj equals tag of password1 or theObj equals tag of password2 then
+            checkPasswords()
+        else
+            checkRegistration()
         end if
     end controlTextDidChange:
     
@@ -157,7 +236,7 @@ script AppDelegate
             startButton's setEnabled:true
             fileName's setStringValue:fileName2
             fileName's setToolTip:fileName2
-            else
+        else
             startButton's setEnabled:false
             fileName's setStringValue:""
             fileName's setToolTip:""
@@ -276,8 +355,10 @@ script AppDelegate
             set delApp to replace_chars(delApp, " ", "\\ ")
             delFileName's setStringValue:delApp
             delFileName's setToolTip:delApp
-            delButton's setEnabled:true
-            on error
+            if isLicensed is true then
+                delButton's setEnabled:true
+            end if
+        on error
             delFileName's setStringValue:""
             delFileName's setToolTip:""
             delButton's setEnabled:false
@@ -296,7 +377,7 @@ script AppDelegate
             do shell script "srm -rf " & delApp
             display dialog "Sucessfully securely removed app at location:
             " & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
-            on error
+        on error
             display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         set isBusy to false
@@ -306,6 +387,9 @@ script AppDelegate
     end delButton:
     
     on gotit:sender --tutorialScreen button action
+        if isLicensed is false then
+             registrationWindow's makeKeyAndOrderFront:me
+        end if
         if (dontShow's state()) is 1 then
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
@@ -317,6 +401,14 @@ script AppDelegate
         end if
         tutorialWindow's orderOut:sender
     end gotit:
+    
+    on registrationButton:sender
+        checkRegistration()
+        checkLicenseKey()
+        if bye is equal to "1"
+            registrationWindow's orderOut:sender
+        end if
+    end registrationButton:
     
     on welcomeNext:sender
         welcomeWindow's orderOut:sender
@@ -343,6 +435,7 @@ script AppDelegate
         set password2Value to ""
         installWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
+        checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
         windowMath(installWindow, mainWindow)
     end houseKeepingInstall:
     
@@ -397,7 +490,7 @@ script AppDelegate
         log currDate
         theDate's setDateValue_(currDate)
         theDate's setMinDate_(currDate)
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
         set notInstalledString to ""
         
         try
@@ -423,25 +516,36 @@ script AppDelegate
         end if
         
         try
-            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
+            set licensedValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed"
+            if licensedValue is "1" then
+                set isLicensed to true
+            end if
             on error
+            set licensedValue to "0"
+        end try
+        
+        try
+            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
+        on error
             set dontShowValue to "0"
         end try
         
         try
             set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
-            on error
+        on error
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
         
         if hasWelcomed is "0" then
             welcomeWindow's makeKeyAndOrderFront:me
-            else
+            registrationWindow's makeKeyAndOrderFront:me
+        else
             if dontShowValue is "0" then
                 tutorialWindow's makeKeyAndOrderFront:me
             end if
         end if
+        
     end applicationWillFinishLaunching:
     
     on applicationShouldTerminate:sender

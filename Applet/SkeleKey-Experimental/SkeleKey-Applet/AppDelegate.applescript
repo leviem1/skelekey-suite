@@ -105,16 +105,21 @@ script AppDelegate
     end checkadmin
     
     on auth(username, passwd)
-        try
-            tell application "System Events" to tell process "SecurityAgent"
-            set value of text field 1 of window 1 to username
-            set value of text field 2 of window 1 to passwd
-            click button 2 of window 1
-        end tell
-        on error
-            display dialog "Error! No Security Agent found! Is the prompt on the screen? Now quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+        set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list
+        if username is not in localusers then
+            display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            else
+            try
+                tell application "System Events" to tell process "SecurityAgent"
+                set value of text field 1 of window 1 to username
+                set value of text field 2 of window 1 to passwd
+                click button 2 of window 1
+            end tell
+            on error
+            display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end try
+    end if
     end auth
     
     on main()
@@ -135,7 +140,7 @@ script AppDelegate
     end main
     
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl"}
         set notInstalledString to ""
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
