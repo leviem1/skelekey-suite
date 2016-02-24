@@ -253,10 +253,11 @@ script AppDelegate
                 on error
                 do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
-            
+            display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
             " & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
             on error
+            display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         housekeeping_(sender)
