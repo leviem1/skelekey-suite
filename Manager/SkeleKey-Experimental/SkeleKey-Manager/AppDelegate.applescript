@@ -87,32 +87,31 @@ script AppDelegate
     end returnNumbersInString
     
     on dateChecked_(sender)
-        log dateEnabled's state()
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
             theDate's setHidden:true
+            --inverse here
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
+            set origin to origin of installWindow's frame()
+            set windowSize to |size| of installWindow's frame()
+            set x to x of origin
+            set y to y of origin
+            set y to y - 214
+            set newOrigin to {x, y}
+            installWindow's setFrame_display_animate_({newOrigin, {480, 455}}, true, true)
+            set origin to origin of installWindow's frame()
+            set windowSize to |size| of installWindow's frame()
         end if
     end dateChecked_
     
-    on displayData_(sender) -- having probles getting a string of the date selected. String must be in format of 2016-02-25 04:53:20 +0000
-        #set exp_date to theDate's dateValue()
-        #set myFormatter to current application's class "NSDateFormatter"'s alloc()'s init()
-        #displayDate's setStringValue_(exp_date)
-        #set exp_dateStr to myFormatter's stringFromDate_(exp_date)
-        #set exp_date_e to do shell script "date -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
-        #
-        
-        set now to current application's class "NSDate"'s |date|() -- current date
-        set myFormatter to current application's class "NSDateFormatter"'s alloc()'s init()
-        myFormatter's setDateStyle:1-- 0 = none, 1 = short, 2 = med, 3 = long, 4 = full
-        myFormatter's setTimeStyle:1
-        set theString to myFormatter's stringFromDate:now
-        displayDate's setStringValue_(theString)
-        display dialog theString
-        
+    on displayData_(sender)
+        set exp_date to theDate's dateValue()'s |description| as unicode text
+        displayDate's setStringValue_(exp_date)
+        if exp_date contains "2017" --Mark, put your fancy code here. Use exp_date for your calculations.
+            display dialog "Yes"
+        end if
     end displayData_
     
     on checkPasswords()
@@ -123,10 +122,10 @@ script AppDelegate
             if isLicensed is true then
                 installButton's setEnabled:true
             end if
-            else if password1String is not equal to password2String then
+        else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             installButton's setEnabled:false
-            else
+        else
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
         end if
@@ -146,7 +145,7 @@ script AppDelegate
         if regorgexists is equal to "1" then
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
             set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
-            else
+        else
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
             set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
         end if
@@ -203,7 +202,7 @@ script AppDelegate
             installWindow's makeKeyAndOrderFront:me
             installWindow's makeFirstResponder:username
             windowMath(mainWindow, installWindow)
-            else if modeString is "Remove a SkeleKey" then
+        else if modeString is "Remove a SkeleKey" then
             mainWindow's orderOut:sender
             removeWindow's makeKeyAndOrderFront:me
             windowMath(mainWindow, removeWindow)
@@ -225,7 +224,7 @@ script AppDelegate
                 set vol to replace_chars(vol, " ", "\\ ")
                 try
                     set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
-                    on error
+                on error
                     set isValid to "False"
                 end try
                 if isValid is "USB" then
@@ -235,7 +234,7 @@ script AppDelegate
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
             set fileName3 to replace_chars(fileName2, "\\ ", " ")
-            on error
+        on error
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
         end try
@@ -331,18 +330,18 @@ script AppDelegate
                     try
                         set theNumber to theNumber + 1
                         do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
-                        on error
+                    on error
                         do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
                         exit repeat
                     end try
                 end repeat
-                on error
+            on error
                 do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
             display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
             " & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
-            on error
+        on error
             display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
@@ -401,7 +400,7 @@ script AppDelegate
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
             end try
-            else if (dontShow's state()) is 0 then
+        else if (dontShow's state()) is 0 then
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool false"
             end try
@@ -477,21 +476,8 @@ script AppDelegate
         set fromStart to false
     end doOpenWelcome:
     
-    on windowExpand:sender
-        set origin to origin of installWindow's frame()
-        set windowSize to |size| of installWindow's frame()
-        set x to x of origin
-        set y to y of origin
-        set y to y - 214
-        set newOrigin to {x, y}
-        installWindow's setFrame_display_animate_({newOrigin, {480, 455}}, true, true)
-        set origin to origin of installWindow's frame()
-        set windowSize to |size| of installWindow's frame()
-    end windowExpand
-    
     on applicationWillFinishLaunching:aNotification --dependency and admin checking
         set currDate to current date
-        log currDate
         theDate's setDateValue_(currDate)
         theDate's setMinDate_(currDate)
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
@@ -499,7 +485,7 @@ script AppDelegate
         
         try
             do shell script "sudo echo elevate" with administrator privileges
-            on error
+        on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
@@ -524,7 +510,7 @@ script AppDelegate
             if licensedValue is "1" then
                 set isLicensed to true
             end if
-            on error
+        on error
             set licensedValue to "0"
         end try
         
