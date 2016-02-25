@@ -228,9 +228,9 @@ script AppDelegate
                     on error
                     set isValid to "False"
                 end try
-                #if isValid is "USB" then
-                set validVols to validVols & {vol}
-                #end if
+                if isValid is "USB" then
+                    set validVols to validVols & {vol}
+                end if
             end repeat
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
