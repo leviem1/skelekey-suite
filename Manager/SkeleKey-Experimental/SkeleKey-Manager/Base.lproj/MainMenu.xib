@@ -63,7 +63,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="PPG-LM-gSP"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="4RF-Pr-BRJ"/>
+                            <menuItem title="Preferencesâ€¦" keyEquivalent="," id="4RF-Pr-BRJ"/>
                             <menuItem isSeparatorItem="YES" id="ND6-xK-NU7"/>
                             <menuItem title="Services" id="vt9-jl-yhl">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -105,7 +105,7 @@
                                     <action selector="newDocument:" target="-1" id="70X-iZ-TZD"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open…" keyEquivalent="o" id="qRb-sR-QDo">
+                            <menuItem title="Openâ€¦" keyEquivalent="o" id="qRb-sR-QDo">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="be0-6I-Nrp"/>
                                 </connections>
@@ -129,12 +129,12 @@
                                     <action selector="performClose:" target="-1" id="ueg-lw-YNf"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="jLh-BN-ZzJ">
+                            <menuItem title="Saveâ€¦" keyEquivalent="s" id="jLh-BN-ZzJ">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="Fp2-KQ-Jof"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="ReF-hq-ilg">
+                            <menuItem title="Save Asâ€¦" keyEquivalent="S" id="ReF-hq-ilg">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="Xmn-vV-gLf"/>
                                 </connections>
@@ -146,13 +146,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="k7F-ap-m3Y"/>
-                            <menuItem title="Page Setup…" keyEquivalent="P" id="dHn-zh-tuf">
+                            <menuItem title="Page Setupâ€¦" keyEquivalent="P" id="dHn-zh-tuf">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="runPageLayout:" target="-1" id="7OX-I1-Sse"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="xrS-MI-4Qg">
+                            <menuItem title="Printâ€¦" keyEquivalent="p" id="xrS-MI-4Qg">
                                 <connections>
                                     <action selector="print:" target="-1" id="iYB-87-j4a"/>
                                 </connections>
@@ -212,12 +212,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Find" id="RGu-vA-Au6">
                                     <items>
-                                        <menuItem title="Find…" tag="1" keyEquivalent="f" id="lff-fE-uee">
+                                        <menuItem title="Findâ€¦" tag="1" keyEquivalent="f" id="lff-fE-uee">
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="UyJ-om-OCs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
+                                        <menuItem title="Find and Replaceâ€¦" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="0q8-Zr-Ygf"/>
@@ -859,13 +859,13 @@ DQ
                             <font key="font" metaFont="system"/>
                             <string key="title">Mark Hedrick 
 Levi Muniz
-© 2016</string>
+Â© 2016</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8y-rW-a5E">
-                        <rect key="frame" x="163" y="57" width="5" height="217"/>
+                        <rect key="frame" x="163" y="57" width="4" height="217"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -881,25 +881,14 @@ Levi Muniz
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-Pv-g6s">
                         <rect key="frame" x="184" y="57" width="340" height="219"/>
                         <clipView key="contentView" ambiguous="YES" id="F9I-ZN-ysH">
-<<<<<<< HEAD
                             <rect key="frame" x="1" y="1" width="323" height="217"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="252"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="448"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
-=======
-                            <rect key="frame" x="1" y="1" width="338" height="217"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="338" height="414"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="338" height="217"/>
->>>>>>> cb7ad14c1138e1762a29d0958f0437acd48d91f4
                                     <size key="maxSize" width="646" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -956,11 +945,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-<<<<<<< HEAD
                                     <size key="minSize" width="323" height="217"/>
-=======
-                                    <size key="minSize" width="338" height="217"/>
->>>>>>> cb7ad14c1138e1762a29d0958f0437acd48d91f4
                                     <size key="maxSize" width="646" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -971,11 +956,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
-<<<<<<< HEAD
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
-=======
-                            <rect key="frame" x="323" y="1" width="16" height="217"/>
->>>>>>> cb7ad14c1138e1762a29d0958f0437acd48d91f4
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -1343,11 +1324,11 @@ to verify that it works.</string>
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="NtL-w0-ZSX">
-                            <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
+                            <rect key="frame" x="-8" y="-15" width="0.0" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="bpR-VY-zbb">
-                            <rect key="frame" x="-16" y="0.0" width="16" height="0.0"/>
+                            <rect key="frame" x="-15" y="-8" width="15" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -1480,16 +1461,6 @@ DQ
             <contentBorderThickness minY="32"/>
             <point key="canvasLocation" x="1237" y="161"/>
         </window>
-        <textField verticalHuggingPriority="750" id="bty-fR-rAF">
-            <rect key="frame" x="0.0" y="0.0" width="332" height="22"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" bezelStyle="round" id="6hm-nU-YTF">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-            </textFieldCell>
-            <point key="canvasLocation" x="1264" y="115"/>
-        </textField>
     </objects>
     <resources>
         <image name="AppIcon" width="512" height="512"/>
