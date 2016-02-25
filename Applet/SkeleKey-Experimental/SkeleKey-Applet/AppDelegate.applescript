@@ -78,9 +78,10 @@ script AppDelegate
         end if
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
-        
-        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
-        return {username, passwd}
+        try
+            set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
+        end try
+        return {username, passwd, exp_date_e}
     end decryptinfo
     
     on assistiveaccess(username, passwd)
@@ -97,9 +98,15 @@ script AppDelegate
         end try
     end assistiveaccess
     
-    on checkadmin(username, passwd)
+    on checkadmin(username, passwd, exp_date_e)
+        set current_date_e to do shell script "date -u '+%s'"
+        if exp_date_e is less than or equal to current_date_e then
+            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            quit
+        end if
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
+            
             on error
             display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
@@ -122,48 +129,48 @@ script AppDelegate
             quit
         end try
     end if
-    end auth
-    
-    on main()
-        set UnixPath to POSIX path of (path to current application as text)
-        set volumepath to UnixPath
-        set UnixPath to replace_chars(UnixPath, "//", "/")
-        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
-        set volumepath to POSIX path of ((path to current application as text) & "::")
-        set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-        set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
-        set volumepath to "/Volumes/" & volumepath
-        set volumepath to replace_chars(volumepath, " ", "\\ ")
-        set authcred to decryptinfo(volumepath, authinfobin)
-        checkadmin(item 1 of authcred, item 2 of authcred)
-        assistiveaccess(item 1 of authcred, item 2 of authcred)
-        auth(item 1 of authcred, item 2 of authcred)
-        quit
-    end main
-    
-    on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl"}
-        set notInstalledString to ""
-        repeat with i in dependencies
-            set status to do shell script i & "; echo $?"
-            if status is "127" then
-                set notInstalledString to notInstalledString & i & "
-                "
-            end if
-        end repeat
-        if notInstalledString is not "" then
-            display alert "The following required items are not installed:
-            
-            " & notInstalledString buttons "Quit"
-            quit
+end auth
+
+on main()
+    set UnixPath to POSIX path of (path to current application as text)
+    set volumepath to UnixPath
+    set UnixPath to replace_chars(UnixPath, "//", "/")
+    set UnixPath to replace_chars(UnixPath, " ", "\\ ")
+    set volumepath to POSIX path of ((path to current application as text) & "::")
+    set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
+    set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
+    set volumepath to "/Volumes/" & volumepath
+    set volumepath to replace_chars(volumepath, " ", "\\ ")
+    set authcred to decryptinfo(volumepath, authinfobin)
+    checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
+    assistiveaccess(item 1 of authcred, item 2 of authcred)
+    auth(item 1 of authcred, item 2 of authcred)
+    quit
+end main
+
+on applicationWillFinishLaunching:aNotification
+    set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl"}
+    set notInstalledString to ""
+    repeat with i in dependencies
+        set status to do shell script i & "; echo $?"
+        if status is "127" then
+            set notInstalledString to notInstalledString & i & "
+            "
         end if
-        main()
+    end repeat
+    if notInstalledString is not "" then
+        display alert "The following required items are not installed:
+        
+        " & notInstalledString buttons "Quit"
         quit
-    end applicationWillFinishLaunching:
-    
-    on applicationShouldTerminate:sender
-        -- Insert code here to do any housekeeping before your application quits
-        return current application's NSTerminateNow
-    end applicationShouldTerminate:
-    
+    end if
+    main()
+    quit
+end applicationWillFinishLaunching:
+
+on applicationShouldTerminate:sender
+    -- Insert code here to do any housekeeping before your application quits
+    return current application's NSTerminateNow
+end applicationShouldTerminate:
+
 end script
