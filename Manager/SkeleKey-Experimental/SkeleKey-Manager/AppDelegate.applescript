@@ -48,6 +48,20 @@ script AppDelegate
     property regFirstNameString : missing value
     property bye : missing value
     
+    on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
+        set origin to origin of window1's frame()
+        set windowSize to |size| of window1's frame()
+        set x to x of origin
+        set y to y of origin
+        set yAdd to height of windowSize
+        set y to y + yAdd
+        window2's setFrameTopLeftPoint:{x, y}
+    end windowMath
+    
+    on radioOption:sender --get mode
+        set modeString to sender's title as text
+    end radioOption:
+    
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -76,37 +90,30 @@ script AppDelegate
         log dateEnabled's state()
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
-            theDate's setHidden:false
+            theDate's setHidden:true
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
-            theDate's setHidden:true
+            theDate's setHidden:false
         end if
     end dateChecked_
     
-    on displayData_(sender)
-        global lastOpenedDate_str
-        set lastOpenedDate to theDate's dateValue()
+    on displayData_(sender) -- having probles getting a string of the date selected. String must be in format of 2016-02-25 04:53:20 +0000
+        #set exp_date to theDate's dateValue()
+        #set myFormatter to current application's class "NSDateFormatter"'s alloc()'s init()
+        #displayDate's setStringValue_(exp_date)
+        #set exp_dateStr to myFormatter's stringFromDate_(exp_date)
+        #set exp_date_e to do shell script "date -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
+        #
+        
+        set now to current application's class "NSDate"'s |date|() -- current date
         set myFormatter to current application's class "NSDateFormatter"'s alloc()'s init()
-        displayDate's setStringValue_(lastOpenedDate)
-        #set lastOpenedDate_str to myFormatter's stringFromDate_(lastOpenedDate)
-        log lastOpenedDate
-        set lastOpenedDate_str to do shell script "echo '" & lastOpenedDate_str & "' | sed \"s/.....$//g\""
-        log lastOpenedDate_str
+        myFormatter's setDateStyle:1-- 0 = none, 1 = short, 2 = med, 3 = long, 4 = full
+        myFormatter's setTimeStyle:1
+        set theString to myFormatter's stringFromDate:now
+        displayDate's setStringValue_(theString)
+        display dialog theString
+        
     end displayData_
-    
-    on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
-        set origin to origin of window1's frame()
-        set windowSize to |size| of window1's frame()
-        set x to x of origin
-        set y to y of origin
-        set yAdd to height of windowSize
-        set y to y + yAdd
-        window2's setFrameTopLeftPoint:{x, y}
-    end windowMath
-    
-    on radioOption:sender --get mode
-        set modeString to sender's title as text
-    end radioOption:
     
     on checkPasswords()
         set password1String to (stringValue() of password1) as string
@@ -473,7 +480,6 @@ script AppDelegate
     on windowExpand:sender
         set origin to origin of installWindow's frame()
         set windowSize to |size| of installWindow's frame()
-        log windowSize
         set x to x of origin
         set y to y of origin
         set y to y - 214
@@ -481,8 +487,6 @@ script AppDelegate
         installWindow's setFrame_display_animate_({newOrigin, {480, 455}}, true, true)
         set origin to origin of installWindow's frame()
         set windowSize to |size| of installWindow's frame()
-        log windowSize
-
     end windowExpand
     
     on applicationWillFinishLaunching:aNotification --dependency and admin checking
