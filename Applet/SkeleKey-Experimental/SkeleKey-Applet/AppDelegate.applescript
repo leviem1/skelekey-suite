@@ -100,7 +100,7 @@ script AppDelegate
     
     on checkadmin(username, passwd, exp_date_e)
         set current_date_e to do shell script "date -u '+%s'"
-        if exp_date_e is less than or equal to current_date_e then
+        if current_date_e is greater than or equal to exp_date_e then
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end if

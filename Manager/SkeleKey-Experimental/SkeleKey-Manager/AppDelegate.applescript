@@ -112,9 +112,7 @@ script AppDelegate
         set exp_date to theDate's dateValue()
         displayDate's setStringValue:exp_date
         set exp_date to theDate's dateValue()'s |description| as Unicode text
-        log exp_date
-        set exp_date_e to do shell script "date -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
-        log exp_date_e
+        set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
     end displayData:
     
     on checkPasswords()
@@ -325,14 +323,10 @@ script AppDelegate
             if (length of epass) is greater than 2048 then
                 set epass to (characters 1 thru 2047 of epass) as string
             end if
-            display dialog exp_date_e
             if exp_date_e is not "" then
-                do shell script "echo \"" & usernameValue & "
-                " & password2Value & "
-                " & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
                 else
-                do shell script "echo \"" & usernameValue & "
-                " & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             end if
             try
                 set theNumber to 1
