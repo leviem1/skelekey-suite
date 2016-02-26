@@ -101,6 +101,7 @@ script AppDelegate
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
+            quit
         end if
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
