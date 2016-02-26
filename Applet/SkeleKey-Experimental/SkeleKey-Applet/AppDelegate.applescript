@@ -78,9 +78,7 @@ script AppDelegate
         end if
         set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
         set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
-        try
-            set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
-        end try
+        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
         return {username, passwd, exp_date_e}
     end decryptinfo
     
@@ -100,8 +98,12 @@ script AppDelegate
     
     on checkadmin(username, passwd, exp_date_e)
         set current_date_e to do shell script "date -u '+%s'"
-        if current_date_e is greater than or equal to exp_date_e then
-            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+        if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
+            set expired to display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            if button returned of expired is "Quit" then
+                quit
+            end if
+            set quitnow to "1"
             quit
         end if
         try

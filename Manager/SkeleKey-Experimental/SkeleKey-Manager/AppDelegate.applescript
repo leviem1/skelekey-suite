@@ -326,7 +326,8 @@ script AppDelegate
             if exp_date_e is not "" then
                 do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
                 else
-                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                set exp_date_e to "none"
+                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             end if
             try
                 set theNumber to 1
