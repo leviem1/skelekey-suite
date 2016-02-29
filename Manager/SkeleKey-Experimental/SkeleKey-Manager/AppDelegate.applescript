@@ -118,16 +118,16 @@ script AppDelegate
             if isLicensed is true then
                 installButton's setEnabled:true
             end if
-            else if password1String is not equal to password2String then
+        else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             installButton's setEnabled:false
-            else
+        else
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
         end if
     end checkPasswords
     
-    on licensekeygen(myname, myemail, myorg, regorgexists)
+    on licensekeygen(myname, myemail, myorg)
         set e_mn to do shell script "echo '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
         set e_mn to characters 7 thru 11 of e_mn
         set e_me to do shell script "echo '" & myemail & "' | base64 | rev | md5| fold -w3 | paste -sd'4' - "
@@ -138,10 +138,10 @@ script AppDelegate
         set e_me2 to do shell script "echo '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
         set e_me2 to characters ((length of e_me2) - 4) thru (length of e_me2) of e_me2
         
-        if regorgexists is equal to "1" then
+        if myorg is not "" then
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
             set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
-            else
+        else
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
             set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
         end if
@@ -149,37 +149,35 @@ script AppDelegate
     end licensekeygen
     
     on checkRegistration()
-        global lickey
-        global regSerialString
         global regFirstNameString
+        global regEmailString
+        global regOrgString
+        global regSerialString
         set regFirstNameString to (stringValue() of regFirstName) as string
         set regEmailString to (stringValue() of regEmail) as string
         set regOrgString to (stringValue() of regOrg) as string
         set regSerialString to (stringValue() of regSerial) as string
-        if regOrgString is not equal to "" then
-            set regorgexists to "1"
-        end if
-        set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString, regorgexists)
         if regFirstNameString is not "" and regEmailString is not "" and regSerialString is not "" then
             registrationButton's setEnabled:true
-            else
+        else
             registrationButton's setEnabled:false
         end if
     end checkRegistration
     
     on checkLicenseKey()
-        global bye
+        global regFirstNameString
+        global regEmailString
+        global regOrgString
+        global regSerialString
+        set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
         if regSerialString is not equal to lickey then
             display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
             registrationButton's setEnabled:false
-            else
-            registrationButton's setEnabled:true
+        else
             set isLicensed to true
-            set succ_lic to display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString with title "SkeleKey Manager" buttons {"OK"}
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed -bool true"
-            if button returned of succ_lic is "OK" then
-                set bye to "1"
-            end if
+            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString with title "SkeleKey Manager" buttons {"OK"}
+            registrationWindow's orderOut:sender
         end if
     end checkLicenseKey
     
@@ -187,7 +185,7 @@ script AppDelegate
         set theObj to tag of object of aNotification
         if theObj is equal to tag of password1 or theObj is equal to tag of password2 then
             checkPasswords()
-            else
+        else
             checkRegistration()
         end if
     end controlTextDidChange:
@@ -410,11 +408,7 @@ script AppDelegate
     end gotit:
     
     on registrationButton:sender
-        checkRegistration()
         checkLicenseKey()
-        if bye is equal to "1" then
-            registrationWindow's orderOut:sender
-        end if
     end registrationButton:
     
     on welcomeNext:sender
