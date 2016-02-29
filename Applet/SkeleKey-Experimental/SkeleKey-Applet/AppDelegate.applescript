@@ -97,9 +97,10 @@ script AppDelegate
     end assistiveaccess
     
     on checkadmin(username, passwd, exp_date_e)
+        global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
-            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            do shell script "srm -Rf " & UnixPath
             quit
             quit
         end if
@@ -131,6 +132,7 @@ script AppDelegate
 end auth
 
 on main()
+    global UnixPath
     set UnixPath to POSIX path of (path to current application as text)
     set volumepath to UnixPath
     set UnixPath to replace_chars(UnixPath, "//", "/")
