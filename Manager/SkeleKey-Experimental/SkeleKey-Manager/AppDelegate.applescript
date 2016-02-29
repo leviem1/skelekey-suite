@@ -43,11 +43,6 @@ script AppDelegate
     property regSerialString : missing value
     property modeString : "Install a SkeleKey"
     property isLicensed : false
-    property regorgexists : missing value
-    property lickey : missing value
-    property regFirstNameString : missing value
-    property bye : missing value
-    property exp_date_e : ""
     
     on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
         set origin to origin of window1's frame()
