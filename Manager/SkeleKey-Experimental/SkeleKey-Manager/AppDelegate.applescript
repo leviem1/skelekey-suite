@@ -193,6 +193,10 @@ script AppDelegate
     on buttonClicked:sender -- "Start!" button
         if modeString is "Install a SkeleKey" then
             mainWindow's orderOut:sender
+            set currDate to current date
+            theDate's setDateValue:currDate
+            theDate's setMinDate:currDate
+            displayDate's setStringValue:currDate
             installWindow's makeKeyAndOrderFront:me
             installWindow's makeFirstResponder:username
             windowMath(mainWindow, installWindow)
@@ -471,9 +475,6 @@ script AppDelegate
     end doOpenWelcome:
     
     on applicationWillFinishLaunching:aNotification --dependency and admin checking
-        set currDate to current date
-        theDate's setDateValue:currDate
-        theDate's setMinDate:currDate
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
         set notInstalledString to ""
         
