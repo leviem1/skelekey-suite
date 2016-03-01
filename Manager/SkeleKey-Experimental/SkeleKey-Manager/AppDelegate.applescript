@@ -41,8 +41,9 @@ script AppDelegate
     property regOrg : missing value
     property regSerial : missing value
     property regSerialString : missing value
-    property modeString : "Install a SkeleKey"
     property isLicensed : false
+    property modeString : "Install a SkeleKey"
+    property exp_date_e : ""
     
     on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
         set origin to origin of window1's frame()
@@ -103,7 +104,6 @@ script AppDelegate
     end dateChecked:
     
     on displayData:sender
-        global exp_date_e
         set exp_date to theDate's dateValue()
         displayDate's setStringValue:exp_date
         set exp_date to theDate's dateValue()'s |description| as Unicode text
@@ -244,7 +244,6 @@ script AppDelegate
     end destvolume:
     
     on installButton:sender --install button action
-        global exp_date_e
         global fileName2
         global password1Value
         global password2Value
@@ -318,7 +317,7 @@ script AppDelegate
             end if
             if exp_date_e is not "" then
                 do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
-                else
+            else
                 set exp_date_e to "none"
                 do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             end if
@@ -329,18 +328,18 @@ script AppDelegate
                     try
                         set theNumber to theNumber + 1
                         do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
-                        on error
+                    on error
                         do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
                         exit repeat
                     end try
                 end repeat
-                on error
+            on error
                 do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
             display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
             " & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
-            on error
+        on error
             display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
