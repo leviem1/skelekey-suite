@@ -84,13 +84,17 @@ script AppDelegate
     end returnNumbersInString
     
     on dateChecked:sender
+        global currDate
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
             theDate's setHidden:true
+            set exp_date_e to ""
             --inverse here
-            else if (dateEnabled's state()) is 1 then
+        else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
+            set currDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (currDate as Unicode text) & "\" +\"%s\""
             set origin to origin of installWindow's frame()
             set windowSize to |size| of installWindow's frame()
             set x to x of origin
@@ -191,6 +195,7 @@ script AppDelegate
     end controlTextDidChange:
     
     on buttonClicked:sender -- "Start!" button
+        global currDate
         if modeString is "Install a SkeleKey" then
             mainWindow's orderOut:sender
             set currDate to current date
