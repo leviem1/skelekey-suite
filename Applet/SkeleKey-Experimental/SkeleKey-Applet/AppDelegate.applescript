@@ -100,9 +100,9 @@ script AppDelegate
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
-            do shell script "srm -Rf " & UnixPath
-            quit
-            quit
+            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            do shell script "chflags hidden " & UnixPath
+            do shell script "nohup sh -c \"killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "\" > /dev/null &"
         end if
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
@@ -123,55 +123,55 @@ script AppDelegate
                 set value of text field 1 of window 1 to username
                 set value of text field 2 of window 1 to passwd
                 click button 2 of window 1
-            end tell
+                end tell
             on error
-            display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-            quit
-        end try
-    end if
-end auth
-
-on main()
-    global UnixPath
-    set UnixPath to POSIX path of (path to current application as text)
-    set volumepath to UnixPath
-    set UnixPath to replace_chars(UnixPath, "//", "/")
-    set UnixPath to replace_chars(UnixPath, " ", "\\ ")
-    set volumepath to POSIX path of ((path to current application as text) & "::")
-    set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-    set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
-    set volumepath to "/Volumes/" & volumepath
-    set volumepath to replace_chars(volumepath, " ", "\\ ")
-    set authcred to decryptinfo(volumepath, authinfobin)
-    checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
-    assistiveaccess(item 1 of authcred, item 2 of authcred)
-    auth(item 1 of authcred, item 2 of authcred)
-    quit
-end main
-
-on applicationWillFinishLaunching:aNotification
-    set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl"}
-    set notInstalledString to ""
-    repeat with i in dependencies
-        set status to do shell script i & "; echo $?"
-        if status is "127" then
-            set notInstalledString to notInstalledString & i & "
-            "
+                display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+                quit
+            end try
         end if
-    end repeat
-    if notInstalledString is not "" then
-        display alert "The following required items are not installed:
-        
-        " & notInstalledString buttons "Quit"
-        quit
-    end if
-    main()
-    quit
-end applicationWillFinishLaunching:
+    end auth
 
-on applicationShouldTerminate:sender
-    -- Insert code here to do any housekeeping before your application quits
-    return current application's NSTerminateNow
-end applicationShouldTerminate:
+    on main()
+        global UnixPath
+        set UnixPath to POSIX path of (path to current application as text)
+        set volumepath to UnixPath
+        set UnixPath to replace_chars(UnixPath, "//", "/")
+        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
+        set volumepath to POSIX path of ((path to current application as text) & "::")
+        set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
+        set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
+        set volumepath to "/Volumes/" & volumepath
+        set volumepath to replace_chars(volumepath, " ", "\\ ")
+        set authcred to decryptinfo(volumepath, authinfobin)
+        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
+        assistiveaccess(item 1 of authcred, item 2 of authcred)
+        auth(item 1 of authcred, item 2 of authcred)
+        quit
+    end main
+
+    on applicationWillFinishLaunching:aNotification
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "python", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl"}
+        set notInstalledString to ""
+        repeat with i in dependencies
+            set status to do shell script i & "; echo $?"
+            if status is "127" then
+                set notInstalledString to notInstalledString & i & "
+                "
+            end if
+        end repeat
+        if notInstalledString is not "" then
+            display alert "The following required items are not installed:
+
+            " & notInstalledString buttons "Quit"
+            quit
+        end if
+        main()
+        quit
+    end applicationWillFinishLaunching:
+
+    on applicationShouldTerminate:sender
+        -- Insert code here to do any housekeeping before your application quits
+        return current application's NSTerminateNow
+    end applicationShouldTerminate:
 
 end script
