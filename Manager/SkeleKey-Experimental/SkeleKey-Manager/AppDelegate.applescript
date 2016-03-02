@@ -33,14 +33,12 @@ script AppDelegate
     property isBusy : false
     property fromStart : true
     property theDate : missing value
-    property theTime : missing value
     property displayDate : missing value
     property dateEnabled : missing value
     property regFirstName : missing value
     property regEmail : missing value
     property regOrg : missing value
     property regSerial : missing value
-    property regSerialString : missing value
     property isLicensed : false
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
@@ -239,7 +237,7 @@ script AppDelegate
                 set vol to replace_chars(vol, " ", "\\ ")
                 try
                     set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
-                    on error
+                on error
                     set isValid to "False"
                 end try
                 if isValid is "USB" then
@@ -249,7 +247,7 @@ script AppDelegate
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
             set fileName3 to replace_chars(fileName2, "\\ ", " ")
-            on error
+        on error
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
         end try
@@ -257,7 +255,7 @@ script AppDelegate
             startButton's setEnabled:true
             fileName's setStringValue:fileName2
             fileName's setToolTip:fileName2
-            else
+        else
             startButton's setEnabled:false
             fileName's setStringValue:""
             fileName's setToolTip:""
@@ -383,7 +381,7 @@ script AppDelegate
             if isLicensed is true then
                 delButton's setEnabled:true
             end if
-            on error
+        on error
             delFileName's setStringValue:""
             delFileName's setToolTip:""
             delButton's setEnabled:false
@@ -421,7 +419,7 @@ script AppDelegate
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
             end try
-            else if (dontShow's state()) is 0 then
+        else if (dontShow's state()) is 0 then
             try
                 do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool false"
             end try
@@ -508,7 +506,7 @@ script AppDelegate
         set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
-            on error
+        on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
@@ -530,24 +528,24 @@ script AppDelegate
             if licensedValue is "1" then
                 set isLicensed to true
             end if
-            on error
+        on error
             set licensedValue to "0"
         end try
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
-            on error
+        on error
             set dontShowValue to "0"
         end try
         try
             set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
-            on error
+        on error
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
         if hasWelcomed is "0" then
             welcomeWindow's makeKeyAndOrderFront:me
             registrationWindow's makeKeyAndOrderFront:me
-            else
+        else
             if dontShowValue is "0" then
                 tutorialWindow's makeKeyAndOrderFront:me
             end if
@@ -559,7 +557,6 @@ script AppDelegate
         if isBusy is true then
             return NSTerminateCancel
         end if
-        
         return current application's NSTerminateNow
     end applicationShouldTerminate:
 
