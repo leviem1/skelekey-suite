@@ -45,7 +45,8 @@ script AppDelegate
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
     
-    on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
+    #Window Math Function (Thanks to Holly Lakin for helping us with the math of this function)
+    on windowMath(window1, window2)
         set origin to origin of window1's frame()
         set windowSize to |size| of window1's frame()
         set x to x of origin
@@ -55,10 +56,7 @@ script AppDelegate
         window2's setFrameTopLeftPoint:{x, y}
     end windowMath
     
-    on radioOption:sender --get mode
-        set modeString to sender's title as text
-    end radioOption:
-    
+    #Replace Characters Function
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -68,9 +66,15 @@ script AppDelegate
         return this_text
     end replace_chars
     
+    #Mode Selector Function
+    on radioOption:sender
+        set modeString to sender's title as text
+    end radioOption:
+    
+    #Number Ninja Function (return numbers from UUID)
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
-        do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
+        do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString
         set nums to the result
         set numlist to {}
         repeat with i from 1 to length of nums
@@ -83,6 +87,7 @@ script AppDelegate
         return numlist
     end returnNumbersInString
     
+    #Date Checked Sender
     on dateChecked:sender
         global currDate
         if (dateEnabled's state()) is 0 then
@@ -107,6 +112,7 @@ script AppDelegate
         end if
     end dateChecked:
     
+    #Display Expiration Date Function
     on displayData:sender
         set exp_date to theDate's dateValue()
         displayDate's setStringValue:exp_date
@@ -114,6 +120,7 @@ script AppDelegate
         set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
     end displayData:
     
+    #Password Value Check Function
     on checkPasswords()
         set password1String to (stringValue() of password1) as string
         set password2String to (stringValue() of password2) as string
@@ -131,6 +138,7 @@ script AppDelegate
         end if
     end checkPasswords
     
+    #License Generator Function
     on licensekeygen(myname, myemail, myorg)
         set e_mn to do shell script "echo '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
         set e_mn to characters 7 thru 11 of e_mn
@@ -138,10 +146,8 @@ script AppDelegate
         set e_me to characters ((length of e_me) - 4) thru (length of e_me) of e_me
         set e_mo to do shell script "echo '" & myorg & "' | base64 | md5 | rev | fold -w3 | paste -sd'K' - "
         set e_mo to characters 4 thru 8 of e_mo
-        
         set e_me2 to do shell script "echo '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
         set e_me2 to characters ((length of e_me2) - 4) thru (length of e_me2) of e_me2
-        
         if myorg is not "" then
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
             set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
@@ -152,6 +158,7 @@ script AppDelegate
         return lickey
     end licensekeygen
     
+    #Check Registration Function
     on checkRegistration()
         global regFirstNameString
         global regEmailString
@@ -168,6 +175,7 @@ script AppDelegate
         end if
     end checkRegistration
     
+    #Check License Key Function
     on checkLicenseKey()
         global regFirstNameString
         global regEmailString
@@ -185,7 +193,8 @@ script AppDelegate
         end if
     end checkLicenseKey
     
-    on controlTextDidChange:aNotification --check if both passwords are equal
+    #Text Field Checker
+    on controlTextDidChange:aNotification
         set theObj to tag of object of aNotification
         if theObj is equal to tag of password1 or theObj is equal to tag of password2 then
             checkPasswords()
@@ -194,7 +203,8 @@ script AppDelegate
         end if
     end controlTextDidChange:
     
-    on buttonClicked:sender -- "Start!" button
+    #Main Window Start Button Function
+    on buttonClicked:sender
         global currDate
         if modeString is "Install a SkeleKey" then
             mainWindow's orderOut:sender
@@ -205,18 +215,20 @@ script AppDelegate
             installWindow's makeKeyAndOrderFront:me
             installWindow's makeFirstResponder:username
             windowMath(mainWindow, installWindow)
-            else if modeString is "Remove a SkeleKey" then
+        else if modeString is "Remove a SkeleKey" then
             mainWindow's orderOut:sender
             removeWindow's makeKeyAndOrderFront:me
             windowMath(mainWindow, removeWindow)
         end if
     end buttonClicked:
     
+    #Acknowledgements Function
     on acknowledgements:sender
         acknowledgements's makeKeyAndOrderFront:me
     end acknowledgements:
     
-    on destvolume:choosevolume --choose volume to install
+    #Destination Volume Chooser Function
+    on destvolume:choosevolume
         global fileName2
         global fileName3
         set validVols to {}
@@ -252,7 +264,8 @@ script AppDelegate
         end if
     end destvolume:
     
-    on installButton:sender --install button action
+    #Install Button Function
+    on installButton:sender
         global fileName2
         global password1Value
         global password2Value
@@ -300,12 +313,10 @@ script AppDelegate
         set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
         set encstring to ""
         set epass to ""
-        
         if usernameValue is "" then
             display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
             return
         end if
-        
         if password1Value is not equal to password2Value then
             display alert "Passwords do not match!"
             password1's setStringValue:""
@@ -359,7 +370,8 @@ script AppDelegate
         windowMath(installWindow, mainWindow)
     end installButton:
     
-    on destApp:sender --choose app to remove
+    #Removal Target Function
+    on destApp:sender
         global delApp
         global fileName3
         try
@@ -378,7 +390,8 @@ script AppDelegate
         end try
     end destApp:
     
-    on delButton:sender --remove button action
+    #Removal Button Function
+    on delButton:sender
         global delApp
         removeWindow's orderOut:sender
         loadingWindow's makeKeyAndOrderFront:me
@@ -399,7 +412,8 @@ script AppDelegate
         finishedDel_(sender)
     end delButton:
     
-    on gotit:sender --tutorialScreen button action
+    #Tutorial Screen Button Function
+    on gotit:sender
         if isLicensed is false then
             registrationWindow's makeKeyAndOrderFront:me
         end if
@@ -415,10 +429,12 @@ script AppDelegate
         tutorialWindow's orderOut:sender
     end gotit:
     
+    #Registration Window Button Function
     on registrationButton:sender
         checkLicenseKey()
     end registrationButton:
     
+    #Tutorial Window Button Function
     on welcomeNext:sender
         welcomeWindow's orderOut:sender
         if fromStart is true then
@@ -427,7 +443,8 @@ script AppDelegate
         end if
     end welcomeNext:
     
-    on housekeeping:sender --remove main window's info
+    #Main Window Housekeeping
+    on housekeeping:sender
         global fileName2
         fileName's setStringValue:""
         fileName's setToolTip:""
@@ -435,7 +452,8 @@ script AppDelegate
         set fileName2 to ""
     end housekeeping:
     
-    on houseKeepingInstall:sender --remove install window's info
+    #Install Window Housekeeping
+    on houseKeepingInstall:sender
         username's setStringValue:""
         password1's setStringValue:""
         password2's setStringValue:""
@@ -448,21 +466,8 @@ script AppDelegate
         windowMath(installWindow, mainWindow)
     end houseKeepingInstall:
     
-    on cancelDel:sender --when removal is canceled
-        houseKeepingDel_()
-        removeWindow's orderOut:sender
-        mainWindow's makeKeyAndOrderFront:me
-        windowMath(removeWindow, mainWindow)
-    end cancelDel:
-    
-    on finishedDel:sender --when removal has finished
-        houseKeepingDel_()
-        loadingWindow's orderOut:sender
-        mainWindow's makeKeyAndOrderFront:me
-        windowMath(loadingWindow, mainWindow)
-    end finishedDel:
-    
-    on houseKeepingDel_() --remove del window's info
+    #Remove Window Housekeeping
+    on houseKeepingDel_()
         global delApp
         delFileName's setStringValue:""
         delFileName's setToolTip:""
@@ -470,26 +475,43 @@ script AppDelegate
         set delApp to ""
     end houseKeepingDel_
     
+    #Remove Window Cancelled Function
+    on cancelDel:sender
+        houseKeepingDel_()
+        removeWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
+        windowMath(removeWindow, mainWindow)
+    end cancelDel:
+    
+    #Remove Window Complete Function
+    on finishedDel:sender
+        houseKeepingDel_()
+        loadingWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
+        windowMath(loadingWindow, mainWindow)
+    end finishedDel:
+    
+    #Tutorial Window Execution Function
     on doOpenTutorial:sender
         tutorialWindow's makeKeyAndOrderFront:me
     end doOpenTutorial:
     
+    #Welcome Window Execution Function
     on doOpenWelcome:sender
         welcomeWindow's makeKeyAndOrderFront:me
         set fromStart to false
     end doOpenWelcome:
     
-    on applicationWillFinishLaunching:aNotification --dependency and admin checking
+    #On-startup Function
+    on applicationWillFinishLaunching:aNotification
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
         set notInstalledString to ""
-        
         try
             do shell script "sudo echo elevate" with administrator privileges
             on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
-        
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
             if status is "127" then
@@ -497,14 +519,12 @@ script AppDelegate
                 "
             end if
         end repeat
-        
         if notInstalledString is not "" then
             display alert "The following required resources are not installed:
             
             " & notInstalledString buttons "Quit"
             quit
         end if
-        
         try
             set licensedValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed"
             if licensedValue is "1" then
@@ -513,20 +533,17 @@ script AppDelegate
             on error
             set licensedValue to "0"
         end try
-        
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
             on error
             set dontShowValue to "0"
         end try
-        
         try
             set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
             on error
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
-        
         if hasWelcomed is "0" then
             welcomeWindow's makeKeyAndOrderFront:me
             registrationWindow's makeKeyAndOrderFront:me
@@ -535,9 +552,9 @@ script AppDelegate
                 tutorialWindow's makeKeyAndOrderFront:me
             end if
         end if
-        
     end applicationWillFinishLaunching:
     
+    #On Termination Function
     on applicationShouldTerminate:sender
         if isBusy is true then
             return NSTerminateCancel
@@ -545,7 +562,8 @@ script AppDelegate
         
         return current application's NSTerminateNow
     end applicationShouldTerminate:
-    
+
+    #Application Specific Values
     on applicationShouldTerminateAfterLastWindowClosed:sender
         return true
     end applicationShouldTerminateAfterLastWindowClosed:
