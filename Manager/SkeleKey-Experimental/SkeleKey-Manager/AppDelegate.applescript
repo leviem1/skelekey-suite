@@ -496,6 +496,8 @@ script AppDelegate
         backButtonAlt's setHidden:true
         displayDate's setStringValue:""
         displayDate's setHidden:true
+        dateEnabled's setState:0
+        installWindow's setFrame:{origin of installWindow's frame(), {480,271}} display:true
         installWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
         checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
