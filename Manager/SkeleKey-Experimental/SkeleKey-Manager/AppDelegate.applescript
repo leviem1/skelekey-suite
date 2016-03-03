@@ -106,8 +106,6 @@ script AppDelegate
             set y to y + 184
             set newOrigin to {x, y}
             installWindow's setFrame:{newOrigin, {480, 271}} display:true animate:true
-            set origin to origin of installWindow's frame()
-            set windowSize to |size| of installWindow's frame()
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
@@ -125,8 +123,6 @@ script AppDelegate
             set y to y - 184
             set newOrigin to {x, y}
             installWindow's setFrame:{newOrigin, {480, 455}} display:true animate:true
-            set origin to origin of installWindow's frame()
-            set windowSize to |size| of installWindow's frame()
         end if
     end dateChecked:
     
@@ -497,10 +493,16 @@ script AppDelegate
         displayDate's setStringValue:""
         displayDate's setHidden:true
         dateEnabled's setState:0
-        installWindow's setFrame:{origin of installWindow's frame(), {480,271}} display:true
+        checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+        set origin to origin of installWindow's frame()
+        set x to x of origin
+        set y to y of origin
+        set theHeight to height of |size| of installWindow's frame()
+        set y to y + theHeight
+        set y to y - 271
+        installWindow's setFrame:{{x,y}, {480,271}} display:true
         installWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
-        checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
         windowMath(installWindow, mainWindow)
     end houseKeepingInstall:
     
