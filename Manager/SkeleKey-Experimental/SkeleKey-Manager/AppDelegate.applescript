@@ -28,10 +28,11 @@ script AppDelegate
     property delFileName : missing value
     property startButton : missing value
     property installButton : missing value
+    property installButtonAlt : missing value
+    property backButton : missing value
+    property backButtonAlt : missing value
     property registrationButton : missing value
     property delButton : missing value
-    property isBusy : false
-    property fromStart : true
     property theDate : missing value
     property displayDate : missing value
     property dateEnabled : missing value
@@ -39,6 +40,8 @@ script AppDelegate
     property regEmail : missing value
     property regOrg : missing value
     property regSerial : missing value
+    property isBusy : false
+    property fromStart : true
     property isLicensed : false
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
@@ -64,11 +67,6 @@ script AppDelegate
         return this_text
     end replace_chars
     
-    #Mode Selector Function
-    on radioOption:sender
-        set modeString to sender's title as text
-    end radioOption:
-    
     #Number Ninja Function (return numbers from UUID)
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
@@ -85,24 +83,47 @@ script AppDelegate
         return numlist
     end returnNumbersInString
     
+    #Mode Selector Function
+    on radioOption:sender
+        set modeString to sender's title as text
+    end radioOption:
+    
     #Date Checked Sender
     on dateChecked:sender
         global currDate
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
             theDate's setHidden:true
+            displayDate's setHidden:true
+            backButton's setHidden:false
+            backButtonAlt's setHidden:true
+            installButton's setHidden:false
+            installButtonAlt's setHidden:true
             set exp_date_e to ""
-            --inverse here
+            set windowSize to |size| of installWindow's frame()
+            set origin to origin of installWindow's frame()
+            set x to x of origin
+            set y to y of origin
+            set y to y + 184
+            set newOrigin to {x, y}
+            installWindow's setFrame:{newOrigin, {480, 271}} display:true animate:true
+            set origin to origin of installWindow's frame()
+            set windowSize to |size| of installWindow's frame()
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
-            set currDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
-            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (currDate as Unicode text) & "\" +\"%s\""
+            displayDate's setHidden:false
+            backButton's setHidden:true
+            backButtonAlt's setHidden:false
+            installButton's setHidden:true
+            installButtonAlt's setHidden:false
+            set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
             set origin to origin of installWindow's frame()
             set windowSize to |size| of installWindow's frame()
             set x to x of origin
             set y to y of origin
-            set y to y - 214
+            set y to y - 184
             set newOrigin to {x, y}
             installWindow's setFrame:{newOrigin, {480, 455}} display:true animate:true
             set origin to origin of installWindow's frame()
@@ -126,13 +147,16 @@ script AppDelegate
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusAvailable")
             if isLicensed is true then
                 installButton's setEnabled:true
+                installButtonAlt's setEnabled:true
             end if
         else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             installButton's setEnabled:false
+            installButtonAlt's setEnabled:false
         else
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
+            installButtonAlt's setEnabled:false
         end if
     end checkPasswords
     
@@ -265,6 +289,7 @@ script AppDelegate
     #Install Button Function
     on installButton:sender
         global fileName2
+        global usernameValue
         global password1Value
         global password2Value
         set UnixPath to POSIX path of (path to current application as text)
@@ -444,20 +469,35 @@ script AppDelegate
     #Main Window Housekeeping
     on housekeeping:sender
         global fileName2
+        global fileName3
         fileName's setStringValue:""
         fileName's setToolTip:""
         startButton's setEnabled:false
         set fileName2 to ""
+        set fileName3 to ""
     end housekeeping:
     
     #Install Window Housekeeping
     on houseKeepingInstall:sender
+        global usernameValue
+        global password1Value
+        global password2Value
         username's setStringValue:""
         password1's setStringValue:""
         password2's setStringValue:""
         set usernameValue to ""
         set password1Value to ""
         set password2Value to ""
+        theDate's setEnabled:false
+        theDate's setHidden:true
+        installButton's setEnabled:false
+        installButtonAlt's setEnabled:false
+        installButton's setHidden:false
+        backButton's setHidden:false
+        installButtonAlt's setHidden:true
+        backButtonAlt's setHidden:true
+        displayDate's setStringValue:""
+        displayDate's setHidden:true
         installWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
         checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
