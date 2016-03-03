@@ -42,7 +42,6 @@ script AppDelegate
     property regSerial : missing value
     property isBusy : false
     property fromStart : true
-    property isLicensed : false
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
     
@@ -141,6 +140,7 @@ script AppDelegate
     
     #Password Value Check Function
     on checkPasswords()
+        global isLicensed
         set password1String to (stringValue() of password1) as string
         set password2String to (stringValue() of password2) as string
         if password1String is equal to password2String and password1String is not "" then
@@ -198,11 +198,12 @@ script AppDelegate
     end checkRegistration
     
     #Check License Key Function
-    on checkLicenseKey()
+    on checkLicenseKey:sender
         global regFirstNameString
         global regEmailString
         global regOrgString
         global regSerialString
+        global isLicensed
         set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
         if regSerialString is not equal to lickey then
             display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
@@ -210,7 +211,7 @@ script AppDelegate
         else
             set isLicensed to true
             do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed -bool true"
-            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString with title "SkeleKey Manager" buttons {"OK"}
+            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Please return to the main window to use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
             registrationWindow's orderOut:sender
         end if
     end checkLicenseKey
@@ -397,6 +398,7 @@ script AppDelegate
     on destApp:sender
         global delApp
         global fileName3
+        global isLicensed
         try
             set delApp to choose file of type "com.apple.application-bundle" default location fileName3
             set delApp to POSIX path of delApp
@@ -437,6 +439,7 @@ script AppDelegate
     
     #Tutorial Screen Button Function
     on gotit:sender
+        global isLicensed
         if isLicensed is false then
             registrationWindow's makeKeyAndOrderFront:me
         end if
@@ -451,11 +454,6 @@ script AppDelegate
         end if
         tutorialWindow's orderOut:sender
     end gotit:
-    
-    #Registration Window Button Function
-    on registrationButton:sender
-        checkLicenseKey()
-    end registrationButton:
     
     #Tutorial Window Button Function
     on welcomeNext:sender
@@ -522,7 +520,7 @@ script AppDelegate
     end cancelDel:
     
     #Remove Window Complete Function
-    on finishedDel:sender
+    on finishedDel()
         houseKeepingDel_()
         loadingWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
@@ -542,6 +540,7 @@ script AppDelegate
     
     #On-startup Function
     on applicationWillFinishLaunching:aNotification
+        global isLicensed
         set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
         set notInstalledString to ""
         try
@@ -569,7 +568,7 @@ script AppDelegate
                 set isLicensed to true
             end if
         on error
-            set licensedValue to "0"
+            set isLicensed to false
         end try
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"

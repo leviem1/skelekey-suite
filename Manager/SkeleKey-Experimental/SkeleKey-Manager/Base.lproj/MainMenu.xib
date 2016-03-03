@@ -1472,7 +1472,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="registrationButton:" target="Voe-Tx-rLC" id="2Ox-ob-Bu0"/>
+                            <action selector="checkLicenseKey:" target="Voe-Tx-rLC" id="4dp-es-KoO"/>
                         </connections>
                     </button>
                 </subviews>
