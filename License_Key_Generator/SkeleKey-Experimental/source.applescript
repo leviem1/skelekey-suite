@@ -1,3 +1,10 @@
+--
+--  main.applescript
+--  SkeleKey-LicenseKeyGenerator
+--
+--  Created by Mark Hedrick on 02/23/16.
+--  Copyright (c) 2016 Mark Hedrick. All rights reserved.
+--
 set lickey to ""
 set orgexists to "0"
 display dialog "This software should only be used by the SkeleKey Team"
