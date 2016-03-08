@@ -2,6 +2,7 @@
 set drive_names to {}
 set drive_uuids to {}
 set epasses to {}
+set sk_names to {}
 set ucreds to {}
 set pcreds to {}
 set matching_users to {}
@@ -64,15 +65,24 @@ set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
 set discoverVol to get paragraphs of discoverVol
 
 repeat with vol in discoverVol --Find Volumes with SkeleKey's
-	set vol to replace_chars(vol, " ", "\\ ")
-	if (do shell script "if test -e /Volumes/" & vol & "/*-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin; then echo \"1\";fi") is "1" then
-		set drive_names to drive_names & vol
-	end if
+	try
+		set vol to replace_chars(vol, " ", "\\ ")
+		set findSKA to do shell script "cd /Volumes/" & vol & "; find . -type d -name \"*-SkeleKey-Applet.app\""
+		if findSKA is not "" then
+			set drive_names to drive_names & vol
+		end if
+	on error
+		quit
+	end try
 end repeat
 
 repeat with vol in drive_names --Find that Volume's UUID
-	set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
-	set drive_uuids to drive_uuids & uuid
+	try
+		set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
+		set drive_uuids to drive_uuids & uuid
+	on error
+		quit
+	end try
 end repeat
 
 repeat with uuid in drive_uuids --Convert UUID to the epass
@@ -90,10 +100,22 @@ end repeat
 
 repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in the computer
 	repeat with drive in drive_names
-		set username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/*-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '1q;d'")
-		set passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/*-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '2q;d'")
-		set ucreds to ucreds & username
-		set pcreds to pcreds & passwd
+		set detect_skeles to do shell script "cd /Volumes/" & drive & "; ls *-SkeleKey-Applet.app | grep -v \"Contents\""
+		set detect_skeles to paragraphs of detect_skeles
+		
+		repeat with name_ in detect_skeles
+			if name_ contains "-SkeleKey-Applet.app" then
+				set name_ to do shell script "echo '" & name_ & "' | awk -F- '{print $1}'"
+				set sk_names to sk_names & name_
+			end if
+		end repeat
+		
+		repeat with skname in sk_names
+			set username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '1q;d'")
+			set passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '2q;d'")
+			set ucreds to ucreds & username
+			set pcreds to pcreds & passwd
+		end repeat
 	end repeat
 end repeat
 
@@ -105,16 +127,21 @@ repeat with users in ucreds --Check if SkeleKey users match local users
 	end if
 end repeat
 
-try --Attempt to authenticate with those users
-	set test_ to do shell script "sudo echo elevate" user name matching_users password passwd with administrator privileges
-	set test_ to "YES"
-on error
-	set test_ to "NO"
-end try
+repeat with user_ in matching_users
+	repeat with pass in pcreds
+		try --Attempt to authenticate with those users
+			set test_ to do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
+			set uname to user_
+			set passwd to pass
+			exit repeat
+			exit repeat
+		on error
+			quit
+		end try
+	end repeat
+end repeat
 
-if test_ is not equal to "YES" then --If cant authenticate, error out
-	say "error!"
-end if
+
 set uname to matching_users as string
 set passwd to passwd as string
 set secag to "SecurityAgent"
