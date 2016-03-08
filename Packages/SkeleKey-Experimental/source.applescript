@@ -67,7 +67,6 @@ on error
 	quit
 end try
 
-
 #Attempt to install all packages located in the pkgs folder assuming they are allowed below
 set allowed_pkgs to {"TestNav_Installer.pkg"}
 try
@@ -79,12 +78,11 @@ on error
 end try
 set trusted_pkgs to comparator(allowed_pkgs, pkg_names)
 
-try
-	repeat with pkg in trusted_pkgs
-		do shell script "cd " & UnixPath2 & "; sudo installer -pkg \"" & pkg & "\" -target /" user name "stuadmin" password pw with administrator privileges
+repeat with pkg in trusted_pkgs
+	try
+		do shell script "cd " & UnixPath2 & "; sudo installer -allowUntrusted -pkg \"" & pkg & "\" -target /" user name "stuadmin" password pw with administrator privileges
 		display notification "Successfully Installed:" & space & pkg with title "SkeleKey-Packages"
-	end repeat
-on error
-	display dialog "ERROR! Could not install payload(s)!" with title "SkeleKey-Packages" buttons "OK" default button 1
-	quit
-end try
+	on error
+		display dialog "ERROR! Could not install " & pkg & "!" with title "SkeleKey-Packages" buttons "OK" default button 1
+	end try
+end repeat
