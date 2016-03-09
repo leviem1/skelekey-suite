@@ -37,7 +37,7 @@ set UnixPath4 to UnixPath & "Contents/"
 set UnixPath5 to UnixPath & "Contents/Resources/"
 
 #Do not run if this program is executed after specified date
-set exp_date to do shell script "echo '" & exp_date & "' | base64 -D"
+set exp_date to do shell script "printf '" & exp_date & "' | base64 -D"
 set current_date to do shell script "date -u +%s"
 if current_date is greater than or equal to exp_date then
 	display dialog "This installation package has expired! Now quitting..." with title "SkeleKey-Packages" buttons "OK" default button 1
@@ -54,14 +54,16 @@ on error
 end try
 
 #Attempt to authenticate with all passwords located in the secure password array
+repeat with pw in pws
+	try
+		do shell script "sudo echo elevate" user name "stuadmin" password pw with administrator privileges
+		set pw_now to pw
+		exit repeat
+	end try
+end repeat
+
 try
-	repeat with pw in pws
-		try
-			do shell script "sudo echo elevate" user name "stuadmin" password pw with administrator privileges
-			set pw to pw
-			exit repeat
-		end try
-	end repeat
+	set pw to pw_now
 on error
 	display dialog "ERROR! Could not authenticate!" with title "SkeleKey-Packages" buttons "OK" default button 1
 	quit
@@ -76,6 +78,7 @@ on error
 	display dialog "ERROR! Could not find payload!" with title "SkeleKey-Packages" buttons "OK" default button 1
 	quit
 end try
+
 set trusted_pkgs to comparator(allowed_pkgs, pkg_names)
 
 repeat with pkg in trusted_pkgs
