@@ -87,12 +87,11 @@ script AppDelegate
         try
             if result contains "10.11" then
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
-                else
+            else
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','org.district70.sebs.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
-            on error
-            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-            quit
+        on error
+            error number 102
         end try
     end assistiveaccess
     
@@ -107,9 +106,8 @@ script AppDelegate
         try
             do shell script "sudo echo elevate" user name username password passwd with administrator privileges
             
-            on error
-            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-            quit
+        on error
+            error number 101
         end try
     end checkadmin
     
@@ -117,7 +115,7 @@ script AppDelegate
         set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list
         if username is not in localusers then
             display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-            else
+        else
             try
                 tell application "System Events" to tell process "SecurityAgent"
                 set value of text field 1 of window 1 to username
@@ -125,44 +123,52 @@ script AppDelegate
                 click button 2 of window 1
                 end tell
             on error
-                display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-                quit
+                error number 103
             end try
         end if
     end auth
 
     on main()
         global UnixPath
-        set UnixPath to POSIX path of (path to current application as text)
-        set volumepath to UnixPath
-        set UnixPath to replace_chars(UnixPath, "//", "/")
-        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
-        set volumepath to POSIX path of ((path to current application as text) & "::")
-        set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-        set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
-        set volumepath to "/Volumes/" & volumepath
-        set volumepath to replace_chars(volumepath, " ", "\\ ")
-        set authcred to decryptinfo(volumepath, authinfobin)
-        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
-        assistiveaccess(item 1 of authcred, item 2 of authcred)
-        auth(item 1 of authcred, item 2 of authcred)
-        quit
+        try
+            set UnixPath to POSIX path of (path to current application as text)
+            set volumepath to UnixPath
+            set UnixPath to replace_chars(UnixPath, "//", "/")
+            set UnixPath to replace_chars(UnixPath, " ", "\\ ")
+            set volumepath to POSIX path of ((path to current application as text) & "::")
+            set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
+            set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
+            set volumepath to "/Volumes/" & volumepath
+            set volumepath to replace_chars(volumepath, " ", "\\ ")
+            set authcred to decryptinfo(volumepath, authinfobin)
+            checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
+            assistiveaccess(item 1 of authcred, item 2 of authcred)
+            auth(item 1 of authcred, item 2 of authcred)
+        on error number errorNumber
+            if errorNumber is 101 then
+                display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+                return
+            else if errorNumber is 102 then
+                display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+                return
+            else if errorNumber is 103 then
+                display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+                return
+            end if
+        end try
     end main
 
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup", "sh", "srm"}
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm"}
         set notInstalledString to ""
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
             if status is "127" then
-                set notInstalledString to notInstalledString & i & "
-                "
+                set notInstalledString to notInstalledString & i & "\n"
             end if
         end repeat
         if notInstalledString is not "" then
-            display alert "The following required items are not installed:
-
-            " & notInstalledString buttons "Quit"
+            display alert "The following required items are not installed:\n\n" & notInstalledString buttons "Quit"
             quit
         end if
         main()
