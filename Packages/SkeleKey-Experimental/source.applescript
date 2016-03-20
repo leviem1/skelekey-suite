@@ -7,7 +7,7 @@
 --
 
 property vkey : "ff685d05f6f43397451657157e19764e"
-property exp_date : "MTQ1ODExMTY0Ngo=" --March 15th @ midnight MST!
+property exp_date : "MTQ1ODA1NDQ5Mgo=" --March 15th @ midnight MST!
 
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
@@ -70,7 +70,7 @@ on error
 end try
 
 #Attempt to install all packages located in the pkgs folder assuming they are allowed below
-set allowed_pkgs to {"TestNav_Installer.pkg"}
+set allowed_pkgs to {"Capstone.pkg"}
 try
 	set pkg_names to do shell script "cd " & UnixPath2 & "; ls *.pkg"
 	set pkg_names to paragraphs of pkg_names

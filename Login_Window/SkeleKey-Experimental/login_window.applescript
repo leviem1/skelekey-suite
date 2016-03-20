@@ -61,9 +61,15 @@ on returnNumbersInString(inputString)
 	end repeat
 	return numlist
 end returnNumbersInString
-set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
-set discoverVol to get paragraphs of discoverVol
 
+
+try
+	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+on error
+	quit
+end try
+
+set discoverVol to get paragraphs of discoverVol
 repeat with vol in discoverVol --Find Volumes with SkeleKey's
 	try
 		set vol to replace_chars(vol, " ", "\\ ")
@@ -72,9 +78,10 @@ repeat with vol in discoverVol --Find Volumes with SkeleKey's
 			set drive_names to drive_names & vol
 		end if
 	on error
-		quit
+		#quit
 	end try
 end repeat
+(*
 
 repeat with vol in drive_names --Find that Volume's UUID
 	try
@@ -98,9 +105,10 @@ repeat with uuid in drive_uuids --Convert UUID to the epass
 	set epasses to epasses & epass
 end repeat
 
+
 repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in the computer
 	repeat with drive in drive_names
-		set detect_skeles to do shell script "cd /Volumes/" & drive & "; ls *-SkeleKey-Applet.app | grep -v \"Contents\""
+		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  find . -type d -name \"*-SkeleKey-Applet.app\""
 		set detect_skeles to paragraphs of detect_skeles
 		
 		repeat with name_ in detect_skeles
@@ -109,7 +117,6 @@ repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in 
 				set sk_names to sk_names & name_
 			end if
 		end repeat
-		
 		repeat with skname in sk_names
 			set username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '1q;d'")
 			set passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '2q;d'")
@@ -119,7 +126,11 @@ repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in 
 	end repeat
 end repeat
 
-set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
+try
+	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
+on error
+	quit
+end try
 
 repeat with users in ucreds --Check if SkeleKey users match local users
 	if users is in localusers then
@@ -127,23 +138,26 @@ repeat with users in ucreds --Check if SkeleKey users match local users
 	end if
 end repeat
 
-repeat with user_ in matching_users
-	repeat with pass in pcreds
-		try --Attempt to authenticate with those users
-			set test_ to do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
-			set uname to user_
-			set passwd to pass
-			exit repeat
-			exit repeat
-		on error
-			quit
-		end try
+if matching_users is not "" then
+	repeat with user_ in matching_users
+		repeat with pass in pcreds
+			try --Attempt to authenticate with those users
+				do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
+				set uname to user_
+				set passwd to pass
+				exit repeat
+			on error
+				quit
+			end try
+		end repeat
 	end repeat
-end repeat
-
+else
+	quit
+end if
 
 set uname to matching_users as string
 set passwd to passwd as string
+
 set secag to "SecurityAgent"
 
 try --Figure out login screen mechanism
@@ -198,3 +212,4 @@ else if text_based is "0" then --If using user image, use this method
 		end try
 	end if
 end if
+*)
