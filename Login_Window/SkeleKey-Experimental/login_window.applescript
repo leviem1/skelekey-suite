@@ -39,6 +39,9 @@ set nine to sha512256 & md5 & rev_e
 set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
 set encstring to ""
 set epass to ""
+set uname to ""
+set passwd to ""
+set secag to "SecurityAgent"
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
 	set the item_list to every text item of this_text
@@ -62,11 +65,10 @@ on returnNumbersInString(inputString)
 	return numlist
 end returnNumbersInString
 
-
 try
 	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
 on error
-	quit
+	#quit
 end try
 
 set discoverVol to get paragraphs of discoverVol
@@ -81,14 +83,13 @@ repeat with vol in discoverVol --Find Volumes with SkeleKey's
 		#quit
 	end try
 end repeat
-(*
 
 repeat with vol in drive_names --Find that Volume's UUID
 	try
 		set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
 		set drive_uuids to drive_uuids & uuid
 	on error
-		quit
+		#quit
 	end try
 end repeat
 
@@ -104,7 +105,6 @@ repeat with uuid in drive_uuids --Convert UUID to the epass
 	end if
 	set epasses to epasses & epass
 end repeat
-
 
 repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in the computer
 	repeat with drive in drive_names
@@ -125,11 +125,10 @@ repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in 
 		end repeat
 	end repeat
 end repeat
-
 try
 	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
 on error
-	quit
+	#quit
 end try
 
 repeat with users in ucreds --Check if SkeleKey users match local users
@@ -143,49 +142,40 @@ if matching_users is not "" then
 		repeat with pass in pcreds
 			try --Attempt to authenticate with those users
 				do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
+				
 				set uname to user_
 				set passwd to pass
 				exit repeat
+				exit repeat
 			on error
-				quit
+				#quit
 			end try
 		end repeat
 	end repeat
 else
-	quit
+	#quit
 end if
 
-set uname to matching_users as string
-set passwd to passwd as string
-
-set secag to "SecurityAgent"
-
-try --Figure out login screen mechanism
-	set test_for_fn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
-	if test_for_fn is "true" then
-		set text_based to "1"
-	else if test_for_fn is "false" then
-		set text_based to "0"
-	else
-		set text_based to "0"
-	end if
-on error
-	set text_based to "0"
-end try
-
-if text_based is "1" then --If using uname/pass fields, use this method
+--try --Figure out login screen mechanism
+set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
+say "Nice value"
+if test_for_txtlgn is "true" then --text version of login window
 	try
 		do shell script "killall SecurityAgent; killall SystemUIServer"
 	end try
 	delay 5
 	tell application "System Events" to tell process secag to activate
-	tell application "Bluetooth Setup Assistant" to quit
+	try
+		tell application "Bluetooth Setup Assistant" to quit
+	end try
+	say "Quit stuff"
 	tell application "System Events"
 		tell process "SecurityAgent"
 			set value of text field 2 of window "Login" to uname
 			set value of text field 1 of window "Login" to passwd
 		end tell
 	end tell
+	say "Fill field"
 	if drive is not "Macintosh HD" or ".DS_Store" then
 		try
 			do shell script "diskutil umount /Volumes/" & drive
@@ -193,12 +183,15 @@ if text_based is "1" then --If using uname/pass fields, use this method
 			do shell script "diskutil unmountDisk /Volumes/" & drive
 		end try
 	end if
-else if text_based is "0" then --If using user image, use this method
+	say "Works"
+else --not text version of login window NOTE: haven't tested below yet.
 	try
 		do shell script "killall SecurityAgent; killall SystemUIServer"
 	end try
 	tell application "System Events" to tell process secag to activate
-	tell application "Bluetooth Setup Assistant" to quit
+	try
+		tell application "Bluetooth Setup Assistant" to quit
+	end try
 	tell application "System Events"
 		tell process "SecurityAgent"
 			set value of text field 1 of window "Login" to passwd
@@ -212,4 +205,4 @@ else if text_based is "0" then --If using user image, use this method
 		end try
 	end if
 end if
-*)
+--end try
