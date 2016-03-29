@@ -68,7 +68,7 @@ on returnNumbersInString(inputString)
 end returnNumbersInString
 
 try
-	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+	set discoverVol to do shell script "diskutil list | grep -A7 \"external\" | awk '{ print $3 }' | grep -v \"physical):\" | grep -v \"NAME\" | grep -v \"*\""
 on error
 	#quit
 end try
@@ -94,7 +94,6 @@ repeat with vol in drive_names --Find that Volume's UUID
 		#quit
 	end try
 end repeat
-
 repeat with uuid in drive_uuids --Convert UUID to the epass
 	set nums to returnNumbersInString(uuid)
 	repeat with char in nums
@@ -107,7 +106,6 @@ repeat with uuid in drive_uuids --Convert UUID to the epass
 	end if
 	set epasses to epasses & epass
 end repeat
-
 repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in the computer
 	repeat with drive in drive_names
 		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  find . -type d -name \"*-SkeleKey-Applet.app\""
@@ -132,13 +130,11 @@ try
 on error
 	#quit
 end try
-
 repeat with users in ucreds --Check if SkeleKey users match local users
 	if users is in localusers then
 		set matching_users to matching_users & users
 	end if
 end repeat
-
 if matching_users is not "" then
 	#create SkeleKey Login Window User Authenticator AS
 	do shell script "echo 'on run arg
@@ -166,15 +162,19 @@ end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
 else
 	#quit
 end if
-#delay 3
 do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
 
---try --Figure out login screen mechanism
+
+set OS to do shell script "sw_vers -productVersion"
+
+if OS is not "10.11" then --fix 10.10 login screen issue, simulate a fake logout
+	do shell script "/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+end if
+
 set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
-say "Nice value"
 if test_for_txtlgn is "true" then --text version of login window
 	try
-		do shell script "killall SecurityAgent; killall SystemUIServer"
+		do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
 	end try
 	delay 5
 	try
@@ -183,14 +183,15 @@ if test_for_txtlgn is "true" then --text version of login window
 	try
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
-	say "Quit stuff"
 	tell application "System Events"
+		delay 1
 		tell process "SecurityAgent"
 			set value of text field 2 of window "Login" to uname
 			set value of text field 1 of window "Login" to passwd
+			keystroke tab
+			keystroke return
 		end tell
 	end tell
-	say "Fill field"
 	if drive is not "Macintosh HD" or ".DS_Store" then
 		try
 			do shell script "diskutil umount /Volumes/" & drive
@@ -198,12 +199,13 @@ if test_for_txtlgn is "true" then --text version of login window
 			do shell script "diskutil unmountDisk /Volumes/" & drive
 		end try
 	end if
-	say "Works"
 else --not text version of login window NOTE: haven't tested below yet.
 	try
 		do shell script "killall SecurityAgent; killall SystemUIServer"
 	end try
-	tell application "System Events" to tell process secag to activate
+	try
+		tell application "System Events" to tell process secag to activate
+	end try
 	try
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
@@ -219,5 +221,6 @@ else --not text version of login window NOTE: haven't tested below yet.
 			do shell script "diskutil unmountDisk /Volumes/" & drive
 		end try
 	end if
+	
 end if
 --end try
