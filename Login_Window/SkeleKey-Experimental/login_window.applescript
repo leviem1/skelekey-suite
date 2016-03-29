@@ -42,6 +42,7 @@ set epass to ""
 set uname to ""
 set passwd to ""
 set secag to "SecurityAgent"
+set didWorked to false
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
 	set the item_list to every text item of this_text
@@ -145,12 +146,15 @@ if matching_users is not "" then
 				
 				set uname to user_
 				set passwd to pass
-				exit repeat
+				set didWorked to true
 				exit repeat
 			on error
 				#quit
 			end try
 		end repeat
+		if didWorked is equal to true then
+			exit repeat
+		end if
 	end repeat
 else
 	#quit
@@ -164,7 +168,9 @@ if test_for_txtlgn is "true" then --text version of login window
 		do shell script "killall SecurityAgent; killall SystemUIServer"
 	end try
 	delay 5
-	tell application "System Events" to tell process secag to activate
+	try
+		tell application "System Events" to tell process secag to activate
+	end try
 	try
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
