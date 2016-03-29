@@ -168,8 +168,7 @@ else
 end if
 #delay 3
 do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
-display dialog uname & space & passwd
-(*
+
 --try --Figure out login screen mechanism
 set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
 say "Nice value"
@@ -222,4 +221,3 @@ else --not text version of login window NOTE: haven't tested below yet.
 	end if
 end if
 --end try
-*)
