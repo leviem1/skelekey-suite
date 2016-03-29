@@ -43,6 +43,7 @@ set uname to ""
 set passwd to ""
 set secag to "SecurityAgent"
 set didWorked to false
+set randStr to do shell script "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1"
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
 	set the item_list to every text item of this_text
@@ -139,27 +140,36 @@ repeat with users in ucreds --Check if SkeleKey users match local users
 end repeat
 
 if matching_users is not "" then
+	#create SkeleKey Login Window User Authenticator AS
+	do shell script "echo 'on run arg
+	set uname to item 1 of arg
+	set passwd to item 2 of arg
+	try
+		do shell script \"sudo echo elevate\" user name uname password passwd with administrator privileges
+		return uname & \"
+\" & passwd
+	on error
+		return \"auth error\"
+	end try
+end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
 	repeat with user_ in matching_users
 		repeat with pass in pcreds
-			try --Attempt to authenticate with those users
-				do shell script "sudo echo elevate" user name user_ password pass with administrator privileges
-				
-				set uname to user_
-				set passwd to pass
-				set didWorked to true
-				exit repeat
-			on error
-				#quit
-			end try
-		end repeat
-		if didWorked is equal to true then
+			#try --Attempt to authenticate with those users
+			set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript " & user_ & space & pass
+			set auth to paragraphs of auth
+			set uname to item 1 of auth
+			set passwd to item 2 of auth
 			exit repeat
-		end if
+		end repeat
+		exit repeat
 	end repeat
 else
 	#quit
 end if
-
+#delay 3
+do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
+display dialog uname & space & passwd
+(*
 --try --Figure out login screen mechanism
 set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
 say "Nice value"
@@ -212,3 +222,4 @@ else --not text version of login window NOTE: haven't tested below yet.
 	end if
 end if
 --end try
+*)
