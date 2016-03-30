@@ -6,6 +6,7 @@ set sk_names to {}
 set ucreds to {}
 set pcreds to {}
 set matching_users to {}
+set validVols to {}
 set text_based to "0"
 set secag to "SecurityAgent"
 set md5 to " md5 | "
@@ -67,14 +68,21 @@ on returnNumbersInString(inputString)
 	return numlist
 end returnNumbersInString
 
-try
-	set discoverVol to do shell script "diskutil list | grep -A7 \"external\" | awk '{ print $3 }' | grep -v \"physical):\" | grep -v \"NAME\" | grep -v \"*\""
-on error
-	#quit
-end try
-
+set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
 set discoverVol to get paragraphs of discoverVol
-repeat with vol in discoverVol --Find Volumes with SkeleKey's
+repeat with vol in discoverVol
+	set vol to replace_chars(vol, " ", "\\ ")
+	try
+		set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+	on error
+		set isValid to "False"
+	end try
+	if isValid is "USB" then
+		set validVols to validVols & {vol}
+	end if
+end repeat
+
+repeat with vol in validVols --Find Volumes with SkeleKey's
 	try
 		set vol to replace_chars(vol, " ", "\\ ")
 		set findSKA to do shell script "cd /Volumes/" & vol & "; find . -type d -name \"*-SkeleKey-Applet.app\""
