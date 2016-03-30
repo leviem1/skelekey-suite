@@ -9,6 +9,12 @@ set matching_users to {}
 set validVols to {}
 set text_based to "0"
 set secag to "SecurityAgent"
+set encstring to ""
+set epass to ""
+set uname to ""
+set passwd to ""
+
+#Start encryption algorithms
 set md5 to " md5 | "
 set md5_e to " md5"
 set base64 to " base64 | "
@@ -38,13 +44,8 @@ set seven to sha384 & base64_e
 set eight to base64 & md5_e
 set nine to sha512256 & md5 & rev_e
 set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
-set encstring to ""
-set epass to ""
-set uname to ""
-set passwd to ""
-set secag to "SecurityAgent"
-set didWorked to false
-set randStr to do shell script "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1"
+
+#Essential Functions
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
 	set the item_list to every text item of this_text
@@ -68,8 +69,13 @@ on returnNumbersInString(inputString)
 	return numlist
 end returnNumbersInString
 
-set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
-set discoverVol to get paragraphs of discoverVol
+#Find Suitable USB Volumes
+try
+	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+	set discoverVol to get paragraphs of discoverVol
+on error
+	return "Could not list volumes!"
+end try
 repeat with vol in discoverVol
 	set vol to replace_chars(vol, " ", "\\ ")
 	try
@@ -81,8 +87,7 @@ repeat with vol in discoverVol
 		set validVols to validVols & {vol}
 	end if
 end repeat
-
-repeat with vol in validVols --Find Volumes with SkeleKey's
+repeat with vol in validVols
 	try
 		set vol to replace_chars(vol, " ", "\\ ")
 		set findSKA to do shell script "cd /Volumes/" & vol & "; find . -type d -name \"*-SkeleKey-Applet.app\""
@@ -94,7 +99,8 @@ repeat with vol in validVols --Find Volumes with SkeleKey's
 	end try
 end repeat
 
-repeat with vol in drive_names --Find that Volume's UUID
+#Find Suitable Volume's UUID
+repeat with vol in drive_names
 	try
 		set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
 		set drive_uuids to drive_uuids & uuid
@@ -102,6 +108,8 @@ repeat with vol in drive_names --Find that Volume's UUID
 		#quit
 	end try
 end repeat
+
+#Create Possible Epasses
 repeat with uuid in drive_uuids --Convert UUID to the epass
 	set nums to returnNumbersInString(uuid)
 	repeat with char in nums
@@ -114,7 +122,9 @@ repeat with uuid in drive_uuids --Convert UUID to the epass
 	end if
 	set epasses to epasses & epass
 end repeat
-repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in the computer
+
+#Decrypt all Suitable SkeleKey credentials
+repeat with epass_str in epasses
 	repeat with drive in drive_names
 		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  find . -type d -name \"*-SkeleKey-Applet.app\""
 		set detect_skeles to paragraphs of detect_skeles
@@ -133,19 +143,25 @@ repeat with epass_str in epasses --Attempt to decrypt all SkeleKey's plugged in 
 		end repeat
 	end repeat
 end repeat
+
+#Check local users against matching users
 try
 	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
 on error
 	#quit
 end try
-repeat with users in ucreds --Check if SkeleKey users match local users
+repeat with users in ucreds
 	if users is in localusers then
 		set matching_users to matching_users & users
 	end if
 end repeat
-if matching_users is not "" then
-	#create SkeleKey Login Window User Authenticator AS
-	do shell script "echo 'on run arg
+
+#Attempt to find matching credentials
+try
+	if matching_users is not "" then
+		
+		set randStr to do shell script "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1"
+		do shell script "echo 'on run arg
 	set uname to item 1 of arg
 	set passwd to item 2 of arg
 	try
@@ -156,79 +172,92 @@ if matching_users is not "" then
 		return \"auth error\"
 	end try
 end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
-	repeat with user_ in matching_users
-		repeat with pass in pcreds
-			#try --Attempt to authenticate with those users
-			set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript " & user_ & space & pass
-			set auth to paragraphs of auth
-			set uname to item 1 of auth
-			set passwd to item 2 of auth
+		repeat with user_ in matching_users
+			repeat with pass in pcreds
+				set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript " & user_ & space & pass
+				set auth to paragraphs of auth
+				set uname to item 1 of auth
+				set passwd to item 2 of auth
+				exit repeat
+			end repeat
 			exit repeat
 		end repeat
-		exit repeat
-	end repeat
-else
-	#quit
-end if
-do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
+	else
+		#quit
+	end if
+	do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
+on error
+	return "Could not authenticate with any of the provided credentials!"
+end try
 
-
-set OS to do shell script "sw_vers -productVersion"
-
-if OS is not "10.11" then --fix 10.10 login screen issue, simulate a fake logout
+#Attempt to find OS version and make changes to login method if necessary
+try
+	set OS to do shell script "sw_vers -productVersion"
+on error
+	return "Could not determine OS X version!"
+end try
+if OS is not greater than "10.10" then --fix 10.10 login screen issue, simulate a fake logout
 	do shell script "/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 end if
 
-set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
-if test_for_txtlgn is "true" then --text version of login window
-	try
-		do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
-	end try
-	delay 5
-	try
-		tell application "System Events" to tell process secag to activate
-	end try
-	try
-		tell application "Bluetooth Setup Assistant" to quit
-	end try
-	tell application "System Events"
-		delay 1
-		tell process "SecurityAgent"
-			set value of text field 2 of window "Login" to uname
-			set value of text field 1 of window "Login" to passwd
-			keystroke tab
-			keystroke return
-		end tell
-	end tell
-	if drive is not "Macintosh HD" or ".DS_Store" then
+#Figure out login window scheme
+try
+	set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
+end try
+
+#Modify login window fields with credentials
+try
+	if test_for_txtlgn is "true" then
 		try
-			do shell script "diskutil umount /Volumes/" & drive
-		on error
-			do shell script "diskutil unmountDisk /Volumes/" & drive
+			do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
 		end try
-	end if
-else --not text version of login window NOTE: haven't tested below yet.
-	try
-		do shell script "killall SecurityAgent; killall SystemUIServer"
-	end try
-	try
-		tell application "System Events" to tell process secag to activate
-	end try
-	try
-		tell application "Bluetooth Setup Assistant" to quit
-	end try
-	tell application "System Events"
-		tell process "SecurityAgent"
-			set value of text field 1 of window "Login" to passwd
-		end tell
-	end tell
-	if drive is not "Macintosh HD" or ".DS_Store" then
+		delay 5
 		try
-			do shell script "diskutil umount /Volumes/" & drive
-		on error
-			do shell script "diskutil unmountDisk /Volumes/" & drive
+			tell application "System Events" to tell process secag to activate
 		end try
+		try
+			tell application "Bluetooth Setup Assistant" to quit
+		end try
+		tell application "System Events"
+			delay 1
+			tell process "SecurityAgent"
+				set value of text field 2 of window "Login" to uname
+				set value of text field 1 of window "Login" to passwd
+				keystroke tab
+				keystroke return
+			end tell
+		end tell
+		if drive is not "Macintosh HD" or ".DS_Store" then
+			try
+				do shell script "diskutil umount /Volumes/" & drive
+			on error
+				do shell script "diskutil unmountDisk /Volumes/" & drive
+			end try
+		end if
+	else --not text version of login window NOTE: haven't tested below yet.
+		try
+			do shell script "killall SecurityAgent; killall SystemUIServer"
+		end try
+		try
+			tell application "System Events" to tell process secag to activate
+		end try
+		try
+			tell application "Bluetooth Setup Assistant" to quit
+		end try
+		tell application "System Events"
+			tell process "SecurityAgent"
+				set value of text field 1 of window "Login" to passwd
+			end tell
+		end tell
+		if drive is not "Macintosh HD" or ".DS_Store" then
+			try
+				do shell script "diskutil umount /Volumes/" & drive
+			on error
+				do shell script "diskutil unmountDisk /Volumes/" & drive
+			end try
+		end if
+		
 	end if
-	
-end if
---end try
+on error
+	return "Could not manipulate the Login Window. Make sure you are at the login window before continuing, or perhaps Accessibility isn't configured properly?"
+end try
