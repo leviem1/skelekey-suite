@@ -19,22 +19,22 @@ on licensekeygen(myname, myemail, myorg, orgexists)
 	if myorg is not equal to "" then
 		set orgexists to "1"
 	end if
-	set e_mn to do shell script "echo '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
+	set e_mn to do shell script "printf '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
 	set e_mn to characters 7 thru 11 of e_mn
-	set e_me to do shell script "echo '" & myemail & "' | base64 | rev | md5| fold -w3 | paste -sd'4' - "
+	set e_me to do shell script "printf '" & myemail & "' | base64 | rev | md5| fold -w3 | paste -sd'4' - "
 	set e_me to characters ((length of e_me) - 4) thru (length of e_me) of e_me
-	set e_mo to do shell script "echo '" & myorg & "' | base64 | md5 | rev | fold -w3 | paste -sd'K' - "
+	set e_mo to do shell script "printf '" & myorg & "' | base64 | md5 | rev | fold -w3 | paste -sd'K' - "
 	set e_mo to characters 4 thru 8 of e_mo
 	
-	set e_me2 to do shell script "echo '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
+	set e_me2 to do shell script "printf '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
 	set e_me2 to characters ((length of e_me2) - 4) thru (length of e_me2) of e_me2
 	
 	if orgexists is equal to "1" then
 		set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
-		set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+		set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
 	else
 		set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
-		set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+		set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
 	end if
 	return lickey
 end licensekeygen
