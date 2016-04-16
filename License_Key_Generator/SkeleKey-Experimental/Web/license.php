@@ -19,30 +19,19 @@ echo $_POST["org"];
 <?php
 ob_start();
 //My Name
-echo substr((chunk_split((base64_encode(md5(strrev($_POST["name"])))),4,"1")) , 6 , 5);
-$myname = ob_get_contents();
-ob_clean();
-#echo"<br>";
+$myname = substr((chunk_split((base64_encode(md5(strrev($_POST["name"])))),4,"1")) , 6 , 5);
 
 //My Email
-echo substr((chunk_split((md5(strrev(base64_encode($_POST["email"])))),3,"4")) , 2 , 5);
-$myemail = ob_get_contents();
-ob_clean();
+$myemail = substr((chunk_split((md5(strrev(base64_encode($_POST["email"])))),3,"4")) , 2 , 5);
+
 //My Org
 if(!empty($_POST["org"])) {
-    echo substr((chunk_split((strrev(md5(base64_encode($_POST["org"])))),3,"K")) , 15 , 5);
-    $myorg = ob_get_contents();
-    ob_clean();
+   $myorg = substr((chunk_split((strrev(md5(base64_encode($_POST["org"])))),3,"K")) , 15 , 5);
 } else {
-    echo substr((chunk_split((base64_encode(md5(md5($_POST["email"])))),4,"A")) , 3 , 5);
-    $myorg = ob_get_contents();
-    ob_clean();
+    $myorg = substr((chunk_split((base64_encode(md5(md5($_POST["email"])))),4,"A")) , 3 , 5);
 }
 
-echo(strtoupper("$myemail-$myname-$myorg"));
-$mykey = ob_get_contents();
-ob_clean();
-echo "SK-$mykey"
+echo strtoupper("SK-$myemail-$myname-$myorg");
     
 ?>
 </body>
