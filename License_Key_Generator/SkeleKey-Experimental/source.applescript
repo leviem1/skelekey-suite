@@ -19,15 +19,29 @@ on licensekeygen(myname, myemail, myorg, orgexists)
 	if myorg is not equal to "" then
 		set orgexists to "1"
 	end if
-	set e_mn to do shell script "printf '" & myname & "' | rev | md5 | base64 | fold -w4 | paste -sd'1' - "
-	set e_mn to characters 7 thru 11 of e_mn
-	set e_me to do shell script "printf '" & myemail & "' | base64 | rev | md5| fold -w3 | paste -sd'4' - "
-	set e_me to characters ((length of e_me) - 4) thru (length of e_me) of e_me
-	set e_mo to do shell script "printf '" & myorg & "' | base64 | md5 | rev | fold -w3 | paste -sd'K' - "
-	set e_mo to characters 4 thru 8 of e_mo
+	set e_mn to do shell script "printf \"" & myname & "\" | rev"
+	set e_mn to do shell script "printf \"" & e_mn & "\" | md5"
+	set e_mn to do shell script "printf \"" & e_mn & "\" | base64"
+	set e_mn to do shell script "printf \"" & e_mn & "\" | fold -w4 | paste -sd'1' - "
+	set e_mn to characters 7 thru 11 of e_mn as text
 	
-	set e_me2 to do shell script "printf '" & myemail & "' | md5 | md5 | base64| fold -w4 | paste -sd'A' - "
-	set e_me2 to characters ((length of e_me2) - 4) thru (length of e_me2) of e_me2
+	set e_me to do shell script "printf \"" & myemail & "\" | base64"
+	set e_me to do shell script "printf \"" & e_me & "\" | rev"
+	set e_me to do shell script "printf \"" & e_me & "\" | md5"
+	set e_me to do shell script "printf \"" & e_me & "\" | fold -w3 | paste -sd'4' - "
+	set e_me to characters 3 thru 7 of e_me as text
+	
+	set e_mo to do shell script "printf \"" & myorg & "\" | base64"
+	set e_mo to do shell script "printf \"" & e_mo & "\" | md5"
+	set e_mo to do shell script "printf \"" & e_mo & "\" | rev"
+	set e_mo to do shell script "printf \"" & e_mo & "\" | fold -w3 | paste -sd'K' - "
+	set e_mo to characters 16 thru 20 of e_mo as text
+	
+	set e_me2 to do shell script "printf \"" & myemail & "\" | md5"
+	set e_me2 to do shell script "printf \"" & e_me2 & "\" | md5"
+	set e_me2 to do shell script "printf \"" & e_me2 & "\" | base64"
+	set e_me2 to do shell script "printf \"" & e_me2 & "\" | fold -w4 | paste -sd'A' - "
+	set e_me2 to characters 4 thru 8 of e_me2 as text
 	
 	if orgexists is equal to "1" then
 		set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
