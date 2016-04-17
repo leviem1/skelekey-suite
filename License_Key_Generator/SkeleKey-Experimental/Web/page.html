@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 If you haven't already purchased your SkeleKey Suite license, you may do so by visiting our PayPal page here: &lt;link to our page&gt;.
 Once you have purchased a license, you will receive an email with a unique purchase code. Enter the purchase code for your order below, along with the same details entered at the time of purchase through PayPal. If the data entered matches our system, we will display your unique license code below to be entered into the SkeleKey Manager.
 
@@ -32,45 +31,33 @@ $name = $_POST["fname"];
 $email = $_POST["email"];
 $org = $_POST["org"];
 if ($name) {
-$conn = @new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-die("Failed to connect to the database");
-}
-$sql = "SELECT `pcode`, `name`, `email`, `org` FROM `licenses` WHERE pcode = '$pcode' && name = '$name' && email = '$email' && org = '$org'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-$myname = substr((chunk_split((base64_encode(md5(strrev($name)))),4,"1")) , 6 , 5);
-$myemail = substr((chunk_split((md5(strrev(base64_encode($email)))),3,"4")) , 2 , 5);
-if(!empty($_POST["org"])) {
-$myorg = substr((chunk_split((strrev(md5(base64_encode($org)))),3,"K")) , 15 , 5);
-} else {
-$myorg = substr((chunk_split((base64_encode(md5(md5($email)))),4,"A")) , 3 , 5);
-}
-echo "
-<header class=\"entry-header\">
-    <h1 class=\"entry-title single-title\" itemprop=\"headline\">License Details</h1>
-    <div class=\"colored-line-left\"></div>
-    <div class=\"clearfix\"></div>
-</header>
-<b>Full Name:</b> $name
-<b>Email:</b> $email
-<b>Organization:</b> $org
-<b>License Key:</b> " . strtoupper("<i>SK-$myemail-$myname-$myorg</i>");
-} else {
-echo("<strong>Purchase Code not found!<strong>");
+	$conn = @new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Failed to connect to the database");
+	}
+	$sql = "SELECT `pcode`, `name`, `email`, `org` FROM `licenses` WHERE pcode = '$pcode' && name = '$name' && email = '$email' && org = '$org'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		$myname = substr((chunk_split((base64_encode(md5(strrev($name)))),4,"1")) , 6 , 5);
+		$myemail = substr((chunk_split((md5(strrev(base64_encode($email)))),3,"4")) , 2 , 5);
+		if(!empty($_POST["org"])) {
+			$myorg = substr((chunk_split((strrev(md5(base64_encode($org)))),3,"K")) , 15 , 5);
+		} else {
+			$myorg = substr((chunk_split((base64_encode(md5(md5($email)))),4,"A")) , 3 , 5);
+		}
+		echo "
+		<header class=\"entry-header\">
+			<h1 class=\"entry-title single-title\" itemprop=\"headline\">License Details</h1>
+			<div class=\"colored-line-left\"></div>
+			<div class=\"clearfix\"></div>
+		</header>
+		<b>Full Name:</b> $name
+		<b>Email:</b> $email
+		<b>Organization:</b> $org
+		<b>License Key:</b> " . strtoupper("<i>SK-$myemail-$myname-$myorg</i>");
+	} else {
+		echo("<strong>Purchase Code not found!<strong>");
     }
     mysqli_close($conn);
-    }
-    [/insert_php]
-<a name="done"></a>
-=======
-<form action="/wp-content/uploads/license_generator/license.php" method="post">Full Name: <input name="name" required="required" type="text" />
-
-Email Address: <input name="email" required="required" type="text" />
-
-Organization <em>(optional)</em>: <input name="org" type="text" />
-
-<input type="submit" />
-
-</form>
->>>>>>> b4f99c2478d89fa3197e6734984ab836ad7f9e93
+}
+[/insert_php]
