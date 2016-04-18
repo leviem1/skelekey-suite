@@ -90,15 +90,15 @@ repeat with vol in discoverVol
 end repeat
 #return validVols --works
 repeat with vol in validVols
-#	try
-		set vol to replace_chars(vol, " ", "\\ ")
-		set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
-		if findSKA is not "" then
-			set drive_names to drive_names & vol
-		end if
-#	on error
-#		#quit
-#	end try
+	#	try
+	set vol to replace_chars(vol, " ", "\\ ")
+	set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
+	if findSKA is not "" then
+		set drive_names to drive_names & vol
+	end if
+	#	on error
+	#		#quit
+	#	end try
 end repeat
 #return drive_names --works
 #Find Suitable Volume's UUID
@@ -193,7 +193,7 @@ end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
 on error
 	return "Could not authenticate with any of the provided credentials!"
 end try
-
+#return passwd --works
 #Attempt to find OS version and make changes to login method if necessary
 try
 	set OS to do shell script "sw_vers -productVersion"
@@ -207,59 +207,70 @@ end if
 #Figure out login window scheme
 try
 	set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
+	if test_for_txtlgn is not "true" then
+		set test_for_txtlgn to "false"
+	end if
 end try
 #Modify login window fields with credentials
 --try
-if test_for_txtlgn is "true" then
-	try
-		do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
-	end try
-	delay 5
-	try
-		tell application "System Events" to tell process secag to activate
-	end try
-	try
-		tell application "Bluetooth Setup Assistant" to quit
-	end try
-	tell application "System Events"
-		delay 1
-		tell process "SecurityAgent"
-			set value of text field 2 of window "Login" to uname
-			set value of text field 1 of window "Login" to passwd
-			keystroke tab
-			keystroke return
-		end tell
-	end tell
-	if drive_ is not "Macintosh HD" or ".DS_Store" then
+#repeat 2 times
+	if test_for_txtlgn is "true" then
 		try
-			do shell script "diskutil umount /Volumes/" & drive_
-		on error
-			do shell script "diskutil unmountDisk /Volumes/" & drive_
+			repeat 3 times
+				do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
+			end repeat
 		end try
-	end if
-else --not text version of login window NOTE: haven't tested below yet.
-	try
-		do shell script "killall SecurityAgent; killall SystemUIServer"
-	end try
-	try
-		tell application "System Events" to tell process secag to activate
-	end try
-	try
-		tell application "Bluetooth Setup Assistant" to quit
-	end try
-	tell application "System Events"
-		tell process "SecurityAgent"
-			set value of text field 1 of window "Login" to passwd
-		end tell
-	end tell
-	if drive_ is not "Macintosh HD" or ".DS_Store" then
+		delay 5
 		try
-			do shell script "diskutil umount /Volumes/" & drive_
-		on error
-			do shell script "diskutil unmountDisk /Volumes/" & drive_
+			repeat 3 times
+				tell application "System Events" to tell process secag to activate
+			end repeat
 		end try
+		try
+			repeat 3 times
+				tell application "Bluetooth Setup Assistant" to quit
+			end repeat
+		end try
+		tell application "System Events"
+			delay 1
+			tell process "SecurityAgent"
+				set value of text field 2 of window "Login" to uname
+				set value of text field 1 of window "Login" to passwd
+				keystroke tab
+				keystroke return
+			end tell
+		end tell
+		if drive_ is not "Macintosh HD" or ".DS_Store" then
+			try
+				do shell script "diskutil umount /Volumes/" & drive_
+			on error
+				do shell script "diskutil unmountDisk /Volumes/" & drive_
+			end try
+		end if
+	else --not text version of login window NOTE: haven't tested below yet.
+		try
+			do shell script "killall SecurityAgent; killall SystemUIServer"
+		end try
+		try
+			tell application "System Events" to tell process secag to activate
+		end try
+		try
+			tell application "Bluetooth Setup Assistant" to quit
+		end try
+		tell application "System Events"
+			tell process "SecurityAgent"
+				set value of text field 1 of window "Login" to passwd
+			end tell
+		end tell
+		if drive_ is not "Macintosh HD" or ".DS_Store" then
+			try
+				do shell script "diskutil umount /Volumes/" & drive_
+			on error
+				do shell script "diskutil unmountDisk /Volumes/" & drive_
+			end try
+		end if
+		
 	end if
-	
-end if
+#end repeat
 --on error
 --	return "Could not manipulate the Login Window. Make sure you are at the login window before continuing, or perhaps Accessibility isn't configured properly?"
