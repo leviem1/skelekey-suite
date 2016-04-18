@@ -76,6 +76,7 @@ try
 on error
 	return "Could not list volumes!"
 end try
+#return discoverVol
 repeat with vol in discoverVol
 	set vol to replace_chars(vol, " ", "\\ ")
 	try
@@ -87,17 +88,19 @@ repeat with vol in discoverVol
 		set validVols to validVols & {vol}
 	end if
 end repeat
+#return validVols --works
 repeat with vol in validVols
-	try
+#	try
 		set vol to replace_chars(vol, " ", "\\ ")
-		set findSKA to do shell script "cd /Volumes/" & vol & "; find . -type d -name \"*-SkeleKey-Applet.app\""
+		set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
 		if findSKA is not "" then
 			set drive_names to drive_names & vol
 		end if
-	on error
-		#quit
-	end try
+#	on error
+#		#quit
+#	end try
 end repeat
+#return drive_names --works
 #Find Suitable Volume's UUID
 repeat with vol in drive_names
 	try
@@ -107,6 +110,7 @@ repeat with vol in drive_names
 		#quit
 	end try
 end repeat
+#return drive_uuids --works
 #Create Possible Epasses
 repeat with uuid in drive_uuids --Convert UUID to the epass
 	set nums to returnNumbersInString(uuid)
@@ -124,7 +128,7 @@ end repeat
 #Decrypt all Suitable SkeleKey credentials
 repeat with epass_str in epasses
 	repeat with drive in drive_names
-		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  find . -type d -name \"*-SkeleKey-Applet.app\""
+		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  ls -ldA1 *-SkeleKey-Applet.app"
 		set detect_skeles to paragraphs of detect_skeles
 		
 		repeat with name_ in detect_skeles
@@ -142,7 +146,8 @@ repeat with epass_str in epasses
 		set drive_ to drive
 	end repeat
 end repeat
-
+#return ucreds --works
+#return pcreds --works
 #Check local users against matching users
 try
 	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
@@ -154,7 +159,7 @@ repeat with users in ucreds
 		set matching_users to matching_users & users
 	end if
 end repeat
-
+#return matching_users --works
 #Attempt to find matching credentials
 try
 	if matching_users is not "" then
@@ -258,4 +263,3 @@ else --not text version of login window NOTE: haven't tested below yet.
 end if
 --on error
 --	return "Could not manipulate the Login Window. Make sure you are at the login window before continuing, or perhaps Accessibility isn't configured properly?"
---end try
