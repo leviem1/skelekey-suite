@@ -7,57 +7,84 @@ Once you have purchased a license, you will receive an email with a unique purch
     <div class="clearfix"></div>
 </header>
 <br>
-<form action="#done" method="post">
-    <p>Full Name: <input name="fname" required="required" type="text" title="Enter your full name here"/></p>
+<form action="#done" method="post" id="licensegenerator">
+    <p>Full Name: <input name="fname" required="required" type="text" title="Enter your full name here"/><a class="color: red">*</a></p>
     
-    Email Address: <input name="email" required="required" type="text" title="Enter your email address here"/>
+    Email Address: <input name="email" required="required" type="text" title="Enter your email address here"/>*
     
     Organization <em>(optional)</em>: <input name="org" type="text" title="Enter your organization here"/>
     
-    Purchase Code: <input name="pcode" required="required" type="text" title="Enter your purchase code here"/>
+    Purchase Code: <input name="pcode" required="required" type="text" title="Enter your purchase code here"/>*
     
     <input type="submit" value="Submit" />
-    
 </form>
+<script>
+    var form = document.getElementById('licensegenerator');
+    form.noValidate = true;
+    form.addEventListener('submit', function(event) { // listen for form submitting
+                          if (!event.target.checkValidity()) {
+                          event.preventDefault(); // dismiss the default functionality
+                          alert('Please ensure all required fields are filled.'); // error message
+                          }
+                          }, false);
+    </script>
 
 <a name="done"></a>
 [insert_php]
 $servername = "localhost";
 $username = "conne122_sk";
 $password = "Sc3l3tus*Ky3";
-$dbname = "conne122_skelekey";
+$dbname = "conne122_wp530sk";
 $pcode = $_POST["pcode"];
 $name = $_POST["fname"];
 $email = $_POST["email"];
 $org = $_POST["org"];
 if ($name) {
-	$conn = @new mysqli($servername, $username, $password, $dbname);
-	if ($conn->connect_error) {
-		die("Failed to connect to the database");
-	}
-	$sql = "SELECT `pcode`, `name`, `email`, `org` FROM `licenses` WHERE pcode = '$pcode' && name = '$name' && email = '$email' && org = '$org'";
-	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
-		$myname = substr((chunk_split((base64_encode(md5(strrev($name)))),4,"1")) , 6 , 5);
-		$myemail = substr((chunk_split((md5(strrev(base64_encode($email)))),3,"4")) , 2 , 5);
-		if(!empty($_POST["org"])) {
-			$myorg = substr((chunk_split((strrev(md5(base64_encode($org)))),3,"K")) , 15 , 5);
-		} else {
-			$myorg = substr((chunk_split((base64_encode(md5(md5($email)))),4,"A")) , 3 , 5);
-		}
-		echo "
-		<header class=\"entry-header\">
-			<h1 class=\"entry-title single-title\" itemprop=\"headline\">License Details</h1>
-			<div class=\"colored-line-left\"></div>
-			<div class=\"clearfix\"></div>
-		</header>
-		<b>Full Name:</b> $name
-		<b>Email:</b> $email
-		<b>Organization:</b> $org
-		<b>License Key:</b> " . strtoupper("<i>SK-$myemail-$myname-$myorg</i>");
-	} else {
-		echo("<strong>Purchase Code not found!<strong>");
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+die("Failed to connect to the database");
+}
+$sqlFn = "SELECT `meta_value` FROM `wp_sk_postmeta` WHERE `post_id` = '$pcode' AND `meta_key` = '_billing_first_name'";
+$sqlLn = "SELECT `meta_value` FROM `wp_sk_postmeta` WHERE `post_id` = '$pcode' AND `meta_key` = '_billing_last_name'";
+$sqlE = "SELECT `meta_value` FROM `wp_sk_postmeta` WHERE `post_id` = '$pcode' AND `meta_key` = '_billing_email'";
+$sqlOrg = "SELECT `meta_value` FROM `wp_sk_postmeta` WHERE `post_id` = '$pcode' AND `meta_key` = '_billing_company'";
+
+$resultFn = $conn->query($sqlFn);
+$resultLn = $conn->query($sqlLn);
+$resultE = $conn->query($sqlE);
+$resultOrg = $conn->query($sqlOrg);
+
+$resultFn = $resultFn->fetch_assoc();
+$resultLn = $resultLn->fetch_assoc();
+$resultE = $resultE->fetch_assoc();
+$resultOrg = $resultOrg->fetch_assoc();
+
+$resultOrg = $resultOrg["meta_value"];
+$resultE = $resultE["meta_value"];
+$resultFnLn = $resultFn["meta_value"] . " " . $resultLn["meta_value"];
+
+if (($name == $resultFnLn) && ($email == $resultE) && ($org == $resultOrg)) {
+$myname = substr((chunk_split((base64_encode(md5(strrev($name)))),4,"1")) , 6 , 5);
+$myemail = substr((chunk_split((md5(strrev(base64_encode($email)))),3,"4")) , 2 , 5);
+if(!empty($_POST["org"])) {
+$myorg = substr((chunk_split((strrev(md5(base64_encode($org)))),3,"K")) , 15 , 5);
+} else {
+$myorg = substr((chunk_split((base64_encode(md5(md5($email)))),4,"A")) , 3 , 5);
+}
+echo "
+<header class=\"entry-header\">
+    <h1 class=\"entry-title single-title\" itemprop=\"headline\">License Details</h1>
+    <div class=\"colored-line-left\"></div>
+    <div class=\"clearfix\"></div>
+</header>
+<b>Full Name:</b> $name
+<b>Email:</b> $email
+<b>Organization:</b> $org
+<b>License Key:</b> " . strtoupper("<i>SK-$myemail-$myname-$myorg</i>");
+} else {
+echo("<strong>Purchase Code not found!<strong>");
     }
     mysqli_close($conn);
-}
-[/insert_php]
+    }
+    [/insert_php]
+<a name="done"></a>
