@@ -112,7 +112,7 @@ repeat with vol in drive_names
 end repeat
 #return drive_uuids --works
 #Create Possible Epasses
-repeat with uuid in drive_uuids --Convert UUID to the epass
+repeat with uuid in drive_uuids
 	set nums to returnNumbersInString(uuid)
 	repeat with char in nums
 		set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
