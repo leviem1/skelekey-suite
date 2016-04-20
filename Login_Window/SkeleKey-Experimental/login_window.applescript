@@ -69,6 +69,11 @@ on returnNumbersInString(inputString)
 	return numlist
 end returnNumbersInString
 
+set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
+if loggedusers is not "" then
+	return 1
+end if
+
 #Find Suitable USB Volumes
 try
 	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
