@@ -1,20 +1,26 @@
-#!/bin/osascript
+--
+--  AppDelegate.applescript
+--  SkeleKey-Manager
+--
+--  Created by Mark Hedrick on 02/21/16.
+--  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
+--
+--VERSION 0.3
+#VARIABLES
+set validVols to {}
 set drive_names to {}
 set drive_uuids to {}
+set epass to {}
 set epasses to {}
 set sk_names to {}
 set ucreds to {}
 set pcreds to {}
+set uuids to {}
+set count_dec to 0
+set count_atmpt_auth to 0
 set matching_users to {}
-set validVols to {}
-set text_based to "0"
 set secag to "SecurityAgent"
-set encstring to ""
-set epass to ""
-set uname to ""
-set passwd to ""
 
-#Start encryption algorithms
 set md5 to " md5 | "
 set md5_e to " md5"
 set base64 to " base64 | "
@@ -45,7 +51,7 @@ set eight to base64 & md5_e
 set nine to sha512256 & md5 & rev_e
 set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
 
-#Essential Functions
+#FUNCTIONS
 on replace_chars(this_text, search_string, replacement_string)
 	set AppleScript's text item delimiters to the search_string
 	set the item_list to every text item of this_text
@@ -73,15 +79,16 @@ set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
 	return 1
 end if
-
-#Find Suitable USB Volumes
+#CODE
+################################
+#   Find USB Vols, then search for SK Applet        #
+################################
 try
 	set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
 	set discoverVol to get paragraphs of discoverVol
 on error
 	return "Could not list volumes!"
 end try
-#return discoverVol
 repeat with vol in discoverVol
 	set vol to replace_chars(vol, " ", "\\ ")
 	try
@@ -93,20 +100,20 @@ repeat with vol in discoverVol
 		set validVols to validVols & {vol}
 	end if
 end repeat
-#return validVols --works
 repeat with vol in validVols
-	#	try
-	set vol to replace_chars(vol, " ", "\\ ")
-	set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
-	if findSKA is not "" then
-		set drive_names to drive_names & vol
-	end if
-	#	on error
-	#		#quit
-	#	end try
+	try
+		set vol to replace_chars(vol, " ", "\\ ")
+		set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
+		if findSKA is not "" then
+			set drive_names to drive_names & vol
+		end if
+	on error
+		#quit
+	end try
 end repeat
-#return drive_names --works
-#Find Suitable Volume's UUID
+#####################
+#   Find Matching USB UUIDs    #
+#####################
 repeat with vol in drive_names
 	try
 		set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
@@ -115,45 +122,47 @@ repeat with vol in drive_names
 		#quit
 	end try
 end repeat
-#return drive_uuids --works
-#Create Possible Epasses
+###########################
+#   Generate epass for each set of creds    #
+###########################
 repeat with uuid in drive_uuids
 	set nums to returnNumbersInString(uuid)
 	repeat with char in nums
 		set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
 		set epass to epass & encstring
 	end repeat
+	#set epass to epass as text
 	set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
 	if (length of epass) is greater than 2048 then
 		set epass to (characters 1 thru 2047 of epass) as string
 	end if
 	set epasses to epasses & epass
 end repeat
-
-#Decrypt all Suitable SkeleKey credentials
-repeat with epass_str in epasses
-	repeat with drive in drive_names
-		set detect_skeles to do shell script "cd /Volumes/" & drive & ";  ls -ldA1 *-SkeleKey-Applet.app"
-		set detect_skeles to paragraphs of detect_skeles
-		
-		repeat with name_ in detect_skeles
-			if name_ contains "-SkeleKey-Applet.app" then
-				set name_ to do shell script "echo '" & name_ & "' | awk -F- '{print $1}'"
-				set sk_names to sk_names & name_
-			end if
-		end repeat
-		repeat with skname in sk_names
-			set username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '1q;d'")
-			set passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass_str & "\" | sed '2q;d'")
-			set ucreds to ucreds & username
-			set pcreds to pcreds & passwd
-		end repeat
-		set drive_ to drive
+#########################
+#   Attempt to Decrypt All Credenials   #
+#########################
+repeat (count of drive_names) times
+	set drive to item (count_dec + 1) in drive_names
+	set epass to item (count_dec + 1) in epasses
+	set detect_skeles to do shell script "cd /Volumes/" & drive & ";  ls -ldA1 *-SkeleKey-Applet.app"
+	set detect_skeles to paragraphs of detect_skeles
+	repeat with name_ in detect_skeles
+		if name_ contains "-SkeleKey-Applet.app" then
+			set name_ to do shell script "echo '" & name_ & "' | awk -F- '{print $1}'"
+			set sk_names to sk_names & name_
+		end if
 	end repeat
+	repeat with skname in sk_names
+		set _username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\" | sed '1q;d'")
+		set _passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\" | sed '2q;d'")
+		set ucreds to ucreds & _username
+		set pcreds to pcreds & _passwd
+	end repeat
+	set drive_ to drive
 end repeat
-#return ucreds --works
-#return pcreds --works
-#Check local users against matching users
+#########################
+#   Attempt to authenticate local users  #
+#########################
 try
 	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
 on error
@@ -164,8 +173,6 @@ repeat with users in ucreds
 		set matching_users to matching_users & users
 	end if
 end repeat
-#return matching_users --works
-#Attempt to find matching credentials
 try
 	if matching_users is not "" then
 		
@@ -181,15 +188,13 @@ try
 		return \"auth error\"
 	end try
 end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
-		repeat with user_ in matching_users
-			repeat with pass in pcreds
-				set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript " & user_ & space & pass
-				set auth to paragraphs of auth
-				set uname to item 1 of auth
-				set passwd to item 2 of auth
-				exit repeat
-			end repeat
-			exit repeat
+		repeat (count of matching_users) times
+			set user_ to item (count_atmpt_auth + 1) in matching_users
+			set pass_ to item (count_atmpt_auth + 1) in pcreds
+			set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript '" & user_ & "'" & space & "'" & pass_ & "'"
+			set auth to paragraphs of auth
+			set uname to item 1 of auth
+			set passwd to item 2 of auth
 		end repeat
 	else
 		#quit
@@ -198,8 +203,9 @@ end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
 on error
 	return "Could not authenticate with any of the provided credentials!"
 end try
-#return passwd --works
-#Attempt to find OS version and make changes to login method if necessary
+########################
+#   Figure out login window format   #
+########################
 try
 	set OS to do shell script "sw_vers -productVersion"
 on error
@@ -208,36 +214,24 @@ end try
 if OS is not greater than "10.10" then --fix 10.10 login screen issue, simulate a fake logout
 	do shell script "/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 end if
-
-#Figure out login window scheme
 try
 	set test_for_txtlgn to do shell script "/usr/libexec/PlistBuddy -c 'print :SHOWFULLNAME' /Library/Preferences/com.apple.loginwindow.plist"
 	if test_for_txtlgn is not "true" then
 		set test_for_txtlgn to "false"
 	end if
 end try
-#Modify login window fields with credentials
---try
-#repeat 2 times
-if test_for_txtlgn is "true" then
+####################
+#   Finally, the login window!   #
+####################
+if test_for_txtlgn is "true" then --text only login window
 	try
-		repeat 1 times
-			do shell script "killall SecurityAgent; sleep 1; killall SystemUIServer"
-		end repeat
-	end try
-	delay 5
-	try
-		repeat 3 times
-			tell application "System Events" to tell process secag to activate
-		end repeat
+		tell application "System Events" to tell process secag to activate
 	end try
 	try
-		repeat 3 times
-			tell application "Bluetooth Setup Assistant" to quit
-		end repeat
+		tell application "Bluetooth Setup Assistant" to quit
 	end try
 	tell application "System Events"
-		delay 1
+		delay 0.5
 		tell process "SecurityAgent"
 			set value of text field 2 of window "Login" to uname
 			set value of text field 1 of window "Login" to passwd
@@ -252,9 +246,12 @@ if test_for_txtlgn is "true" then
 			do shell script "diskutil unmountDisk /Volumes/" & drive_
 		end try
 	end if
-else --not text version of login window NOTE: haven't tested below yet.
+else --graphical item login window
 	try
-		do shell script "killall SecurityAgent; killall SystemUIServer"
+		do shell script "killall \"System Events\""
+	end try
+	try
+		tell application "System Events" to activate
 	end try
 	try
 		tell application "System Events" to tell process secag to activate
@@ -262,11 +259,42 @@ else --not text version of login window NOTE: haven't tested below yet.
 	try
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
-	tell application "System Events"
-		tell process "SecurityAgent"
-			set value of text field 1 of window "Login" to passwd
+	set uid to do shell script "dscl . list /Users UniqueID | grep '" & uname & "' | awk {'print $2'}"
+	set ishidden to do shell script "dscl . list /Users IsHidden | grep '" & uname & "' | awk {'print $2'}"
+	if uid is less than 500 or ishidden is "1" then
+		delay 0.5
+		tell application "System Events"
+			key code 53
+			keystroke "Other"
+			delay 0.25
+			keystroke tab
+			keystroke return
+			delay 0.5
+			tell process "SecurityAgent"
+				set value of text field 2 of window "Login" to uname
+				set value of text field 1 of window "Login" to passwd
+			end tell
+			delay 0.25
+			keystroke return
+			keystroke return
 		end tell
-	end tell
+	else --if no users hidden
+		set fullname to do shell script "dscacheutil -q user -a name '" & uname & "' | grep 'gecos' | sed -e 's/.*gecos: \\(.*\\)/\\1/'"
+		delay 0.25
+		tell application "System Events"
+			key code 53
+			keystroke fullname
+			delay 0.25
+			keystroke tab
+			keystroke return
+			delay 0.5
+			tell process "SecurityAgent"
+				set value of text field 1 of window "Login" to passwd
+			end tell
+			delay 0.25
+			keystroke return
+		end tell
+	end if
 	if drive_ is not "Macintosh HD" or ".DS_Store" then
 		try
 			do shell script "diskutil umount /Volumes/" & drive_
@@ -274,8 +302,4 @@ else --not text version of login window NOTE: haven't tested below yet.
 			do shell script "diskutil unmountDisk /Volumes/" & drive_
 		end try
 	end if
-	
 end if
-#end repeat
---on error
---	return "Could not manipulate the Login Window. Make sure you are at the login window before continuing, or perhaps Accessibility isn't configured properly?"
