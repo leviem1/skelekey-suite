@@ -77,7 +77,7 @@ end returnNumbersInString
 
 set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
-	return 1
+		return 1
 end if
 #CODE
 ################################
@@ -262,10 +262,10 @@ else --graphical item login window
 	set uid to do shell script "dscl . list /Users UniqueID | grep '" & uname & "' | awk {'print $2'}"
 	set ishidden to do shell script "dscl . list /Users IsHidden | grep '" & uname & "' | awk {'print $2'}"
 	if uid is less than 500 or ishidden is "1" then
-		delay 0.5
 		tell application "System Events"
 			key code 53
-			keystroke "Other"
+			keystroke "Othe"
+			keystroke "r"
 			delay 0.25
 			keystroke tab
 			keystroke return
