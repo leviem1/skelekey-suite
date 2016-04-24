@@ -255,7 +255,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "SkeleKey-Applet/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Applet";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.skelekey.SkeleKey-Applet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -267,7 +267,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "SkeleKey-Applet/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Applet";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.skelekey.SkeleKey-Applet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -291,6 +291,7 @@
 				2FA8FD791C1E9BD80034522C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
