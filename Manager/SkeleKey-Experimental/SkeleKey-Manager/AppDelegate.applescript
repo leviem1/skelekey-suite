@@ -569,26 +569,32 @@ script AppDelegate
     #On-startup Function
     on applicationWillFinishLaunching:aNotification
         global isLicensed
-        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
+        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy"}
         set notInstalledString to ""
         try
             do shell script "sudo printf elevate" with administrator privileges
-        on error
+            on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
-        repeat with i in dependencies
-            set status to do shell script i & "; printf $?"
-            if status is "127" then
-                set notInstalledString to notInstalledString & i & "
-                "
+        set cmd_existance to do shell script "command; printf $?"
+        if cmd_existance is not "" then
+            repeat with i in dependencies
+                try
+                    set status to do shell script "command -v " & i
+                    on error
+                    set notInstalledString to notInstalledString & i & "
+                    "
+                end try
+            end repeat
+            if notInstalledString is not "" then
+                display alert "The following required resources are not installed:
+                
+                " & notInstalledString buttons "Quit"
+                quit
             end if
-        end repeat
-        if notInstalledString is not "" then
-            display alert "The following required resources are not installed:
-            
-            " & notInstalledString buttons "Quit"
-            quit
+            else
+            display dialog "The executable 'command' is misssing!"
         end if
         try
             set licensedValue_fullname_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:full_name\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
