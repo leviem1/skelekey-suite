@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -14,20 +14,33 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="acknowledgements" destination="Jy1-fJ-A9s" id="5X3-lI-4kE"/>
+                <outlet property="backButton" destination="uc9-x6-uIc" id="hCg-ZE-0LL"/>
+                <outlet property="backButtonAlt" destination="GmC-Xz-vRP" id="iWC-o2-Ps7"/>
                 <outlet property="checkIcon" destination="TDD-tj-XO5" id="GeL-Xi-8wC"/>
+                <outlet property="dateEnabled" destination="iaW-rW-Sab" id="BCv-yx-yem"/>
                 <outlet property="delButton" destination="UKA-JI-xoR" id="ADR-kk-BhJ"/>
                 <outlet property="delFileName" destination="mwK-fz-jwa" id="HQF-Tn-0F0"/>
+                <outlet property="displayDate" destination="wvF-FS-NWp" id="Qaj-YR-MQB"/>
                 <outlet property="dontShow" destination="jrG-jd-6Kg" id="7tF-YZ-ueX"/>
                 <outlet property="fileName" destination="H19-Om-myj" id="nmk-LK-mIs"/>
-                <outlet property="installButton" destination="BT6-x9-wyN" id="SRs-wM-gqQ"/>
+                <outlet property="installButton" destination="20E-8C-wi3" id="OPc-rh-Wbc"/>
+                <outlet property="installButtonAlt" destination="BT6-x9-wyN" id="Uks-L2-Cd8"/>
                 <outlet property="installWindow" destination="g9G-SY-q6i" id="GWw-Xu-vpi"/>
                 <outlet property="loadingWindow" destination="XBI-rp-gAe" id="TxJ-DX-ZR9"/>
                 <outlet property="mainWindow" destination="PO6-qi-PJf" id="G16-Me-Vw9"/>
                 <outlet property="password1" destination="kj0-xq-5Dc" id="W2z-S9-sur"/>
                 <outlet property="password2" destination="EUr-9y-8rG" id="mBO-Za-eca"/>
                 <outlet property="quitItem" destination="yCb-Ds-K5D" id="moZ-tR-R9z"/>
+                <outlet property="regEmail" destination="zR5-K6-NqK" id="hAy-Rc-ndJ"/>
+                <outlet property="regFirstName" destination="svT-M7-0zk" id="wR0-Dd-3U7"/>
+                <outlet property="regOrg" destination="VEa-On-INm" id="dB7-JE-KA3"/>
+                <outlet property="regSerial" destination="vbA-45-31g" id="XO5-jF-9TX"/>
+                <outlet property="registrationButton" destination="dhi-Gs-bjk" id="dl2-cA-R5H"/>
+                <outlet property="registrationWindow" destination="48N-vL-7qV" id="k1A-OS-ifj"/>
                 <outlet property="removeWindow" destination="ceD-Cp-ty0" id="5cT-GN-jzi"/>
                 <outlet property="startButton" destination="OJK-8R-WZi" id="Ila-2J-JbK"/>
+                <outlet property="theDate" destination="c70-eM-acp" id="FnZ-oQ-L7J"/>
                 <outlet property="tutorialWindow" destination="HJU-0l-vvI" id="uOa-mN-o9a"/>
                 <outlet property="username" destination="XN4-9y-0kf" id="cQN-zQ-Hpd"/>
                 <outlet property="welcomeWindow" destination="xLt-ws-R6g" id="1jV-TK-NJy"/>
@@ -53,7 +66,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="PPG-LM-gSP"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="4RF-Pr-BRJ"/>
+                            <menuItem title="Preferences" keyEquivalent="," id="4RF-Pr-BRJ"/>
                             <menuItem isSeparatorItem="YES" id="ND6-xK-NU7"/>
                             <menuItem title="Services" id="vt9-jl-yhl">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -95,7 +108,7 @@
                                     <action selector="newDocument:" target="-1" id="70X-iZ-TZD"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open…" keyEquivalent="o" id="qRb-sR-QDo">
+                            <menuItem title="Open" keyEquivalent="o" id="qRb-sR-QDo">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="be0-6I-Nrp"/>
                                 </connections>
@@ -119,12 +132,12 @@
                                     <action selector="performClose:" target="-1" id="ueg-lw-YNf"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="jLh-BN-ZzJ">
+                            <menuItem title="Save" keyEquivalent="s" id="jLh-BN-ZzJ">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="Fp2-KQ-Jof"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="ReF-hq-ilg">
+                            <menuItem title="Save As" keyEquivalent="S" id="ReF-hq-ilg">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="Xmn-vV-gLf"/>
                                 </connections>
@@ -136,13 +149,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="k7F-ap-m3Y"/>
-                            <menuItem title="Page Setup…" keyEquivalent="P" id="dHn-zh-tuf">
+                            <menuItem title="Page Setup" keyEquivalent="P" id="dHn-zh-tuf">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="runPageLayout:" target="-1" id="7OX-I1-Sse"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="xrS-MI-4Qg">
+                            <menuItem title="Print" keyEquivalent="p" id="xrS-MI-4Qg">
                                 <connections>
                                     <action selector="print:" target="-1" id="iYB-87-j4a"/>
                                 </connections>
@@ -202,12 +215,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Find" id="RGu-vA-Au6">
                                     <items>
-                                        <menuItem title="Find…" tag="1" keyEquivalent="f" id="lff-fE-uee">
+                                        <menuItem title="Findâ€¦" tag="1" keyEquivalent="f" id="lff-fE-uee">
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="UyJ-om-OCs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
+                                        <menuItem title="Find and Replaceâ€¦" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="0q8-Zr-Ygf"/>
@@ -653,12 +666,25 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Help" id="Fug-eM-Sh8">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="z6v-ps-Ufi">
+                        <items>
+                            <menuItem title="Acknowledgements" id="Aex-Dc-wQV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="acknowledgements:" target="Voe-Tx-rLC" id="pB2-qo-QYe"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
             </items>
         </menu>
         <window title="SkeleKey - Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ceD-Cp-ty0">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="121" y="123" width="480" height="145"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="L4M-6x-8c7">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="145"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -674,21 +700,8 @@
                             <action selector="destApp:" target="Voe-Tx-rLC" id="cAb-gm-IjN"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKA-JI-xoR">
-                        <rect key="frame" x="321" y="13" width="145" height="32"/>
-                        <buttonCell key="cell" type="push" title="Securely Remove" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZE-q8-ziH">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="delButton:" target="Voe-Tx-rLC" id="wln-5Z-DE9"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pqo-rW-p0p">
-                        <rect key="frame" x="14" y="13" width="70" height="32"/>
+                        <rect key="frame" x="14" y="-1" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CJS-wG-uyg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -716,14 +729,28 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKA-JI-xoR">
+                        <rect key="frame" x="321" y="-1" width="145" height="32"/>
+                        <buttonCell key="cell" type="push" title="Securely Remove" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZE-q8-ziH">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="delButton:" target="Voe-Tx-rLC" id="wln-5Z-DE9"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-54" y="506.5"/>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="712" y="933.5"/>
         </window>
         <window title="SkeleKey - Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="PO6-qi-PJf">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="886" y="0.0" width="480" height="200"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="tfz-bb-9mF">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -750,19 +777,6 @@ Gw
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-8R-WZi">
-                        <rect key="frame" x="394" y="13" width="70" height="32"/>
-                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RZR-f9-D98">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="buttonClicked:" target="Voe-Tx-rLC" id="ebT-2I-OvX"/>
-                        </connections>
-                    </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aO9-G2-klu">
                         <rect key="frame" x="121" y="168" width="238" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please choose the mode of operation:" id="3l3-7l-VtX">
@@ -804,17 +818,31 @@ DQ
                             <action selector="destvolume:" target="Voe-Tx-rLC" id="Yd8-is-IIK"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-8R-WZi">
+                        <rect key="frame" x="396" y="-2" width="70" height="32"/>
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RZR-f9-D98">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="buttonClicked:" target="Voe-Tx-rLC" id="ebT-2I-OvX"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-54" y="265"/>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="185" y="138"/>
         </window>
         <window title="SkeleKey - Welcome" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="xLt-ws-R6g" userLabel="Welcome Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="332"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="5oi-fF-NJo">
                 <rect key="frame" x="0.0" y="0.0" width="561" height="332"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAp-xB-vxw">
                         <rect key="frame" x="24" y="172" width="128" height="128"/>
@@ -828,21 +856,13 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyH-KW-eUH">
-                        <rect key="frame" x="51" y="122" width="84" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Created By:" id="WGt-3o-Jzg">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yGT-gu-80N">
                         <rect key="frame" x="42" y="68" width="93" height="51"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="IMQ-pp-DIe">
                             <font key="font" metaFont="system"/>
                             <string key="title">Mark Hedrick 
 Levi Muniz
-© 2015</string>
+© 2015 -2016</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -853,19 +873,6 @@ Levi Muniz
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LgM-eY-DRZ">
-                        <rect key="frame" x="478" y="13" width="69" height="32"/>
-                        <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2So-1E-Skc">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="welcomeNext:" target="Voe-Tx-rLC" id="5Ji-yu-mWb"/>
-                        </connections>
-                    </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEo-M1-5oy">
                         <rect key="frame" x="18" y="282" width="525" height="36"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to SkeleKey Manager!" id="dX2-8U-ECp">
@@ -877,15 +884,15 @@ DQ
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-Pv-g6s">
                         <rect key="frame" x="184" y="57" width="340" height="219"/>
                         <clipView key="contentView" ambiguous="YES" id="F9I-ZN-ysH">
-                            <rect key="frame" x="1" y="1" width="338" height="217"/>
+                            <rect key="frame" x="1" y="1" width="323" height="217"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="338" height="414"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="430"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="338" height="217"/>
-                                    <size key="maxSize" width="463" height="10000000"/>
+                                    <size key="minSize" width="323" height="217"/>
+                                    <size key="maxSize" width="646" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
                                             <mutableString key="content">Greetings from the SkeleKey Team! 
@@ -941,8 +948,8 @@ Although it may seem like a daunting task to protect your organization's passwor
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="338" height="217"/>
-                                    <size key="maxSize" width="463" height="10000000"/>
+                                    <size key="minSize" width="323" height="217"/>
+                                    <size key="maxSize" width="646" height="10000000"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -952,18 +959,40 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
-                            <rect key="frame" x="323" y="1" width="16" height="217"/>
+                            <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <button horizontalHuggingPriority="255" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LgM-eY-DRZ">
+                        <rect key="frame" x="478" y="-1" width="69" height="32"/>
+                        <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2So-1E-Skc">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="welcomeNext:" target="Voe-Tx-rLC" id="5Ji-yu-mWb"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyH-KW-eUH">
+                        <rect key="frame" x="46" y="122" width="84" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Created By:" id="WGt-3o-Jzg">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="594.5" y="814"/>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="-381.5" y="204"/>
         </window>
         <window title="SkeleKey - Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="XBI-rp-gAe">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="100"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="dKJ-UW-eKp">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -981,26 +1010,34 @@ Although it may seem like a daunting task to protect your organization's passwor
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="473" y="498"/>
+            <point key="canvasLocation" x="712" y="88"/>
         </window>
         <window title="SkeleKey - Creator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="g9G-SY-q6i">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="441" y="273" width="480" height="217"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="contentRect" x="441" y="132" width="480" height="248"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="a8V-80-o4U">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="217"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="248"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gzg-7w-nBF">
-                        <rect key="frame" x="60" y="179" width="361" height="23"/>
+                        <rect key="frame" x="60" y="210" width="361" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Enter credentials for an account to create a SkeleKey:" id="ten-Sk-XMP">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-vH-UoQ">
+                        <rect key="frame" x="60" y="46" width="361" height="23"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="OSt-q1-fp8">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kki-Bt-OJj">
-                        <rect key="frame" x="18" y="147" width="71" height="17"/>
+                        <rect key="frame" x="18" y="178" width="71" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Username:" id="u68-Eu-lTi">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1008,15 +1045,15 @@ Although it may seem like a daunting task to protect your organization's passwor
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Yb-Ew-bMU">
-                        <rect key="frame" x="18" y="112" width="69" height="17"/>
+                        <rect key="frame" x="18" y="143" width="69" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Password:" id="aUf-4i-Po6">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kj0-xq-5Dc">
-                        <rect key="frame" x="98" y="109" width="332" height="22"/>
+                    <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="kj0-xq-5Dc">
+                        <rect key="frame" x="98" y="140" width="332" height="22"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="5kQ-55-o2i">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1029,32 +1066,16 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="t2j-ff-YMg"/>
                         </connections>
                     </secureTextField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-9y-0kf">
-                        <rect key="frame" x="98" y="144" width="332" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" bezelStyle="round" id="ir0-NJ-84X">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiZ-5q-bxf">
-                        <rect key="frame" x="18" y="76" width="66" height="17"/>
+                        <rect key="frame" x="18" y="107" width="66" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Password:" id="e1Z-vr-GLS">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aak-YY-6dS">
-                        <rect key="frame" x="28" y="60" width="47" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="(Again)" id="j8I-nH-q4T">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GmC-Xz-vRP">
-                        <rect key="frame" x="11" y="13" width="70" height="32"/>
+                    <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GmC-Xz-vRP">
+                        <rect key="frame" x="14" y="-187" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="akt-xy-gWP">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1066,26 +1087,26 @@ Gw
                             <action selector="houseKeepingInstall:" target="Voe-Tx-rLC" id="9ga-5w-UxB"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BT6-x9-wyN">
-                        <rect key="frame" x="388" y="13" width="81" height="32"/>
-                        <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hrp-tQ-usQ">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uc9-x6-uIc">
+                        <rect key="frame" x="14" y="-3" width="70" height="32"/>
+                        <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gBU-TM-eXn">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
-DQ
+Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="installButton:" target="Voe-Tx-rLC" id="akn-Fq-Vwu"/>
+                            <action selector="houseKeepingInstall:" target="Voe-Tx-rLC" id="exc-qt-84P"/>
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TDD-tj-XO5">
-                        <rect key="frame" x="433" y="76" width="17" height="17"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusAvailable" id="epi-Yf-pUO"/>
+                        <rect key="frame" x="433" y="107" width="17" height="17"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusPartiallyAvailable" id="epi-Yf-pUO"/>
                     </imageView>
-                    <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUr-9y-8rG">
-                        <rect key="frame" x="98" y="74" width="332" height="22"/>
-                        <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="TZe-sn-FwK">
+                    <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="EUr-9y-8rG">
+                        <rect key="frame" x="98" y="105" width="332" height="22"/>
+                        <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="(Verification)" usesSingleLineMode="YES" bezelStyle="round" id="TZe-sn-FwK">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1097,20 +1118,97 @@ DQ
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="Ude-jI-FFk"/>
                         </connections>
                     </secureTextField>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="RPf-dC-AB5">
+                        <rect key="frame" x="20" y="75" width="430" height="5"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
+                        <rect key="frame" x="97" y="-149" width="277" height="148"/>
+                        <datePickerCell key="cell" enabled="NO" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
+                            <font key="font" metaFont="system"/>
+                            <date key="date" timeIntervalSinceReferenceDate="476985600">
+                                <!--2016-02-12 16:00:00 +0000-->
+                            </date>
+                            <date key="minDate" timeIntervalSinceReferenceDate="-978307200">
+                                <!--1970-01-01 00:00:00 +0000-->
+                            </date>
+                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
+                        </datePickerCell>
+                        <connections>
+                            <action selector="displayData:" target="Voe-Tx-rLC" id="8CM-xb-Qfo"/>
+                        </connections>
+                    </datePicker>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
+                        <rect key="frame" x="39" y="35" width="115" height="18"/>
+                        <buttonCell key="cell" type="check" title="Expiration Date" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="dateChecked:" target="Voe-Tx-rLC" id="7DY-7t-Kex"/>
+                        </connections>
+                    </button>
+                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-FS-NWp">
+                        <rect key="frame" x="20" y="7" width="440" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="jJg-9j-QzH">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BT6-x9-wyN">
+                        <rect key="frame" x="385" y="-187" width="81" height="32"/>
+                        <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hrp-tQ-usQ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="installButton:" target="Voe-Tx-rLC" id="akn-Fq-Vwu"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-9y-0kf">
+                        <rect key="frame" x="98" y="175" width="332" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" bezelStyle="round" id="ir0-NJ-84X">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20E-8C-wi3">
+                        <rect key="frame" x="385" y="-3" width="81" height="32"/>
+                        <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mNg-mj-bMf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="installButton:" target="Voe-Tx-rLC" id="vbf-zN-RUZ"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="473" y="273.5"/>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="185" y="429"/>
         </window>
         <window title="SkeleKey - Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
             <windowStyleMask key="styleMask" titled="YES"/>
-            <rect key="contentRect" x="196" y="207" width="561" height="332"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
+            <rect key="contentRect" x="196" y="207" width="561" height="318"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="3Fx-CF-sk9">
-                <rect key="frame" x="0.0" y="0.0" width="561" height="332"/>
+                <rect key="frame" x="0.0" y="0.0" width="561" height="318"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ube-JF-A5I">
-                        <rect key="frame" x="18" y="276" width="525" height="36"/>
+                        <rect key="frame" x="18" y="262" width="525" height="36"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Quick Start" id="H80-jE-3EM">
                             <font key="font" size="19" name=".AppleSystemUIFont"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1118,19 +1216,19 @@ DQ
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wZb-fO-B7o">
-                        <rect key="frame" x="240" y="186" width="81" height="58"/>
+                        <rect key="frame" x="240" y="172" width="81" height="58"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSUser" id="Hhe-WU-e2a"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zk8-vx-UAm">
-                        <rect key="frame" x="450" y="183" width="66" height="61"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="NSLockUnlockedTemplate" id="1G1-HY-nDe"/>
+                        <rect key="frame" x="450" y="172" width="66" height="58"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSLockLockedTemplate" id="1G1-HY-nDe"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oOg-lK-BSU">
-                        <rect key="frame" x="33" y="166" width="117" height="98"/>
+                        <rect key="frame" x="33" y="152" width="117" height="98"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSComputer" id="I7Y-sH-7z9"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q59-dF-fJe">
-                        <rect key="frame" x="251" y="252" width="59" height="23"/>
+                        <rect key="frame" x="251" y="238" width="59" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Step 2" id="rVF-fz-fQh">
                             <font key="font" size="13" name="Arial-Black"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1138,7 +1236,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MjC-UQ-AcC">
-                        <rect key="frame" x="454" y="252" width="59" height="23"/>
+                        <rect key="frame" x="454" y="238" width="59" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Step 3" id="MaN-Tf-lf6">
                             <font key="font" size="13" name="Arial-Black"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1146,13 +1244,13 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tC4-dC-87b">
-                        <rect key="frame" x="20" y="164" width="521" height="5"/>
+                        <rect key="frame" x="20" y="150" width="521" height="5"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MUs-cN-nMV">
-                        <rect key="frame" x="62" y="252" width="59" height="23"/>
+                        <rect key="frame" x="62" y="238" width="59" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Step 1" id="gVe-p6-ghR">
                             <font key="font" size="13" name="Arial-Black"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1160,7 +1258,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Z7-Zu-e3B">
-                        <rect key="frame" x="470" y="13" width="78" height="32"/>
+                        <rect key="frame" x="469" y="-2" width="78" height="32"/>
                         <buttonCell key="cell" type="push" title="Got it!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ORU-09-N8K">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1172,15 +1270,8 @@ DQ
                             <action selector="gotit:" target="Voe-Tx-rLC" id="suP-TM-h0K"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrG-jd-6Kg">
-                        <rect key="frame" x="18" y="18" width="184" height="18"/>
-                        <buttonCell key="cell" type="check" title="Don't show me this again" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="spz-c4-I5e">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5O-TW-sj3">
-                        <rect key="frame" x="6" y="39" width="173" height="119"/>
+                        <rect key="frame" x="6" y="25" width="173" height="119"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="ceP-Bb-raq">
                             <font key="font" metaFont="system"/>
                             <string key="title">Select the USB device
@@ -1194,7 +1285,7 @@ operation is correct.</string>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aBg-O7-FQq">
-                        <rect key="frame" x="189" y="39" width="183" height="119"/>
+                        <rect key="frame" x="189" y="25" width="183" height="119"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="9sY-nD-uxy">
                             <font key="font" metaFont="system"/>
                             <string key="title">Enter the administrator
@@ -1208,7 +1299,7 @@ this information.</string>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bzw-4p-pkb">
-                        <rect key="frame" x="392" y="66" width="163" height="92"/>
+                        <rect key="frame" x="392" y="52" width="163" height="92"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Ua1-Qj-HLL">
                             <font key="font" metaFont="system"/>
                             <string key="title">Run the installed 
@@ -1220,16 +1311,181 @@ to verify that it works.</string>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrG-jd-6Kg">
+                        <rect key="frame" x="18" y="8" width="184" height="18"/>
+                        <buttonCell key="cell" type="check" title="Don't show me this again" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="spz-c4-I5e">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-13.5" y="814"/>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="-381.5" y="599"/>
+        </window>
+        <window title="SkeleKey - Acknowledgements" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Jy1-fJ-A9s">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <rect key="contentRect" x="121" y="123" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" wantsLayer="YES" id="6b4-w1-VZT">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-XI-ZU3">
+                        <rect key="frame" x="154" y="87" width="183" height="96"/>
+                        <clipView key="contentView" ambiguous="YES" id="x5A-rj-lOx">
+                            <rect key="frame" x="0.0" y="0.0" width="183" height="96"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KqR-DD-zjK">
+                                    <rect key="frame" x="0.0" y="17" width="166" height="79"/>
+                                </view>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="NtL-w0-ZSX">
+                            <rect key="frame" x="-8" y="-15" width="0.0" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="bpR-VY-zbb">
+                            <rect key="frame" x="-15" y="-8" width="15" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUY-L7-HR0">
+                        <rect key="frame" x="10" y="224" width="460" height="34"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Tjx-eX-JPI">
+                            <font key="font" metaFont="systemBold"/>
+                            <string key="title">SkeleKey is made possible through the following 
+Open Source Software:</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nHe-8J-HKn">
+                        <rect key="frame" x="216" y="0.0" width="48" height="48"/>
+                        <shadow key="shadow">
+                            <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </shadow>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="AppIcon" id="UEs-KH-DnM"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <contentBorderThickness minY="45"/>
+            <point key="canvasLocation" x="712" y="656"/>
+        </window>
+        <window title="SkeleKey - Registration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="48N-vL-7qV">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="121" y="123" width="480" height="246"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="YgO-s5-hVP">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="246"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Cq-QZ-SI8">
+                        <rect key="frame" x="62" y="209" width="356" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enter you SkeleKey Registration information below" id="36I-9z-2F9">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fA-2D-sD4">
+                        <rect key="frame" x="18" y="167" width="68" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Full Name:" id="KaT-w2-lih">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uqa-Jg-tbN">
+                        <rect key="frame" x="18" y="131" width="45" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Email:" id="vQN-62-HZb">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VwR-KN-uDT">
+                        <rect key="frame" x="18" y="95" width="89" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Organization:" id="SS5-lS-N9U">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svT-M7-0zk">
+                        <rect key="frame" x="122" y="164" width="332" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="RUU-Jh-mhE">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="SfT-4z-q28"/>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR5-K6-NqK">
+                        <rect key="frame" x="122" y="128" width="332" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="6ML-kQ-lyK">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="BiN-AF-e3w"/>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEa-On-INm">
+                        <rect key="frame" x="122" y="92" width="332" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Optional)" bezelStyle="round" id="Nic-PT-s8x">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbA-45-31g">
+                        <rect key="frame" x="122" y="55" width="332" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="ZAw-64-Ay3">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="xB3-bE-jpa"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qud-d3-nHx">
+                        <rect key="frame" x="18" y="60" width="85" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="License Key:" id="fKn-bO-ptt">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dhi-Gs-bjk">
+                        <rect key="frame" x="376" y="-2" width="90" height="32"/>
+                        <buttonCell key="cell" type="push" title="Register" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pgh-XF-hPP">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="checkLicenseKey:" target="Voe-Tx-rLC" id="4dp-es-KoO"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="712" y="329"/>
         </window>
     </objects>
     <resources>
         <image name="AppIcon" width="512" height="512"/>
         <image name="NSComputer" width="32" height="32"/>
-        <image name="NSLockUnlockedTemplate" width="10" height="14"/>
-        <image name="NSStatusAvailable" width="16" height="16"/>
+        <image name="NSLockLockedTemplate" width="10" height="14"/>
+        <image name="NSStatusPartiallyAvailable" width="16" height="16"/>
         <image name="NSUser" width="32" height="32"/>
     </resources>
 </document>

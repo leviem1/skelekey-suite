@@ -221,7 +221,7 @@ script AppDelegate
             registrationButton's setEnabled:false
         else
             set isLicensed to true
-            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed -bool true"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed -bool true"
             display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Please return to the main window to use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
             registrationWindow's orderOut:sender
         end if
@@ -456,11 +456,11 @@ script AppDelegate
         end if
         if (dontShow's state()) is 1 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
+                do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool true"
             end try
         else if (dontShow's state()) is 0 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool false"
+                do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool false"
             end try
         end if
         tutorialWindow's orderOut:sender
@@ -582,7 +582,7 @@ script AppDelegate
             quit
         end if
         try
-            set licensedValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist licensed"
+            set licensedValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed"
             if licensedValue is "1" then
                 set isLicensed to true
             end if
@@ -590,14 +590,14 @@ script AppDelegate
             set isLicensed to false
         end try
         try
-            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
+            set dontShowValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
         on error
             set dontShowValue to "0"
         end try
         try
-            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
+            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed"
         on error
-            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
         if hasWelcomed is "0" then

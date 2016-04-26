@@ -14,7 +14,9 @@ script AppDelegate
     property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
+    property acknowledgements : missing value
     property welcomeWindow : missing value
+    property registrationWindow : missing value
     property tutorialWindow : missing value
     property checkIcon : missing value
     property dontShow : missing value
@@ -26,11 +28,35 @@ script AppDelegate
     property delFileName : missing value
     property startButton : missing value
     property installButton : missing value
+    property installButtonAlt : missing value
+    property backButton : missing value
+    property backButtonAlt : missing value
+    property registrationButton : missing value
     property delButton : missing value
-    property modeString : "Install a SkeleKey"
+    property theDate : missing value
+    property displayDate : missing value
+    property dateEnabled : missing value
+    property regFirstName : missing value
+    property regEmail : missing value
+    property regOrg : missing value
+    property regSerial : missing value
     property isBusy : false
     property fromStart : true
+    property modeString : "Install a SkeleKey"
+    property exp_date_e : ""
     
+    #Window Math Function (Thanks to Holly Lakin for helping us with the math of this function)
+    on windowMath(window1, window2)
+        set origin to origin of window1's frame()
+        set windowSize to |size| of window1's frame()
+        set x to x of origin
+        set y to y of origin
+        set yAdd to height of windowSize
+        set y to y + yAdd
+        window2's setFrameTopLeftPoint:{x, y}
+    end windowMath
+    
+    #Replace Characters Function
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -40,46 +66,203 @@ script AppDelegate
         return this_text
     end replace_chars
     
-    on windowMath(window1, window2) --Thanks to Holly Lakin for helping us with the math of this function
-        set origin to origin of window1's frame()
-        set windowSize to |size| of window1's frame()
-        set x to x of origin
-        set y to y of origin
-        set yAdd to height of windowSize
-        set y to y + yAdd
-        window2's setFrameTopLeftPoint_({x,y})
-    end windowMath
+    #Number Ninja Function (return numbers from UUID)
+    on returnNumbersInString(inputString)
+        set inputString to quoted form of inputString
+        do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString
+        set nums to the result
+        set numlist to {}
+        repeat with i from 1 to length of nums
+            set certain_char to character i of nums
+            try
+                set certain_char to certain_char as number
+                set the end of numlist to certain_char
+            end try
+        end repeat
+        return numlist
+    end returnNumbersInString
     
-    on radioOption_(sender) --get mode
+    #Mode Selector Function
+    on radioOption:sender
         set modeString to sender's title as text
-    end radioOption_
+    end radioOption:
     
-    on controlTextDidChange_(aNotification) --check if both passwords are equal
+    #Date Checked Sender
+    on dateChecked:sender
+        global currDate
+        if (dateEnabled's state()) is 0 then
+            theDate's setEnabled:false
+            theDate's setHidden:true
+            displayDate's setHidden:true
+            backButton's setHidden:false
+            backButtonAlt's setHidden:true
+            installButton's setHidden:false
+            installButtonAlt's setHidden:true
+            set exp_date_e to ""
+            set windowSize to |size| of installWindow's frame()
+            set origin to origin of installWindow's frame()
+            set x to x of origin
+            set y to y of origin
+            set y to y + 184
+            set newOrigin to {x, y}
+            installWindow's setFrame:{newOrigin, {480, 271}} display:true animate:true
+        else if (dateEnabled's state()) is 1 then
+            theDate's setEnabled:true
+            theDate's setHidden:false
+            displayDate's setHidden:false
+            backButton's setHidden:true
+            backButtonAlt's setHidden:false
+            installButton's setHidden:true
+            installButtonAlt's setHidden:false
+            set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+            set origin to origin of installWindow's frame()
+            set windowSize to |size| of installWindow's frame()
+            set x to x of origin
+            set y to y of origin
+            set y to y - 184
+            set newOrigin to {x, y}
+            installWindow's setFrame:{newOrigin, {480, 455}} display:true animate:true
+        end if
+    end dateChecked:
+    
+    #Display Expiration Date Function
+    on displayData:sender
+        set exp_date to theDate's dateValue()
+        displayDate's setStringValue:exp_date
+        set exp_date to theDate's dateValue()'s |description| as Unicode text
+        set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
+    end displayData:
+    
+    #Password Value Check Function
+    on checkPasswords()
+        global isLicensed
         set password1String to (stringValue() of password1) as string
         set password2String to (stringValue() of password2) as string
-        if password1String equals password2String then
-            checkIcon's setImage_(NSImage's imageNamed_("NSStatusAvailable"))
-            installButton's setEnabled_(true)
-        else if password1String does not equal password2String then
-            checkIcon's setImage_(NSImage's imageNamed_("NSStatusUnavailable"))
-            installButton's setEnabled_(false)
+        if password1String is equal to password2String and password1String is not "" then
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusAvailable")
+            if isLicensed is true then
+                installButton's setEnabled:true
+                installButtonAlt's setEnabled:true
+            end if
+        else if password1String is not equal to password2String then
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            installButton's setEnabled:false
+            installButtonAlt's setEnabled:false
+        else
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+            installButton's setEnabled:false
+            installButtonAlt's setEnabled:false
         end if
-    end controlTextDidChange_
+    end checkPasswords
     
-    on buttonClicked_(sender) -- "Start!" button
+    #License Generator Function
+    on licensekeygen(myname, myemail, myorg)
+        set e_mn to do shell script "printf \"" & myname & "\" | rev"
+        set e_mn to do shell script "printf \"" & e_mn & "\" | md5"
+        set e_mn to do shell script "printf \"" & e_mn & "\" | base64"
+        set e_mn to do shell script "printf \"" & e_mn & "\" | fold -w4 | paste -sd'1' - "
+        set e_mn to characters 7 thru 11 of e_mn as text
+        
+        set e_me to do shell script "printf \"" & myemail & "\" | base64"
+        set e_me to do shell script "printf \"" & e_me & "\" | rev"
+        set e_me to do shell script "printf \"" & e_me & "\" | md5"
+        set e_me to do shell script "printf \"" & e_me & "\" | fold -w3 | paste -sd'4' - "
+        set e_me to characters 3 thru 7 of e_me as text
+        
+        set e_mo to do shell script "printf \"" & myorg & "\" | base64"
+        set e_mo to do shell script "printf \"" & e_mo & "\" | md5"
+        set e_mo to do shell script "printf \"" & e_mo & "\" | rev"
+        set e_mo to do shell script "printf \"" & e_mo & "\" | fold -w3 | paste -sd'K' - "
+        set e_mo to characters 16 thru 20 of e_mo as text
+        
+        set e_me2 to do shell script "printf \"" & myemail & "\" | md5"
+        set e_me2 to do shell script "printf \"" & e_me2 & "\" | md5"
+        set e_me2 to do shell script "printf \"" & e_me2 & "\" | base64"
+        set e_me2 to do shell script "printf \"" & e_me2 & "\" | fold -w4 | paste -sd'A' - "
+        set e_me2 to characters 4 thru 8 of e_me2 as text
+        if myorg is not "" then
+            set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
+            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+        else
+            set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
+            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+        end if
+        return lickey
+    end licensekeygen
+    
+    #Check Registration Function
+    on checkRegistration()
+        global regFirstNameString
+        global regEmailString
+        global regOrgString
+        global regSerialString
+        set regFirstNameString to (stringValue() of regFirstName) as string
+        set regEmailString to (stringValue() of regEmail) as string
+        set regOrgString to (stringValue() of regOrg) as string
+        set regSerialString to (stringValue() of regSerial) as string
+        if regFirstNameString is not "" and regEmailString is not "" and regSerialString is not "" then
+            registrationButton's setEnabled:true
+        else
+            registrationButton's setEnabled:false
+        end if
+    end checkRegistration
+    
+    #Check License Key Function
+    on checkLicenseKey:sender
+        global regFirstNameString
+        global regEmailString
+        global regOrgString
+        global regSerialString
+        global isLicensed
+        set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
+        if regSerialString is not equal to lickey then
+            display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
+            registrationButton's setEnabled:false
+        else
+            set isLicensed to true
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed -bool true"
+            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Please return to the main window to use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
+            registrationWindow's orderOut:sender
+        end if
+    end checkLicenseKey
+    
+    #Text Field Checker
+    on controlTextDidChange:aNotification
+        set theObj to tag of object of aNotification
+        if theObj is equal to tag of password1 or theObj is equal to tag of password2 then
+            checkPasswords()
+        else
+            checkRegistration()
+        end if
+    end controlTextDidChange:
+    
+    #Main Window Start Button Function
+    on buttonClicked:sender
+        global currDate
         if modeString is "Install a SkeleKey" then
-            mainWindow's orderOut_(sender)
-            installWindow's makeKeyAndOrderFront_(me)
-            installWindow's makeFirstResponder_(username)
+            mainWindow's orderOut:sender
+            set currDate to current date
+            theDate's setDateValue:currDate
+            theDate's setMinDate:currDate
+            displayDate's setStringValue:currDate
+            installWindow's makeKeyAndOrderFront:me
+            installWindow's makeFirstResponder:username
             windowMath(mainWindow, installWindow)
         else if modeString is "Remove a SkeleKey" then
-            mainWindow's orderOut_(sender)
-            removeWindow's makeKeyAndOrderFront_(me)
+            mainWindow's orderOut:sender
+            removeWindow's makeKeyAndOrderFront:me
             windowMath(mainWindow, removeWindow)
         end if
-    end buttonClicked_
+    end buttonClicked:
     
-    on destvolume:choosevolume --choose volume to install
+    #Acknowledgements Function
+    on acknowledgements:sender
+        acknowledgements's makeKeyAndOrderFront:me
+    end acknowledgements:
+    
+    #Destination Volume Chooser Function
+    on destvolume:choosevolume
         global fileName2
         global fileName3
         set validVols to {}
@@ -105,18 +288,20 @@ script AppDelegate
             return
         end try
         if fileName2 is not "/Volumes/False/" then
-            startButton's setEnabled_(true)
-            fileName's setStringValue_(fileName2)
-            fileName's setToolTip_(fileName2)
+            startButton's setEnabled:true
+            fileName's setStringValue:fileName2
+            fileName's setToolTip:fileName2
         else
-            startButton's setEnabled_(false)
-            fileName's setStringValue_("")
-            fileName's setToolTip_("")
+            startButton's setEnabled:false
+            fileName's setStringValue:""
+            fileName's setToolTip:""
         end if
     end destvolume:
     
-    on installButton_(sender) --install button action
+    #Install Button Function
+    on installButton:sender
         global fileName2
+        global usernameValue
         global password1Value
         global password2Value
         set UnixPath to POSIX path of (path to current application as text)
@@ -132,24 +317,65 @@ script AppDelegate
         set password2Value to replace_chars(password2Value, "`", "\\`")
         set password2Value to replace_chars(password2Value, "\"", "\\\"")
         set password2Value to replace_chars(password2Value, "$", "\\$")
-        
+        set md5 to " md5 | "
+        set md5_e to " md5"
+        set base64 to " base64 | "
+        set base64_e to " base64"
+        set rev to "rev | "
+        set rev_e to "rev"
+        set sha224 to "shasum -a 224 | awk '{print $1}' | "
+        set sha224_e to "shasum -a 224 | awk '{print $1}'"
+        set sha256 to "shasum -a 256 | awk '{print $1}' | "
+        set sha256_e to "shasum -a 256 | awk '{print $1}'"
+        set sha384 to "shasum -a 384 | awk '{print $1}' | "
+        set sha384_e to "shasum -a 384 | awk '{print $1}'"
+        set sha512 to "shasum -a 512 | awk '{print $1}' | "
+        set sha512_e to "shasum -a 512 | awk '{print $1}'"
+        set sha512224 to "shasum -a 512224 | awk '{print $1}' | "
+        set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
+        set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
+        set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
+        set zero to md5 & base64_e
+        set one to sha256 & sha512256_e
+        set two to sha224 & sha384_e
+        set three to base64 & rev & sha256_e
+        set four to sha512 & rev_e
+        set five to sha512224 & md5_e
+        set six to sha384 & rev_e
+        set seven to sha384 & base64_e
+        set eight to base64 & md5_e
+        set nine to sha512256 & md5 & rev_e
+        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+        set encstring to ""
+        set epass to ""
         if usernameValue is "" then
             display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
             return
         end if
-        
-        if password1Value does not equal password2Value then
+        if password1Value is not equal to password2Value then
             display alert "Passwords do not match!"
-            password1's setStringValue_("")
-            password2's setStringValue_("")
+            password1's setStringValue:""
+            password2's setStringValue:""
             return
         end if
         try
             do shell script "cp -R " & UnixPath & "/Contents/Resources/SkeleKey-Applet.app " & fileName2
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
-            set epass to uuid & (do shell script "echo " & uuid & " | base64") & (do shell script "echo 'S3bs!*?' | md5 | md5")
-            do shell script "echo \"" & usernameValue & "\n" & password2Value & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
-            
+            set nums to returnNumbersInString(uuid)
+            repeat with char in nums
+                set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+                set epass to epass & encstring
+            end repeat
+            set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+            if (length of epass) is greater than 2048 then
+                set epass to (characters 1 thru 2047 of epass) as string
+            end if
+            if exp_date_e is not "" then
+                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+            else
+                set exp_date_e to "none"
+                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+            end if
             try
                 set theNumber to 1
                 do shell script "test -e " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
@@ -162,184 +388,238 @@ script AppDelegate
                         exit repeat
                     end try
                 end repeat
-                on error
+            on error
                 do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
             end try
-            
-            display dialog "Sucessfully created SkeleKey at location: \n" & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
+            display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
+            display dialog "Sucessfully created SkeleKey at location:
+            " & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
         on error
+            display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         housekeeping_(sender)
         houseKeepingInstall_(sender)
-        installWindow's orderOut_(sender)
-        mainWindow's makeKeyAndOrderFront_(me)
+        installWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
         windowMath(installWindow, mainWindow)
-    end installButton_
+    end installButton:
     
-    on destApp_(sender) --choose app to remove
+    #Removal Target Function
+    on destApp:sender
         global delApp
         global fileName3
+        global isLicensed
         try
             set delApp to choose file of type "com.apple.application-bundle" default location fileName3
             set delApp to POSIX path of delApp
             set delApp to replace_chars(delApp, " ", "\\ ")
-            delFileName's setStringValue_(delApp)
-            delFileName's setToolTip_(delApp)
-            delButton's setEnabled_(true)
+            delFileName's setStringValue:delApp
+            delFileName's setToolTip:delApp
+            if isLicensed is true then
+                delButton's setEnabled:true
+            end if
         on error
-            delFileName's setStringValue_("")
-            delFileName's setToolTip_("")
-            delButton's setEnabled_(false)
+            delFileName's setStringValue:""
+            delFileName's setToolTip:""
+            delButton's setEnabled:false
         end try
-    end destApp_
+    end destApp:
     
-    on delButton_(sender) --remove button action
+    #Removal Button Function
+    on delButton:sender
         global delApp
-        removeWindow's orderOut_(sender)
-        loadingWindow's makeKeyAndOrderFront_(me)
+        removeWindow's orderOut:sender
+        loadingWindow's makeKeyAndOrderFront:me
         windowMath(removeWindow, loadingWindow)
-        quitItem's setEnabled_(false)
+        quitItem's setEnabled:false
         set isBusy to true
         try
-            delay .1
+            delay 0.1
             do shell script "srm -rf " & delApp
-            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
-        on error
+            display dialog "Sucessfully securely removed app at location:
+            " & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
+            on error
             display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
         end try
         set isBusy to false
-        quitItem's setEnabled_(true)
+        quitItem's setEnabled:true
         housekeeping_(sender)
         finishedDel_(sender)
-    end delButton_
+    end delButton:
     
-    on gotit_(sender) --tutorialScreen button action
+    #Tutorial Screen Button Function
+    on gotit:sender
+        global isLicensed
+        if isLicensed is false then
+            registrationWindow's makeKeyAndOrderFront:me
+        end if
         if (dontShow's state()) is 1 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool true"
+                do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool true"
             end try
         else if (dontShow's state()) is 0 then
             try
-                do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow -bool false"
+                do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool false"
             end try
         end if
-        tutorialWindow's orderOut_(sender)
-    end gotit_
+        tutorialWindow's orderOut:sender
+    end gotit:
     
-    on welcomeNext_(sender)
-        welcomeWindow's orderOut_(sender)
-        if fromStart is true
-            tutorialWindow's makeKeyAndOrderFront_(me)
+    #Tutorial Window Button Function
+    on welcomeNext:sender
+        welcomeWindow's orderOut:sender
+        if fromStart is true then
+            tutorialWindow's makeKeyAndOrderFront:me
             windowMath(welcomeWindow, tutorialWindow)
         end if
-    end welcomeNext_
-
-    on housekeeping_(sender) --remove main window's info
+    end welcomeNext:
+    
+    #Main Window Housekeeping
+    on housekeeping:sender
         global fileName2
-        fileName's setStringValue_("")
-        fileName's setToolTip_("")
-        startButton's setEnabled_(false)
+        global fileName3
+        fileName's setStringValue:""
+        fileName's setToolTip:""
+        startButton's setEnabled:false
         set fileName2 to ""
-    end housekeeping_
-
-    on houseKeepingInstall_(sender) --remove install window's info
-        username's setStringValue_("")
-        password1's setStringValue_("")
-        password2's setStringValue_("")
+        set fileName3 to ""
+    end housekeeping:
+    
+    #Install Window Housekeeping
+    on houseKeepingInstall:sender
+        global usernameValue
+        global password1Value
+        global password2Value
+        username's setStringValue:""
+        password1's setStringValue:""
+        password2's setStringValue:""
         set usernameValue to ""
         set password1Value to ""
         set password2Value to ""
-        installWindow's orderOut_(sender)
-        mainWindow's makeKeyAndOrderFront_(me)
+        theDate's setEnabled:false
+        theDate's setHidden:true
+        installButton's setEnabled:false
+        installButtonAlt's setEnabled:false
+        installButton's setHidden:false
+        backButton's setHidden:false
+        installButtonAlt's setHidden:true
+        backButtonAlt's setHidden:true
+        displayDate's setStringValue:""
+        displayDate's setHidden:true
+        dateEnabled's setState:0
+        checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+        set origin to origin of installWindow's frame()
+        set x to x of origin
+        set y to y of origin
+        set theHeight to height of |size| of installWindow's frame()
+        set y to y + theHeight
+        set y to y - 271
+        installWindow's setFrame:{{x,y}, {480,271}} display:true
+        installWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
         windowMath(installWindow, mainWindow)
-    end houseKeepingInstall_
-
-    on cancelDel_(sender) --when removal is canceled
-        houseKeepingDel_()
-        removeWindow's orderOut_(sender)
-        mainWindow's makeKeyAndOrderFront_(me)
-        windowMath(removeWindow, mainWindow)
-    end cancelDel_
-
-    on finishedDel_(sender) --when removal has finished
-        houseKeepingDel_()
-        loadingWindow's orderOut_(sender)
-        mainWindow's makeKeyAndOrderFront_(me)
-        windowMath(loadingWindow, mainWindow)
-    end finishedDel_
-
-    on houseKeepingDel_() --remove del window's info
+    end houseKeepingInstall:
+    
+    #Remove Window Housekeeping
+    on houseKeepingDel_()
         global delApp
-        delFileName's setStringValue_("")
-        delFileName's setToolTip_("")
-        delButton's setEnabled_(false)
+        delFileName's setStringValue:""
+        delFileName's setToolTip:""
+        delButton's setEnabled:false
         set delApp to ""
     end houseKeepingDel_
-
-    on doOpenTutorial_(sender)
-        tutorialWindow's makeKeyAndOrderFront_(me)
-    end doOpenTutorial_
-
-    on doOpenWelcome_(sender)
-        welcomeWindow's makeKeyAndOrderFront_(me)
-        set fromStart to false
-    end doOpenWelcome_
-
-    on applicationWillFinishLaunching_(aNotification) --dependency and admin checking
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults"}
-        set notInstalledString to ""
     
+    #Remove Window Cancelled Function
+    on cancelDel:sender
+        houseKeepingDel_()
+        removeWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
+        windowMath(removeWindow, mainWindow)
+    end cancelDel:
+    
+    #Remove Window Complete Function
+    on finishedDel()
+        houseKeepingDel_()
+        loadingWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
+        windowMath(loadingWindow, mainWindow)
+    end finishedDel:
+    
+    #Tutorial Window Execution Function
+    on doOpenTutorial:sender
+        tutorialWindow's makeKeyAndOrderFront:me
+    end doOpenTutorial:
+    
+    #Welcome Window Execution Function
+    on doOpenWelcome:sender
+        welcomeWindow's makeKeyAndOrderFront:me
+        set fromStart to false
+    end doOpenWelcome:
+    
+    #On-startup Function
+    on applicationWillFinishLaunching:aNotification
+        global isLicensed
+        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
+        set notInstalledString to ""
         try
             do shell script "sudo echo elevate" with administrator privileges
         on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
-    
         repeat with i in dependencies
             set status to do shell script i & "; echo $?"
             if status is "127" then
-                set notInstalledString to notInstalledString & i & "\n"
+                set notInstalledString to notInstalledString & i & "
+                "
             end if
         end repeat
-    
         if notInstalledString is not "" then
-            display alert "The following required resources are not installed:\n\n" & notInstalledString buttons "Quit"
+            display alert "The following required resources are not installed:
+            
+            " & notInstalledString buttons "Quit"
             quit
         end if
-    
         try
-            set dontShowValue to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist dontShow"
+            set licensedValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed"
+            if licensedValue is "1" then
+                set isLicensed to true
+            end if
+        on error
+            set isLicensed to false
+        end try
+        try
+            set dontShowValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
         on error
             set dontShowValue to "0"
         end try
-    
         try
-            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed"
+            set hasWelcomed to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed"
         on error
-            do shell script "defaults write ~/Library/Preferences/org.district70.sebs.SkeleKey-Manager.plist hasWelcomed -bool true"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed -bool true"
             set hasWelcomed to "0"
         end try
-    
-        if hasWelcomed is "0"
-            welcomeWindow's makeKeyAndOrderFront_(me)
+        if hasWelcomed is "0" then
+            welcomeWindow's makeKeyAndOrderFront:me
+            registrationWindow's makeKeyAndOrderFront:me
         else
             if dontShowValue is "0" then
-                tutorialWindow's makeKeyAndOrderFront_(me)
+                tutorialWindow's makeKeyAndOrderFront:me
             end if
         end if
-    end applicationWillFinishLaunching_
-
-    on applicationShouldTerminate_(sender)
+    end applicationWillFinishLaunching:
+    
+    #On Termination Function
+    on applicationShouldTerminate:sender
         if isBusy is true then
             return NSTerminateCancel
         end if
-    
         return current application's NSTerminateNow
-    end applicationShouldTerminate_
+    end applicationShouldTerminate:
 
-    on applicationShouldTerminateAfterLastWindowClosed_(sender)
+    #Application Specific Values
+    on applicationShouldTerminateAfterLastWindowClosed:sender
         return true
-    end applicationShouldTerminateAfterLastWindowClosed_
+    end applicationShouldTerminateAfterLastWindowClosed:
 end script

@@ -295,7 +295,7 @@
 				);
 				INFOPLIST_FILE = "SkeleKey-Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Manager";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.skelekey.SkeleKey-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -311,7 +311,7 @@
 				);
 				INFOPLIST_FILE = "SkeleKey-Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.district70.sebs.SkeleKey-Manager";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.skelekey.SkeleKey-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
