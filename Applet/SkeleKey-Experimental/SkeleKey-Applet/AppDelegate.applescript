@@ -69,10 +69,10 @@ script AppDelegate
         set nums to returnNumbersInString(uuid)
         set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
         repeat with char in nums
-            set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+            set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
             set epass to epass & encstring
         end repeat
-        set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+        set epass to do shell script "printf \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
         if (length of epass) is greater than 2048 then
             set epass to (characters 1 thru 2047 of epass) as string
         end if
@@ -104,7 +104,7 @@ script AppDelegate
             do shell script "nohup sh -c \"killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "\" > /dev/null &"
         end if
         try
-            do shell script "sudo echo elevate" user name username password passwd with administrator privileges
+            do shell script "sudo printf elevate" user name username password passwd with administrator privileges
             
         on error
             error number 101
@@ -137,7 +137,7 @@ script AppDelegate
             set UnixPath to replace_chars(UnixPath, " ", "\\ ")
             set volumepath to POSIX path of ((path to current application as text) & "::")
             set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-            set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
+            set volumepath to (do shell script "printf \"" & volumepath & "\" | awk -F '/' '{print $3}'")
             set volumepath to "/Volumes/" & volumepath
             set volumepath to replace_chars(volumepath, " ", "\\ ")
             set authcred to decryptinfo(volumepath, authinfobin)
@@ -159,10 +159,10 @@ script AppDelegate
     end main
 
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm"}
+        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm"}
         set notInstalledString to ""
         repeat with i in dependencies
-            set status to do shell script i & "; echo $?"
+            set status to do shell script i & "; printf $?"
             if status is "127" then
                 set notInstalledString to notInstalledString & i & "\n"
             end if

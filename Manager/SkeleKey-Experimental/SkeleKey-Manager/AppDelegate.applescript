@@ -183,10 +183,10 @@ script AppDelegate
         set e_me2 to characters 4 thru 8 of e_me2 as text
         if myorg is not "" then
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
-            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+            set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
         else
             set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
-            set lickey to do shell script "echo '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+            set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
         end if
         return lickey
     end licensekeygen
@@ -221,7 +221,16 @@ script AppDelegate
             registrationButton's setEnabled:false
         else
             set isLicensed to true
-            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed -bool true"
+            set plist_license_name_comp to do shell script "printf '" & regFirstNameString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_email_comp to do shell script "printf '" & regEmailString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_org_comp to do shell script "printf '" & regOrgString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_serial_comp to do shell script "printf '" & regSerialString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_key_comp to plist_license_serial_comp & plist_license_name_comp & plist_license_org_comp & plist_license_email_comp
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict 'full_name' '" & regFirstNameString & "'"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'email_address' '" & regEmailString & "'"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'organization' '" & regOrgString & "'"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'serial_number' '" & regSerialString & "'"
+            do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'verikey' '" & plist_license_key_comp & "'"
             display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Please return to the main window to use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
             registrationWindow's orderOut:sender
         end if
@@ -363,18 +372,18 @@ script AppDelegate
             set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
             set nums to returnNumbersInString(uuid)
             repeat with char in nums
-                set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+                set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
                 set epass to epass & encstring
             end repeat
-            set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+            set epass to do shell script "printf \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
             if (length of epass) is greater than 2048 then
                 set epass to (characters 1 thru 2047 of epass) as string
             end if
             if exp_date_e is not "" then
-                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "printf \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             else
                 set exp_date_e to "none"
-                do shell script "echo \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "printf \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
             end if
             try
                 set theNumber to 1
@@ -560,16 +569,16 @@ script AppDelegate
     #On-startup Function
     on applicationWillFinishLaunching:aNotification
         global isLicensed
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
+        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl"}
         set notInstalledString to ""
         try
-            do shell script "sudo echo elevate" with administrator privileges
+            do shell script "sudo printf elevate" with administrator privileges
         on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
         repeat with i in dependencies
-            set status to do shell script i & "; echo $?"
+            set status to do shell script i & "; printf $?"
             if status is "127" then
                 set notInstalledString to notInstalledString & i & "
                 "
@@ -582,10 +591,23 @@ script AppDelegate
             quit
         end if
         try
-            set licensedValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist licensed"
-            if licensedValue is "1" then
+            set licensedValue_fullname_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:full_name\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
+            set licensedValue_emailaddress_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:email_address\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
+            set licensedValue_organization_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:organization\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
+            set licensedValue_serialnumber_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:serial_number\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
+            set licensedValue_verikey_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:verikey\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
+            
+            set licensedValue_fullname_gen to do shell script "printf '" & licensedValue_fullname_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set licensedValue_organization_gen to do shell script "printf '" & licensedValue_organization_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set licensedValue_verikey_gen to licensedValue_serialnumber_gen & licensedValue_fullname_gen & licensedValue_organization_gen & licensedValue_emailaddress_gen
+            
+            
+            if licensedValue_verikey_gen is equal to licensedValue_verikey_real then
                 set isLicensed to true
             end if
+            
         on error
             set isLicensed to false
         end try
