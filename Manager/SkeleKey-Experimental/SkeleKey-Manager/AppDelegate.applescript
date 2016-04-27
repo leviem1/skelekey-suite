@@ -228,9 +228,9 @@ script AppDelegate
         else
             set isLicensed to true
             set plist_license_name_comp to do shell script "printf '" & regFirstNameString & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set plist_license_email_comp to do shell script "printf '" & regEmailString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_email_comp to do shell script "printf '" & regEmailString & "' | md5 |  shasum -a 512 | awk '{print $1}'"
             set plist_license_org_comp to do shell script "printf '" & regOrgString & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set plist_license_serial_comp to do shell script "printf '" & regSerialString & "' | rev |  shasum -a 512 | awk '{print $1}'"
+            set plist_license_serial_comp to do shell script "printf '" & regSerialString & "' | base64 |  shasum -a 512 | awk '{print $1}'"
             set plist_license_key_comp to plist_license_serial_comp & plist_license_name_comp & plist_license_org_comp & plist_license_email_comp
             do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict 'full_name' '" & regFirstNameString & "'"
             do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'email_address' '" & regEmailString & "'"
@@ -615,9 +615,9 @@ script AppDelegate
             end try
             if check_licensedValue_serialnumber is "0" then
                 set licensedValue_fullname_gen to do shell script "printf '" & licensedValue_fullname_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-                set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | md5 |  shasum -a 512 | awk '{print $1}'"
                 set licensedValue_organization_gen to do shell script "printf '" & licensedValue_organization_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-                set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | base64 |  shasum -a 512 | awk '{print $1}'"
                 set licensedValue_verikey_gen to licensedValue_serialnumber_gen & licensedValue_fullname_gen & licensedValue_organization_gen & licensedValue_emailaddress_gen
                 if licensedValue_verikey_gen is equal to licensedValue_verikey_real then
                     set isLicensed to true
