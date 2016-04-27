@@ -216,7 +216,13 @@ script AppDelegate
         global regSerialString
         global isLicensed
         set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
-        if regSerialString is not equal to lickey then
+        try
+            set check_regSerialString_allowed to do shell script "printf $(curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & regSerialString & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
+            on error
+            set check_regSerialString_allowed to "0"
+        end try
+        
+        if regSerialString is not equal to lickey or check_regSerialString_allowed is  "1" then
             display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
             registrationButton's setEnabled:false
         else
@@ -569,7 +575,7 @@ script AppDelegate
     #On-startup Function
     on applicationWillFinishLaunching:aNotification
         global isLicensed
-        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy"}
+        set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy", "curl"}
         set notInstalledString to ""
         try
             do shell script "sudo printf elevate" with administrator privileges
@@ -594,7 +600,7 @@ script AppDelegate
                 quit
             end if
             else
-            display dialog "The executable 'command' is misssing!"
+            display dialog "The system file 'command' is misssing!"
         end if
         try
             set licensedValue_fullname_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:full_name\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
@@ -602,21 +608,29 @@ script AppDelegate
             set licensedValue_organization_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:organization\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
             set licensedValue_serialnumber_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:serial_number\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
             set licensedValue_verikey_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:verikey\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
-            
-            set licensedValue_fullname_gen to do shell script "printf '" & licensedValue_fullname_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set licensedValue_organization_gen to do shell script "printf '" & licensedValue_organization_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-            set licensedValue_verikey_gen to licensedValue_serialnumber_gen & licensedValue_fullname_gen & licensedValue_organization_gen & licensedValue_emailaddress_gen
-            
-            
-            if licensedValue_verikey_gen is equal to licensedValue_verikey_real then
-                set isLicensed to true
+            try
+                set check_licensedValue_serialnumber to do shell script "printf $(curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & licensedValue_serialnumber_real & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
+                on error
+                set check_licensedValue_serialnumber to "0"
+            end try
+            if check_licensedValue_serialnumber is "0" then
+                set licensedValue_fullname_gen to do shell script "printf '" & licensedValue_fullname_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_organization_gen to do shell script "printf '" & licensedValue_organization_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
+                set licensedValue_verikey_gen to licensedValue_serialnumber_gen & licensedValue_fullname_gen & licensedValue_organization_gen & licensedValue_emailaddress_gen
+                if licensedValue_verikey_gen is equal to licensedValue_verikey_real then
+                    set isLicensed to true
+                    else
+                    set isLicensed to false
+                end if
+                else
+                set isLicensed to false
             end if
-            
-        on error
+            on error
             set isLicensed to false
         end try
+        
         try
             set dontShowValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
         on error
