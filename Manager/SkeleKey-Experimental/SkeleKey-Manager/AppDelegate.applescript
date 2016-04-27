@@ -623,9 +623,15 @@ script AppDelegate
                     set isLicensed to true
                     else
                     set isLicensed to false
+                    try
+                        do shell script "defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
+                    end try
                 end if
                 else
                 set isLicensed to false
+                try
+                    do shell script "defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
+                end try
             end if
             on error
             set isLicensed to false
