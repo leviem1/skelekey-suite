@@ -285,9 +285,8 @@ script AppDelegate
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
             set discoverVol to get paragraphs of discoverVol
             repeat with vol in discoverVol
-                set vol to replace_chars(vol, " ", "\\ ")
                 try
-                    set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+                    set isValid to do shell script "diskutil info '/Volumes/" & vol & "' | grep \"Protocol\" | awk '{print $2}'"
                 on error
                     set isValid to "False"
                 end try
@@ -320,18 +319,9 @@ script AppDelegate
         global password1Value
         global password2Value
         set UnixPath to POSIX path of (path to current application as text)
-        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
-        set usernameValue to replace_chars(usernameValue, "`", "\\`")
-        set usernameValue to replace_chars(usernameValue, "\"", "\\\"")
-        set password1Value to replace_chars(password1Value, "`", "\\`")
-        set password1Value to replace_chars(password1Value, "\"", "\\\"")
-        set password1Value to replace_chars(password2Value, "$", "\\$")
-        set password2Value to replace_chars(password2Value, "`", "\\`")
-        set password2Value to replace_chars(password2Value, "\"", "\\\"")
-        set password2Value to replace_chars(password2Value, "$", "\\$")
         set md5 to " md5 | "
         set md5_e to " md5"
         set base64 to " base64 | "
@@ -374,8 +364,8 @@ script AppDelegate
             return
         end if
         try
-            do shell script "cp -R " & UnixPath & "/Contents/Resources/SkeleKey-Applet.app " & fileName2
-            set uuid to do shell script "diskutil info " & fileName2 & " | grep 'Volume UUID' | awk '{print $3}' | rev"
+            do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
+            set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
             set nums to returnNumbersInString(uuid)
             repeat with char in nums
                 set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
@@ -386,25 +376,25 @@ script AppDelegate
                 set epass to (characters 1 thru 2047 of epass) as string
             end if
             if exp_date_e is not "" then
-                do shell script "printf \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
             else
                 set exp_date_e to "none"
-                do shell script "printf \"" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\" | openssl enc -aes-256-cbc -e -out " & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\""
+                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
             end if
             try
                 set theNumber to 1
-                do shell script "test -e " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
+                do shell script "test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
                 repeat
                     try
                         set theNumber to theNumber + 1
-                        do shell script "test -e " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
+                        do shell script "test -e '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
                     on error
-                        do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "\\ " & theNumber & "-SkeleKey-Applet.app"
+                        do shell script "mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
                         exit repeat
                     end try
                 end repeat
             on error
-                do shell script "mv -f " & fileName2 & "SkeleKey-Applet.app " & fileName2 & usernameValue & "-SkeleKey-Applet.app"
+                do shell script "mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
             end try
             display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
@@ -428,7 +418,6 @@ script AppDelegate
         try
             set delApp to choose file of type "com.apple.application-bundle" default location fileName3
             set delApp to POSIX path of delApp
-            set delApp to replace_chars(delApp, " ", "\\ ")
             delFileName's setStringValue:delApp
             delFileName's setToolTip:delApp
             if isLicensed is true then
@@ -451,7 +440,7 @@ script AppDelegate
         set isBusy to true
         try
             delay 0.1
-            do shell script "srm -rf " & delApp
+            do shell script "srm -rf '" & delApp & "'"
             display dialog "Sucessfully securely removed app at location:
             " & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
             on error
@@ -554,7 +543,7 @@ script AppDelegate
     end cancelDel:
     
     #Remove Window Complete Function
-    on finishedDel()
+    on finishedDel_(sender)
         houseKeepingDel_()
         loadingWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me

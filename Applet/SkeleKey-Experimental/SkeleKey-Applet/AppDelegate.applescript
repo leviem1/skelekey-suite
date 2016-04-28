@@ -8,16 +8,7 @@
 
 script AppDelegate
     property parent : class "NSObject"
-    
-    on replace_chars(this_text, search_string, replacement_string)
-        set AppleScript's text item delimiters to the search_string
-        set the item_list to every text item of this_text
-        set AppleScript's text item delimiters to the replacement_string
-        set this_text to the item_list as string
-        set AppleScript's text item delimiters to ""
-        return this_text
-    end replace_chars
-    
+
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
         do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
@@ -65,7 +56,7 @@ script AppDelegate
         set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
         set encstring to ""
         set epass to ""
-        set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}' | rev"
+        set uuid to do shell script "diskutil info '" & volumepath & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
         set nums to returnNumbersInString(uuid)
         set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
         repeat with char in nums
@@ -76,9 +67,9 @@ script AppDelegate
         if (length of epass) is greater than 2048 then
             set epass to (characters 1 thru 2047 of epass) as string
         end if
-        set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
-        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
-        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
+        set username to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '1q;d'")
+        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '2q;d'")
+        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '3q;d'")
         return {username, passwd, exp_date_e}
     end decryptinfo
     
@@ -133,17 +124,14 @@ on main()
     try
         set UnixPath to POSIX path of (path to current application as text)
         set volumepath to UnixPath
-        set UnixPath to replace_chars(UnixPath, "//", "/")
-        set UnixPath to replace_chars(UnixPath, " ", "\\ ")
         set volumepath to POSIX path of ((path to current application as text) & "::")
         if volumepath does not contain "/Volumes/" then
             display dialog "SkeleKey Applet is not located on a USB Device!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             quit
         end if
         set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-        set volumepath to (do shell script "printf \"" & volumepath & "\" | awk -F '/' '{print $3}'")
+        set volumepath to (do shell script "printf '" & volumepath & "' | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
-        set volumepath to replace_chars(volumepath, " ", "\\ ")
         set authcred to decryptinfo(volumepath, authinfobin)
         checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
@@ -187,4 +175,4 @@ on applicationShouldTerminate:sender
     return current application's NSTerminateNow
 end applicationShouldTerminate:
 
-end script'
+end script
