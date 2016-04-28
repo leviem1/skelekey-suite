@@ -56,16 +56,6 @@ script AppDelegate
         window2's setFrameTopLeftPoint:{x, y}
     end windowMath
     
-    #Replace Characters Function
-    on replace_chars(this_text, search_string, replacement_string)
-        set AppleScript's text item delimiters to the search_string
-        set the item_list to every text item of this_text
-        set AppleScript's text item delimiters to the replacement_string
-        set this_text to the item_list as string
-        set AppleScript's text item delimiters to ""
-        return this_text
-    end replace_chars
-    
     #Number Ninja Function (return numbers from UUID)
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
@@ -279,7 +269,6 @@ script AppDelegate
     #Destination Volume Chooser Function
     on destvolume:choosevolume
         global fileName2
-        global fileName3
         set validVols to {}
         try
             set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
@@ -296,7 +285,6 @@ script AppDelegate
             end repeat
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
-            set fileName3 to replace_chars(fileName2, "\\ ", " ")
         on error
             display alert "No valid destination found! Please (re)insert the USB and try again!"
             return
@@ -413,10 +401,10 @@ script AppDelegate
     #Removal Target Function
     on destApp:sender
         global delApp
-        global fileName3
+        global fileName2
         global isLicensed
         try
-            set delApp to choose file of type "com.apple.application-bundle" default location fileName3
+            set delApp to choose file of type "com.apple.application-bundle" default location fileName2
             set delApp to POSIX path of delApp
             delFileName's setStringValue:delApp
             delFileName's setToolTip:delApp
@@ -482,12 +470,10 @@ script AppDelegate
     #Main Window Housekeeping
     on housekeeping:sender
         global fileName2
-        global fileName3
         fileName's setStringValue:""
         fileName's setToolTip:""
         startButton's setEnabled:false
         set fileName2 to ""
-        set fileName3 to ""
     end housekeeping:
     
     #Install Window Housekeeping
