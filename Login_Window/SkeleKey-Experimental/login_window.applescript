@@ -77,7 +77,7 @@ end returnNumbersInString
 
 set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
-		return 1
+	return 1
 end if
 #CODE
 ################################
@@ -219,6 +219,8 @@ try
 	if test_for_txtlgn is not "true" then
 		set test_for_txtlgn to "false"
 	end if
+on error
+	set test_for_txtlgn to "false"
 end try
 ####################
 #   Finally, the login window!   #
