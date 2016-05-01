@@ -77,7 +77,7 @@ end returnNumbersInString
 
 set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
-	return 1
+		return 1
 end if
 #CODE
 ################################
@@ -262,14 +262,21 @@ else --graphical item login window
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
 	set uid to do shell script "dscl . list /Users UniqueID | grep '" & uname & "' | awk {'print $2'}"
-	set ishidden to do shell script "dscl . list /Users IsHidden | grep '" & uname & "' | awk {'print $2'}"
-	if uid is less than 500 or ishidden is "1" then
+	try
+		set hidesub500 to do shell script "/usr/libexec/PlistBuddy -c 'print :Hide500Users' /Library/Preferences/com.apple.loginwindow.plist"
+	on error
+		set hidesub500 to "false"
+	end try
+	try
+		set ishidden to do shell script "dscl . list /Users IsHidden | grep '" & uname & "' | awk {'print $2'}"
+	on error
+		set ishidden to "0"
+	end try
+	if ishidden is "" then set ishidden to "0"
+	if (uid is less than 500 and hidesub500 is "true") or ishidden is "1" then
 		tell application "System Events"
-			key code 53
 			keystroke "Othe"
-			keystroke "r"
 			delay 0.25
-			keystroke tab
 			keystroke return
 			delay 0.5
 			tell process "SecurityAgent"
@@ -285,8 +292,9 @@ else --graphical item login window
 		delay 0.25
 		tell application "System Events"
 			key code 53
+			delay 0.5
 			keystroke fullname
-			delay 0.25
+			delay 0.5
 			keystroke tab
 			keystroke return
 			delay 0.5
