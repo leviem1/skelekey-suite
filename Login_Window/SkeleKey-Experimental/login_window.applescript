@@ -286,6 +286,7 @@ else --graphical item login window
 			delay 0.25
 			keystroke return
 			keystroke return
+			say "Welcome back " & uname
 		end tell
 	else --if no users hidden
 		set fullname to do shell script "dscacheutil -q user -a name '" & uname & "' | grep 'gecos' | sed -e 's/.*gecos: \\(.*\\)/\\1/'"
@@ -303,6 +304,7 @@ else --graphical item login window
 			end tell
 			delay 0.25
 			keystroke return
+			say "Welcome back " & uname
 		end tell
 	end if
 	if drive_ is not "Macintosh HD" or ".DS_Store" then
