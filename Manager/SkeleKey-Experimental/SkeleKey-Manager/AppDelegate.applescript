@@ -427,7 +427,6 @@ script AppDelegate
         quitItem's setEnabled:false
         set isBusy to true
         try
-            delay 0.1
             do shell script "srm -rf '" & delApp & "'"
             display dialog "Sucessfully securely removed app at location:
             " & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
