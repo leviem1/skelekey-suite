@@ -67,9 +67,10 @@ script AppDelegate
         if (length of epass) is greater than 2048 then
             set epass to (characters 1 thru 2047 of epass) as string
         end if
-        set username to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '1q;d'")
-        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '2q;d'")
-        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\" | sed '3q;d'")
+        set encContents to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\"")
+        set username to paragraph 1 of encContents
+        set passwd to paragraph 2 of encContents
+        set exp_date_e to paragraph 3 of encContents
         return {username, passwd, exp_date_e}
     end decryptinfo
     
@@ -90,9 +91,15 @@ script AppDelegate
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
+<<<<<<< HEAD
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             do shell script "chflags hidden '" & UnixPath & "'"
             do shell script "nohup sh -c 'killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "' > /dev/null &"
+=======
+            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            do shell script "chflags hidden " & UnixPath
+            do shell script "nohup sh -c \"killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "\" > /dev/null &"
+>>>>>>> b376878b6a4d66a0793d60069278e9212c691ef9
         end if
         try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
@@ -105,7 +112,7 @@ script AppDelegate
     on auth(username, passwd)
         set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list
         if username is not in localusers then
-            display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             else
             try
                 tell application "System Events" to tell process "SecurityAgent"
@@ -126,7 +133,7 @@ on main()
         set volumepath to UnixPath
         set volumepath to POSIX path of ((path to current application as text) & "::")
         if volumepath does not contain "/Volumes/" then
-            display dialog "SkeleKey Applet is not located on a USB Device!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            display dialog "SkeleKey Applet is not located on a USB Device!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             quit
         end if
         set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
@@ -138,13 +145,13 @@ on main()
         auth(item 1 of authcred, item 2 of authcred)
         on error number errorNumber
         if errorNumber is 101 then
-            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             return
             else if errorNumber is 102 then
-            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             return
             else if errorNumber is 103 then
-            display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+            display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             return
         end if
     end try
