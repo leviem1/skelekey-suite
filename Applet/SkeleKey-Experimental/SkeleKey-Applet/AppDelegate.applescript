@@ -91,15 +91,9 @@ script AppDelegate
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
-<<<<<<< HEAD
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             do shell script "chflags hidden '" & UnixPath & "'"
             do shell script "nohup sh -c 'killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "' > /dev/null &"
-=======
-            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
-            do shell script "chflags hidden " & UnixPath
-            do shell script "nohup sh -c \"killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "\" > /dev/null &"
->>>>>>> b376878b6a4d66a0793d60069278e9212c691ef9
         end if
         try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
