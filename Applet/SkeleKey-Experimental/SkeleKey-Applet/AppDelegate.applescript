@@ -93,7 +93,7 @@ script AppDelegate
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             do shell script "chflags hidden '" & UnixPath & "'"
-            do shell script "nohup sh -c 'killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "' > /dev/null &"
+            do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "' > /dev/null &"
         end if
         try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
@@ -104,7 +104,7 @@ script AppDelegate
     end checkadmin
     
     on auth(username, passwd)
-        set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list
+        set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)''") as list
         if username is not in localusers then
             display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             else
@@ -152,7 +152,7 @@ on main()
 end main
 
 on applicationWillFinishLaunching:aNotification
-    set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm"}
+    set dependencies to {"printf", "openssl", "ls", "diskutil", "awk", "base64", "sudo", "cp", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm", "egrep", "chflags", "killall", "date"}
     set notInstalledString to ""
     repeat with i in dependencies
         set status to do shell script i & "; printf $?"
