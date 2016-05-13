@@ -28,15 +28,18 @@ script AppDelegate
     property delFileName : missing value
     property startButton : missing value
     property installButton : missing value
-    property installButtonAlt : missing value
     property backButton : missing value
-    property backButtonAlt : missing value
     property registrationButton : missing value
     property delButton : missing value
     property theDate : missing value
     property displayDate : missing value
     property dateEnabled : missing value
+    property loginEnabled : missing value
+    property limitEnabled : missing value
     property regFirstName : missing value
+    property stateInformerDate : missing value
+    property stateInformerLogin : missing value
+    property stateInformerLimit : missing value
     property regEmail : missing value
     property regOrg : missing value
     property regSerial : missing value
@@ -77,42 +80,27 @@ script AppDelegate
         set modeString to sender's title as text
     end radioOption:
     
+    
+    
+    
     #Date Checked Sender
     on dateChecked:sender
         global currDate
         if (dateEnabled's state()) is 0 then
             theDate's setEnabled:false
             theDate's setHidden:true
+            stateInformerDate's setHidden:false
             displayDate's setHidden:true
-            backButton's setHidden:false
-            backButtonAlt's setHidden:true
             installButton's setHidden:false
-            installButtonAlt's setHidden:true
             set exp_date_e to ""
-            set windowSize to |size| of installWindow's frame()
-            set origin to origin of installWindow's frame()
-            set x to x of origin
-            set y to y of origin
-            set y to y + 184
-            set newOrigin to {x, y}
-            installWindow's setFrame:{newOrigin, {480, 271}} display:true animate:true
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
+            stateInformerDate's setHidden:true
             displayDate's setHidden:false
-            backButton's setHidden:true
-            backButtonAlt's setHidden:false
-            installButton's setHidden:true
-            installButtonAlt's setHidden:false
+            #installButton's setHidden:true
             set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
             set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
-            set origin to origin of installWindow's frame()
-            set windowSize to |size| of installWindow's frame()
-            set x to x of origin
-            set y to y of origin
-            set y to y - 184
-            set newOrigin to {x, y}
-            installWindow's setFrame:{newOrigin, {480, 455}} display:true animate:true
         end if
     end dateChecked:
     
@@ -124,6 +112,24 @@ script AppDelegate
         set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
     end displayData:
     
+    #Login Checked Sender
+    on loginChecked:sender
+        if (loginEnabled's state()) is 0 then
+            stateInformerLogin's setHidden:false
+        else if (loginEnabled's state()) is 1 then
+            stateInformerLogin's setHidden:true
+        end if
+    end loginChecked:
+    
+    #Execution Checked Sender
+    on limitChecked:sender
+        if (limitEnabled's state()) is 0 then
+            stateInformerLimit's setHidden:false
+            else if (limitEnabled's state()) is 1 then
+            stateInformerLimit's setHidden:true
+        end if
+    end limitChecked:
+    
     #Password Value Check Function
     on checkPasswords()
         global isLicensed
@@ -133,16 +139,13 @@ script AppDelegate
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusAvailable")
             if isLicensed is true then
                 installButton's setEnabled:true
-                installButtonAlt's setEnabled:true
             end if
         else if password1String is not equal to password2String then
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             installButton's setEnabled:false
-            installButtonAlt's setEnabled:false
         else
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             installButton's setEnabled:false
-            installButtonAlt's setEnabled:false
         end if
     end checkPasswords
     
@@ -279,9 +282,9 @@ script AppDelegate
                 on error
                     set isValid to "False"
                 end try
-                if isValid is "USB" then
+                #if isValid is "USB" then
                     set validVols to validVols & {vol}
-                end if
+                #end if
             end repeat
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
@@ -404,7 +407,7 @@ script AppDelegate
         global fileName2
         global isLicensed
         try
-            set delApp to choose file of type "com.apple.application-bundle" default location fileName2
+            set delApp to choose file of type "com.apple.application-bundle" default location fileName2 with prompt "Please choose a SkeleKey Applet to remove:" without invisibles
             set delApp to POSIX path of delApp
             delFileName's setStringValue:delApp
             delFileName's setToolTip:delApp
@@ -489,22 +492,12 @@ script AppDelegate
         theDate's setEnabled:false
         theDate's setHidden:true
         installButton's setEnabled:false
-        installButtonAlt's setEnabled:false
         installButton's setHidden:false
-        backButton's setHidden:false
-        installButtonAlt's setHidden:true
-        backButtonAlt's setHidden:true
+        #backButton's setHidden:false
         displayDate's setStringValue:""
         displayDate's setHidden:true
         dateEnabled's setState:0
         checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
-        set origin to origin of installWindow's frame()
-        set x to x of origin
-        set y to y of origin
-        set theHeight to height of |size| of installWindow's frame()
-        set y to y + theHeight
-        set y to y - 271
-        installWindow's setFrame:{{x,y}, {480,271}} display:true
         installWindow's orderOut:sender
         mainWindow's makeKeyAndOrderFront:me
         windowMath(installWindow, mainWindow)

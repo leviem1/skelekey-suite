@@ -104,7 +104,7 @@ script AppDelegate
     end checkadmin
     
     on auth(username, passwd)
-        set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)''") as list
+        set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)'") as list
         if username is not in localusers then
             display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             else

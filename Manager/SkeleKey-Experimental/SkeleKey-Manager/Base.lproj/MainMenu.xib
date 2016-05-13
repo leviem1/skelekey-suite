@@ -25,7 +25,9 @@
                 <outlet property="fileName" destination="H19-Om-myj" id="nmk-LK-mIs"/>
                 <outlet property="installButton" destination="20E-8C-wi3" id="OPc-rh-Wbc"/>
                 <outlet property="installWindow" destination="g9G-SY-q6i" id="GWw-Xu-vpi"/>
+                <outlet property="limitEnabled" destination="XUA-1V-REC" id="Xym-2C-lTN"/>
                 <outlet property="loadingWindow" destination="XBI-rp-gAe" id="TxJ-DX-ZR9"/>
+                <outlet property="loginEnabled" destination="i3E-sK-RP3" id="Yxh-3j-atJ"/>
                 <outlet property="mainWindow" destination="PO6-qi-PJf" id="G16-Me-Vw9"/>
                 <outlet property="password1" destination="kj0-xq-5Dc" id="W2z-S9-sur"/>
                 <outlet property="password2" destination="EUr-9y-8rG" id="mBO-Za-eca"/>
@@ -38,6 +40,9 @@
                 <outlet property="registrationWindow" destination="48N-vL-7qV" id="k1A-OS-ifj"/>
                 <outlet property="removeWindow" destination="ceD-Cp-ty0" id="5cT-GN-jzi"/>
                 <outlet property="startButton" destination="OJK-8R-WZi" id="Ila-2J-JbK"/>
+                <outlet property="stateInformerDate" destination="2JR-cU-I1H" id="jeQ-M9-Ipx"/>
+                <outlet property="stateInformerLimit" destination="urP-mc-umD" id="Hla-ba-EOH"/>
+                <outlet property="stateInformerLogin" destination="DHK-1p-qrY" id="UZ6-ne-pLm"/>
                 <outlet property="theDate" destination="c70-eM-acp" id="FnZ-oQ-L7J"/>
                 <outlet property="tutorialWindow" destination="HJU-0l-vvI" id="uOa-mN-o9a"/>
                 <outlet property="username" destination="XN4-9y-0kf" id="cQN-zQ-Hpd"/>
@@ -936,7 +941,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -1004,7 +1009,8 @@ Levi Muniz
         </window>
         <window title="SkeleKey Manager- Creator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="g9G-SY-q6i">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="441" y="132" width="480" height="486"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES"/>
+            <rect key="contentRect" x="441" y="259" width="480" height="486"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="a8V-80-o4U">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="486"/>
@@ -1013,22 +1019,6 @@ Levi Muniz
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gzg-7w-nBF">
                         <rect key="frame" x="60" y="448" width="361" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Enter credentials for an account to create a SkeleKey:" id="ten-Sk-XMP">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-vH-UoQ">
-                        <rect key="frame" x="60" y="312" width="361" height="23"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="OSt-q1-fp8">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Mc-H5-BFd">
-                        <rect key="frame" x="60" y="245" width="361" height="23"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="Ebb-Yl-E2h">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1103,48 +1093,6 @@ Gw
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="Ude-jI-FFk"/>
                         </connections>
                     </secureTextField>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="RPf-dC-AB5">
-                        <rect key="frame" x="20" y="273" width="430" height="5"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                        <rect key="frame" x="97" y="39" width="277" height="148"/>
-                        <datePickerCell key="cell" enabled="NO" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
-                            <font key="font" metaFont="system"/>
-                            <date key="date" timeIntervalSinceReferenceDate="476985600">
-                                <!--2016-02-12 16:00:00 +0000-->
-                            </date>
-                            <date key="minDate" timeIntervalSinceReferenceDate="-978307200">
-                                <!--1970-01-01 00:00:00 +0000-->
-                            </date>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
-                        </datePickerCell>
-                        <connections>
-                            <action selector="displayData:" target="Voe-Tx-rLC" id="8CM-xb-Qfo"/>
-                        </connections>
-                    </datePicker>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
-                        <rect key="frame" x="38" y="240" width="71" height="18"/>
-                        <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="dateChecked:" target="Voe-Tx-rLC" id="7DY-7t-Kex"/>
-                        </connections>
-                    </button>
-                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-FS-NWp">
-                        <rect key="frame" x="20" y="212" width="440" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="jJg-9j-QzH">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-9y-0kf">
                         <rect key="frame" x="98" y="413" width="332" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" bezelStyle="round" id="ir0-NJ-84X">
@@ -1166,64 +1114,130 @@ DQ
                             <action selector="installButton:" target="Voe-Tx-rLC" id="vbf-zN-RUZ"/>
                         </connections>
                     </button>
-                    <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v7W-89-OiC">
-                        <rect key="frame" x="32" y="282" width="417" height="24"/>
-                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="Elf-oL-YCG">
-                            <font key="font" metaFont="system"/>
-                            <segments>
-                                <segment label="Expiration Date" selected="YES"/>
-                                <segment label="Login Window" width="148" tag="1"/>
-                                <segment label="Execution Limit" width="148"/>
-                            </segments>
-                        </segmentedCell>
-                    </segmentedControl>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGp-8A-GHt">
-                        <rect key="frame" x="38" y="221" width="71" height="18"/>
-                        <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="8a6-KK-NPv">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="dateChecked:" target="Voe-Tx-rLC" id="jbz-8i-Q20"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="63h-69-qFX">
-                        <rect key="frame" x="38" y="201" width="71" height="18"/>
-                        <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sIU-Ru-2fY">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="dateChecked:" target="Voe-Tx-rLC" id="c5C-7S-082"/>
-                        </connections>
-                    </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3r-tD-hSY">
-                        <rect key="frame" x="78" y="241" width="361" height="23"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="9f5-va-JUy">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-vH-UoQ">
+                        <rect key="frame" x="60" y="311" width="361" height="23"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="OSt-q1-fp8">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zul-7C-6Bd">
-                        <rect key="frame" x="383" y="180" width="19" height="27"/>
-                        <stepperCell key="cell" continuous="YES" alignment="left" id="3Ns-OG-mi5"/>
-                    </stepper>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0We-Ry-RSM">
-                        <rect key="frame" x="352" y="182" width="32" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qVh-PF-OLi">
-                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="H3n-Xw-Hev"/>
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                    <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sm8-Ev-li2">
+                        <rect key="frame" x="13" y="27" width="454" height="282"/>
+                        <font key="font" metaFont="system"/>
+                        <tabViewItems>
+                            <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
+                                <view key="view" id="PHJ-qU-ZFR">
+                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
+                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="dateChecked:" target="Voe-Tx-rLC" id="7DY-7t-Kex"/>
+                                            </connections>
+                                        </button>
+                                        <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
+                                            <rect key="frame" x="79" y="12" width="277" height="148"/>
+                                            <datePickerCell key="cell" enabled="NO" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
+                                                <font key="font" metaFont="system"/>
+                                                <date key="date" timeIntervalSinceReferenceDate="476985600">
+                                                    <!--2016-02-12 16:00:00 +0000-->
+                                                </date>
+                                                <date key="minDate" timeIntervalSinceReferenceDate="-978307200">
+                                                    <!--1970-01-01 00:00:00 +0000-->
+                                                </date>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
+                                            </datePickerCell>
+                                            <connections>
+                                                <action selector="displayData:" target="Voe-Tx-rLC" id="8CM-xb-Qfo"/>
+                                            </connections>
+                                        </datePicker>
+                                        <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-FS-NWp">
+                                            <rect key="frame" x="-3" y="173" width="440" height="22"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="jJg-9j-QzH">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-cU-I1H">
+                                            <rect key="frame" x="49" y="117" width="337" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select enable before configuring optional components." id="azX-gv-4en">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Login Window" identifier="2" id="PRE-IW-VZ3">
+                                <view key="view" id="wjw-Pr-bmR">
+                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i3E-sK-RP3">
+                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="NDg-Ss-30i">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="loginChecked:" target="Voe-Tx-rLC" id="zzH-QG-Xvy"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DHK-1p-qrY">
+                                            <rect key="frame" x="49" y="117" width="337" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select enable before configuring optional components." id="dYc-L9-XDF">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
+                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
+                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUA-1V-REC">
+                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="1VF-5c-vlE">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="limitChecked:" target="Voe-Tx-rLC" id="tJ5-QM-URN"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urP-mc-umD">
+                                            <rect key="frame" x="49" y="117" width="337" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select enable before configuring optional components." id="g2h-XA-PIM">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
                 </subviews>
             </view>
             <contentBorderThickness minY="32"/>
             <point key="canvasLocation" x="185" y="548"/>
         </window>
-        <window title="SkeleKey Manager- Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
+        <window title="SkeleKey Manager- Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="318"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
