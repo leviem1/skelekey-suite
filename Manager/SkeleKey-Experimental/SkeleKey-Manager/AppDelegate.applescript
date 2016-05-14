@@ -14,7 +14,6 @@ script AppDelegate
     property installWindow : missing value
     property removeWindow : missing value
     property loadingWindow : missing value
-    property acknowledgements : missing value
     property welcomeWindow : missing value
     property registrationWindow : missing value
     property tutorialWindow : missing value
@@ -48,10 +47,18 @@ script AppDelegate
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
     property stepperTF : missing value
-    property stepper: missing value
-    
-   
-    
+    property stepper : missing value
+    property execlimit : ""
+    property loginComponentInstaller : missing value
+    property loginComponentMover : missing value
+    property loginComponentInfo1 : missing value
+    property loginComponentInfo2 : missing value
+    property loginComponentInfo3 : missing value
+    property loginComponentInfo4 : missing value
+    property loginComponentDiv : missing value
+ 
+ 
+ 
     #Window Math Function (Thanks to Holly Lakin for helping us with the math of this function)
     on windowMath(window1, window2)
         set origin to origin of window1's frame()
@@ -83,9 +90,6 @@ script AppDelegate
     on radioOption:sender
         set modeString to sender's title as text
     end radioOption:
-    
-    
-    
     
     #Date Checked Sender
     on dateChecked:sender
@@ -120,10 +124,46 @@ script AppDelegate
     on loginChecked:sender
         if (loginEnabled's state()) is 0 then
             stateInformerLogin's setHidden:false
+            loginComponentInfo1's setHidden:true
+            loginComponentInfo2's setHidden:true
+            loginComponentInfo3's setHidden:true
+            loginComponentInfo4's setHidden:true
+            loginComponentMover's setHidden:true
+            loginComponentInstaller's setHidden:true
+            loginComponentDiv's setHidden:true
         else if (loginEnabled's state()) is 1 then
             stateInformerLogin's setHidden:true
+            loginComponentInfo1's setHidden:false
+            loginComponentInfo2's setHidden:false
+            loginComponentInfo3's setHidden:false
+            loginComponentInfo4's setHidden:false
+            loginComponentMover's setHidden:false
+            loginComponentInstaller's setHidden:false
+            loginComponentDiv's setHidden:false
         end if
     end loginChecked:
+    
+    on loginComponentMover:sender
+        global UnixPath
+        try
+            do shell script "mkdir ~/Desktop/SkeleKey-LoginWindow"
+            do shell script "cp '" & UnixPath & "/Contents/Resources/SKLWH.pkg' ~/Desktop/SkeleKey-LoginWindow"
+        on error
+        display dialog "Could not copy installation package to your Desktop! \n \nPlease make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SKLWH.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+        end try
+    end loginComponentMover:
+    
+    on loginComponentInstaller:sender
+        global UnixPath
+        try
+            do shell script "open -a Installer.app '" & UnixPath & "/Contents/Resources/SKLWH.pkg'"
+        on error
+            display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+        end try
+        
+    end loginComponentInstaller:
+    
+    
     
     #Execution Checked Sender
     on limitChecked:sender
@@ -280,11 +320,6 @@ script AppDelegate
         end if
     end buttonClicked:
     
-    #Acknowledgements Function
-    on acknowledgements:sender
-        acknowledgements's makeKeyAndOrderFront:me
-    end acknowledgements:
-    
     #Destination Volume Chooser Function
     on destvolume:choosevolume
         global fileName2
@@ -305,7 +340,8 @@ script AppDelegate
             set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         on error
-            display alert "No valid destination found! Please (re)insert the USB and try again!"
+        display dialog "No valid destination found! Please (re)insert the USB and try again!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
+
             return
         end try
         if fileName2 is not "/Volumes/False/" then
@@ -325,7 +361,7 @@ script AppDelegate
         global usernameValue
         global password1Value
         global password2Value
-        set UnixPath to POSIX path of (path to current application as text)
+        global UnixPath
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
@@ -361,11 +397,11 @@ script AppDelegate
         set encstring to ""
         set epass to ""
         if usernameValue is "" then
-            display dialog "Please enter a username!" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Please enter a username!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
             return
         end if
         if password1Value is not equal to password2Value then
-            display alert "Passwords do not match!"
+            display dialog "Passwords do not match!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
             password1's setStringValue:""
             password2's setStringValue:""
             return
@@ -382,11 +418,12 @@ script AppDelegate
             if (length of epass) is greater than 2048 then
                 set epass to (characters 1 thru 2047 of epass) as string
             end if
-            if exp_date_e is not "" then
-                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
-            else
+            if exp_date_e is "" or execlimit is "" then
                 set exp_date_e to "none"
-                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+                set execlimit to "none"
+                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+                else
+                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
             end if
             try
                 set theNumber to 1
@@ -558,6 +595,8 @@ script AppDelegate
     #On-startup Function
     on applicationWillFinishLaunching:aNotification
         global isLicensed
+        global UnixPath
+        set UnixPath to POSIX path of (path to current application as text)
         set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy", "curl"}
         set notInstalledString to ""
         try
@@ -577,9 +616,10 @@ script AppDelegate
                 end try
             end repeat
             if notInstalledString is not "" then
-                display alert "The following required resources are not installed:
+                display dialog "The following required resources are not installed:
                 
-                " & notInstalledString buttons "Quit"
+                " & notInstalledString buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
+
                 quit
             end if
             else

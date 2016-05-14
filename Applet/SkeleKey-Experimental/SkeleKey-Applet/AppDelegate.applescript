@@ -71,7 +71,8 @@ script AppDelegate
         set username to paragraph 1 of encContents
         set passwd to paragraph 2 of encContents
         set exp_date_e to paragraph 3 of encContents
-        return {username, passwd, exp_date_e}
+        set execlimit to paragraph 4 of encContents
+        return {username, passwd, exp_date_e, execlimit}
     end decryptinfo
     
     on assistiveaccess(username, passwd)
@@ -87,7 +88,7 @@ script AppDelegate
         end try
     end assistiveaccess
     
-    on checkadmin(username, passwd, exp_date_e)
+    on checkadmin(username, passwd, exp_date_e, execlimit)
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
@@ -96,9 +97,17 @@ script AppDelegate
             do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "' > /dev/null &"
         end if
         try
+            if execlimit is less than "1" and execlimit is not "none" then
+                error number 104
+                quit
+            end if
+        on error
+            error number 104
+            quit
+        end try
+        try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
-            
-            on error
+        on error
             error number 101
         end try
     end checkadmin
@@ -107,18 +116,21 @@ script AppDelegate
         set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)'") as list
         if username is not in localusers then
             display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
-            else
+        else
             try
                 tell application "System Events" to tell process "SecurityAgent"
-                set value of text field 1 of window 1 to username
-                set value of text field 2 of window 1 to passwd
-                click button 2 of window 1
-            end tell
+                    set value of text field 1 of window 1 to username
+                    set value of text field 2 of window 1 to passwd
+                    click button 2 of window 1
+                end tell
             on error
-            error number 103
-        end try
-    end if
-end auth
+                error number 103
+            end try
+        end if
+        if execlimit is greater than "1" and not "none" then
+            #subtract one
+        end if
+    end auth
 
 on main()
     global UnixPath
@@ -134,7 +146,7 @@ on main()
         set volumepath to (do shell script "printf '" & volumepath & "' | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
         set authcred to decryptinfo(volumepath, authinfobin)
-        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
+        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred, item 4 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
         auth(item 1 of authcred, item 2 of authcred)
         on error number errorNumber
@@ -146,6 +158,8 @@ on main()
             return
             else if errorNumber is 103 then
             display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 104 then
+            display dialog "Error! This SkeleKey is no longer valid and has reached the execution limit! Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             return
         end if
     end try

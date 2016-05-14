@@ -14,7 +14,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="acknowledgements" destination="Jy1-fJ-A9s" id="5X3-lI-4kE"/>
                 <outlet property="backButton" destination="uc9-x6-uIc" id="hCg-ZE-0LL"/>
                 <outlet property="checkIcon" destination="TDD-tj-XO5" id="GeL-Xi-8wC"/>
                 <outlet property="dateEnabled" destination="iaW-rW-Sab" id="BCv-yx-yem"/>
@@ -27,6 +26,13 @@
                 <outlet property="installWindow" destination="g9G-SY-q6i" id="GWw-Xu-vpi"/>
                 <outlet property="limitEnabled" destination="XUA-1V-REC" id="Xym-2C-lTN"/>
                 <outlet property="loadingWindow" destination="XBI-rp-gAe" id="TxJ-DX-ZR9"/>
+                <outlet property="loginComponentDiv" destination="bBi-DG-rV5" id="FRX-E5-9lr"/>
+                <outlet property="loginComponentInfo1" destination="cwZ-RG-975" id="Ojq-UH-pPJ"/>
+                <outlet property="loginComponentInfo2" destination="T53-Xd-srQ" id="65p-xU-WrK"/>
+                <outlet property="loginComponentInfo3" destination="O8k-7R-6fP" id="VjE-en-Txo"/>
+                <outlet property="loginComponentInfo4" destination="ern-1U-555" id="Lls-iQ-lCZ"/>
+                <outlet property="loginComponentInstaller" destination="dpM-Jd-a9Y" id="ShE-iE-h8I"/>
+                <outlet property="loginComponentMover" destination="i9S-eG-l43" id="K7t-bU-wf5"/>
                 <outlet property="loginEnabled" destination="i3E-sK-RP3" id="Yxh-3j-atJ"/>
                 <outlet property="mainWindow" destination="PO6-qi-PJf" id="G16-Me-Vw9"/>
                 <outlet property="password1" destination="kj0-xq-5Dc" id="W2z-S9-sur"/>
@@ -1179,7 +1185,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Login Window" identifier="2" id="PRE-IW-VZ3">
-                                <view key="view" id="wjw-Pr-bmR">
+                                <view key="view" ambiguous="YES" id="wjw-Pr-bmR">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1201,11 +1207,73 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i9S-eG-l43">
+                                            <rect key="frame" x="61" y="126" width="143" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Move to Desktop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FtP-Dv-1Ec">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="loginComponentMover:" target="Voe-Tx-rLC" id="fts-zt-lMq"/>
+                                            </connections>
+                                        </button>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cwZ-RG-975">
+                                            <rect key="frame" x="14" y="162" width="237" height="34"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="aMi-fe-h6i">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">Click to have the login window addon 
+package moved to your Desktop.</string>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T53-Xd-srQ">
+                                            <rect key="frame" x="15" y="71" width="244" height="34"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="qjz-S8-e7n">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">Click to install the login window addon 
+package moved to your Desktop.</string>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ern-1U-555">
+                                            <rect key="frame" x="257" y="17" width="160" height="179"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="b6o-ck-R2w">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O8k-7R-6fP">
+                                            <rect key="frame" x="314" y="201" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="Dd7-5b-TsJ">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <box hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="bBi-DG-rV5">
+                                            <rect key="frame" x="37" y="111" width="191" height="5"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpM-Jd-a9Y">
+                                            <rect key="frame" x="94" y="35" width="76" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Install" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gQx-lp-h8X">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="loginComponentInstaller:" target="Voe-Tx-rLC" id="Th0-Xt-agg"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
-                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
+                                <view key="view" id="9eh-em-h1U">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1229,7 +1297,7 @@ DQ
                                         </textField>
                                         <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jg4-5v-XWG">
                                             <rect key="frame" x="187" y="162" width="60" height="22"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" placeholderString="0" drawsBackground="YES" id="p1k-IW-fxL">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="1" placeholderString="1" drawsBackground="YES" id="p1k-IW-fxL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1240,7 +1308,7 @@ DQ
                                         </textField>
                                         <stepper hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zs0-yj-Lbm">
                                             <rect key="frame" x="247" y="160" width="19" height="27"/>
-                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999999" doubleValue="1" id="htz-KT-xlf"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="999999" doubleValue="1" valueWraps="YES" id="htz-KT-xlf"/>
                                             <connections>
                                                 <action selector="stepper:" target="Voe-Tx-rLC" id="vj7-iQ-ih4"/>
                                                 <binding destination="ANp-PN-Mfv" name="value" keyPath="values.stepperValue" id="bEM-zU-pw2"/>
@@ -1256,7 +1324,7 @@ DQ
             <contentBorderThickness minY="32"/>
             <point key="canvasLocation" x="185" y="548"/>
         </window>
-        <window title="SkeleKey Manager- Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
+        <window title="SkeleKey Manager- Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="318"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
@@ -1380,56 +1448,6 @@ properly.</string>
             </view>
             <contentBorderThickness minY="32"/>
             <point key="canvasLocation" x="-381.5" y="599"/>
-        </window>
-        <window title="SkeleKey - Acknowledgements" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Jy1-fJ-A9s">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="121" y="123" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
-            <view key="contentView" wantsLayer="YES" id="6b4-w1-VZT">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-XI-ZU3">
-                        <rect key="frame" x="154" y="87" width="183" height="96"/>
-                        <clipView key="contentView" ambiguous="YES" id="x5A-rj-lOx">
-                            <rect key="frame" x="0.0" y="0.0" width="183" height="96"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KqR-DD-zjK">
-                                    <rect key="frame" x="0.0" y="17" width="166" height="79"/>
-                                </view>
-                            </subviews>
-                        </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="NtL-w0-ZSX">
-                            <rect key="frame" x="-8" y="-15" width="0.0" height="15"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="bpR-VY-zbb">
-                            <rect key="frame" x="-15" y="-8" width="15" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                    </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUY-L7-HR0">
-                        <rect key="frame" x="10" y="224" width="460" height="34"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Tjx-eX-JPI">
-                            <font key="font" metaFont="systemBold"/>
-                            <string key="title">SkeleKey is made possible through the following 
-Open Source Software:</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nHe-8J-HKn">
-                        <rect key="frame" x="216" y="0.0" width="48" height="48"/>
-                        <shadow key="shadow">
-                            <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        </shadow>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="AppIcon" id="UEs-KH-DnM"/>
-                    </imageView>
-                </subviews>
-            </view>
-            <contentBorderThickness minY="45"/>
-            <point key="canvasLocation" x="712" y="656"/>
         </window>
         <window title="SkeleKey Manager - License Registration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="48N-vL-7qV">
             <windowStyleMask key="styleMask" titled="YES"/>
