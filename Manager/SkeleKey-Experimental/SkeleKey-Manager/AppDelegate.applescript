@@ -47,6 +47,10 @@ script AppDelegate
     property fromStart : true
     property modeString : "Install a SkeleKey"
     property exp_date_e : ""
+    property stepperTF : missing value
+    property stepper: missing value
+    
+   
     
     #Window Math Function (Thanks to Holly Lakin for helping us with the math of this function)
     on windowMath(window1, window2)
@@ -125,10 +129,22 @@ script AppDelegate
     on limitChecked:sender
         if (limitEnabled's state()) is 0 then
             stateInformerLimit's setHidden:false
+            stepperTF's setHidden:true
+            stepper's setHidden:true
             else if (limitEnabled's state()) is 1 then
             stateInformerLimit's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepperTF's setHidden:false
+            stepper's setHidden:false
+            stepper's setStringValue:"0"
         end if
     end limitChecked:
+    
+    #Stepper Button Logic
+    on stepper:sender
+        global execlimit
+        set execlimit to (stringValue() of stepperTF) as string
+    end stepper
     
     #Password Value Check Function
     on checkPasswords()
