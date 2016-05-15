@@ -599,12 +599,14 @@ script AppDelegate
         set UnixPath to POSIX path of (path to current application as text)
         set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy", "curl"}
         set notInstalledString to ""
+        (*  DISABLED FOR BETA ONLY!!!!
         try
             do shell script "sudo printf elevate" with administrator privileges
             on error
             display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
             quit
         end try
+        *)
         set cmd_existance to do shell script "command; printf $?"
         if cmd_existance is not "" then
             repeat with i in dependencies
