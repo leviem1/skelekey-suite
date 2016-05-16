@@ -56,10 +56,14 @@ script AppDelegate
     property loginComponentInfo3 : missing value
     property loginComponentInfo4 : missing value
     property loginComponentDiv : missing value
+    property purchase : missing value
+    property execlimitDesc : missing value
+    property regQuit : missing value
  
  
+    property beta_mode : true
  
-    #Window Math Function (Thanks to Holly Lakin for helping us with the math of this function)
+    #Window Math Function (Thanks to Holly Lakin for helping us with the math in this function)
     on windowMath(window1, window2)
         set origin to origin of window1's frame()
         set windowSize to |size| of window1's frame()
@@ -70,7 +74,7 @@ script AppDelegate
         window2's setFrameTopLeftPoint:{x, y}
     end windowMath
     
-    #Number Ninja Function (return numbers from UUID)
+    #Number Ninja Function
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
         do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString
@@ -143,6 +147,7 @@ script AppDelegate
         end if
     end loginChecked:
     
+    #Move Login Window PKG to User's Desktop
     on loginComponentMover:sender
         global UnixPath
         try
@@ -153,6 +158,7 @@ script AppDelegate
         end try
     end loginComponentMover:
     
+    #Open Installer Function
     on loginComponentInstaller:sender
         global UnixPath
         try
@@ -170,6 +176,7 @@ script AppDelegate
         if (limitEnabled's state()) is 0 then
             stateInformerLimit's setHidden:false
             stepperTF's setHidden:true
+            execlimitDesc's setHidden:true
             stepper's setHidden:true
             else if (limitEnabled's state()) is 1 then
             stateInformerLimit's setHidden:true
@@ -177,6 +184,7 @@ script AppDelegate
             stepperTF's setHidden:false
             stepper's setHidden:false
             stepper's setStringValue:"0"
+            execlimitDesc's setHidden:false
         end if
     end limitChecked:
     
@@ -205,6 +213,15 @@ script AppDelegate
         end if
     end checkPasswords
     
+    #Take to Purchase Page Function
+    on purchaseBtn:sender
+        do shell script "open 'http://www.skelekey.com/#purchase'"
+    end purchaseBtn:
+    
+    #Registration Window Quit Function
+    on regQuit:sender
+        quit
+    end regQuit:
     #License Generator Function
     on licensekeygen(myname, myemail, myorg)
         set e_mn to do shell script "printf \"" & myname & "\" | rev"
@@ -271,9 +288,21 @@ script AppDelegate
             set check_regSerialString_allowed to "0"
         end try
         
-        if regSerialString is not equal to lickey or check_regSerialString_allowed is  "1" then
-            display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
+        if regSerialString is not equal to lickey then
+            regFirstName's setStringValue:""
+            regOrg's setStringValue:""
+            regEmail's setStringValue:""
+            regSerial's setStringValue:""
             registrationButton's setEnabled:false
+            display dialog "Error! The license key you have entered is incorrect!" with title "SkeleKey Manager" buttons {"OK"}
+        else if check_regSerialString_allowed is "1" then
+            regFirstName's setStringValue:""
+            regOrg's setStringValue:""
+            regEmail's setStringValue:""
+            regSerial's setStringValue:""
+            registrationButton's setEnabled:false
+            display dialog "The license key you have entered has been disabled!\nPlease contact us at admin@skelekey.com if you have questions." with icon 0 with title "SkeleKey Manager" buttons {"OK"}
+
         else
             set isLicensed to true
             set plist_license_name_comp to do shell script "printf '" & regFirstNameString & "' | rev |  shasum -a 512 | awk '{print $1}'"
@@ -286,7 +315,7 @@ script AppDelegate
             do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'organization' '" & regOrgString & "'"
             do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'serial_number' '" & regSerialString & "'"
             do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'verikey' '" & plist_license_key_comp & "'"
-            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Please return to the main window to use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
+            display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Return to the main window and use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
             registrationWindow's orderOut:sender
         end if
     end checkLicenseKey
@@ -599,14 +628,14 @@ script AppDelegate
         set UnixPath to POSIX path of (path to current application as text)
         set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy", "curl"}
         set notInstalledString to ""
-        (*  DISABLED FOR BETA ONLY!!!!
-        try
-            do shell script "sudo printf elevate" with administrator privileges
-            on error
-            display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
-            quit
-        end try
-        *)
+        if beta_mode is false then
+            try
+                do shell script "sudo printf elevate" with administrator privileges
+                on error
+                display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with   title "SkeleKey-Manager" with icon 0
+                quit
+            end try
+        end if
         set cmd_existance to do shell script "command; printf $?"
         if cmd_existance is not "" then
             repeat with i in dependencies
