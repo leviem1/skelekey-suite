@@ -56,9 +56,7 @@ script AppDelegate
     property loginComponentInfo3 : missing value
     property loginComponentInfo4 : missing value
     property loginComponentDiv : missing value
-    property purchase : missing value
     property execlimitDesc : missing value
-    property regQuit : missing value
  
  
     property beta_mode : true
@@ -511,6 +509,7 @@ script AppDelegate
         windowMath(removeWindow, loadingWindow)
         quitItem's setEnabled:false
         set isBusy to true
+        delay .25
         try
             do shell script "srm -rf '" & delApp & "'"
             display dialog "Sucessfully securely removed app at location:
