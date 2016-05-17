@@ -154,7 +154,7 @@ script AppDelegate
             do shell script "mkdir ~/Desktop/SkeleKey-LoginWindow"
             do shell script "cp '" & UnixPath & "/Contents/Resources/SKLWH.pkg' ~/Desktop/SkeleKey-LoginWindow"
         on error
-        display dialog "Could not copy installation package to your Desktop! \n \nPlease make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SKLWH.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+        display dialog "Could not copy installation package to your Desktop! \n \nPlease make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SKLWH.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
     end loginComponentMover:
     
@@ -164,7 +164,7 @@ script AppDelegate
         try
             do shell script "open -a Installer.app '" & UnixPath & "/Contents/Resources/SKLWH.pkg'"
         on error
-            display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
         
     end loginComponentInstaller:
@@ -178,7 +178,7 @@ script AppDelegate
             stepperTF's setHidden:true
             execlimitDesc's setHidden:true
             stepper's setHidden:true
-            else if (limitEnabled's state()) is 1 then
+        else if (limitEnabled's state()) is 1 then
             stateInformerLimit's setHidden:true
             stepperTF's setStringValue:"0"
             stepperTF's setHidden:false
@@ -193,6 +193,17 @@ script AppDelegate
         global execlimit
         set execlimit to (stringValue() of stepperTF) as string
     end stepper
+    
+    #Execution Limit External Fileout Logic
+    on execlimit_ext(user, limit, drive)
+        set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
+        try
+            do shell script "printf '" & execlimitEL & "' > " & drive & ".SK_EL_" & user & ".enc.bin" with administrator privileges
+        on error
+            display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
+        end try
+    end execlimit_ext
+
     
     #Password Value Check Function
     on checkPasswords()
@@ -366,10 +377,10 @@ script AppDelegate
                     set validVols to validVols & {vol}
                 #end if
             end repeat
-            set fileName2 to choose from list validVols with title "SkeleKey-Manager" with prompt "Please choose a destination:"
+            set fileName2 to choose from list validVols with title "SkeleKey Manager" with prompt "Please choose a destination:"
             set fileName2 to "/Volumes/" & (fileName2 as text) & "/"
         on error
-        display dialog "No valid destination found! Please (re)insert the USB and try again!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
+        display dialog "No valid destination found! Please (re)insert the USB and try again!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
 
             return
         end try
@@ -426,11 +437,11 @@ script AppDelegate
         set encstring to ""
         set epass to ""
         if usernameValue is "" then
-            display dialog "Please enter a username!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Please enter a username!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
             return
         end if
         if password1Value is not equal to password2Value then
-            display dialog "Passwords do not match!" with icon 2 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Passwords do not match!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
             password1's setStringValue:""
             password2's setStringValue:""
             return
@@ -451,8 +462,10 @@ script AppDelegate
                 set exp_date_e to "none"
                 set execlimit to "none"
                 do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
-                else
+                execlimit_ext(usernameValue, execlimit, fileName2)
+            else
                 do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+                execlimit_ext(usernameValue, execlimit, fileName2)
             end if
             try
                 set theNumber to 1
@@ -471,10 +484,10 @@ script AppDelegate
             end try
             display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
-            " & fileName2 buttons "Continue" with title "SkeleKey-Manager" default button 1
+            " & fileName2 buttons "Continue" with title "SkeleKey Manager" default button 1
         on error
             display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
-            display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
         housekeeping_(sender)
         houseKeepingInstall_(sender)
@@ -513,10 +526,9 @@ script AppDelegate
         set isBusy to true
         try
             do shell script "srm -rf '" & delApp & "'"
-            display dialog "Sucessfully securely removed app at location:
-            " & delApp buttons "Continue" with title "SkeleKey-Manager" default button 1
+            display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
             on error
-            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey-Manager" default button 1
+            display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
         set isBusy to false
         quitItem's setEnabled:true
@@ -649,7 +661,7 @@ script AppDelegate
             if notInstalledString is not "" then
                 display dialog "The following required resources are not installed:
                 
-                " & notInstalledString buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
+                " & notInstalledString buttons "Quit" default button 1 with title "SkeleKey Manager" with icon 0
 
                 quit
             end if

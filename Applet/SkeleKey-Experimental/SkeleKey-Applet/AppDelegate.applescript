@@ -112,20 +112,42 @@ script AppDelegate
         end try
     end checkadmin
     
+    on execlimit_ext(usernameValue, drive)
+        global UnixPath
+        set numEL to do shell script "cat '" & drive & ".SK_EL_" & usernameValue & ".enc.bin' | rev | base64 -D | rev"
+        if numEL is not "none" then
+            display dialog numEL
+            if numEL is less than 1 then
+                display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+                do shell script "chflags hidden '" & UnixPath & "'"
+                do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "; srm -rf " & drive & ".SK_EL_" & usernameValue & ".enc.bin' > /dev/null &"
+                quit
+            else if numEL is greater than 0 then
+                display dialog "test2"
+                set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
+                do shell script "printf '" & newNumEL & "' > " & drive & ".SK_EL_" & usernameValue & ".enc.bin" with administrator privileges
+            end if
+        end if
+    end execlimit_ext
+    
+    on guiauth(usern,pass)
+        try
+            tell application "System Events" to tell process "SecurityAgent"
+            set value of text field 1 of window 1 to usern
+            set value of text field 2 of window 1 to pass
+            click button 2 of window 1
+        end tell
+        on error
+            error number 103
+        end try
+    end guiauth
+    
     on auth(username, passwd)
         set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)'") as list
         if username is not in localusers then
             display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
         else
-            try
-                tell application "System Events" to tell process "SecurityAgent"
-                    set value of text field 1 of window 1 to username
-                    set value of text field 2 of window 1 to passwd
-                    click button 2 of window 1
-                end tell
-            on error
-                error number 103
-            end try
+            guiauth(username,passwd)
         end if
         if execlimit is greater than "1" and not "none" then
             #subtract one
@@ -145,9 +167,11 @@ on main()
         set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
         set volumepath to (do shell script "printf '" & volumepath & "' | awk -F '/' '{print $3}'")
         set volumepath to "/Volumes/" & volumepath
+        set volumepath2 to volumepath & "/"
         set authcred to decryptinfo(volumepath, authinfobin)
         checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred, item 4 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
+        execlimit_ext(item 1 of authcred, volumepath2)
         auth(item 1 of authcred, item 2 of authcred)
         on error number errorNumber
         if errorNumber is 101 then
@@ -186,7 +210,6 @@ on applicationWillFinishLaunching:aNotification
 end applicationWillFinishLaunching:
 
 on applicationShouldTerminate:sender
-    -- Insert code here to do any housekeeping before your application quits
     return current application's NSTerminateNow
 end applicationShouldTerminate:
 
