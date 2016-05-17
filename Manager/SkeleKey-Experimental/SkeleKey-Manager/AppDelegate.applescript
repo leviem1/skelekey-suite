@@ -444,6 +444,8 @@ script AppDelegate
             password2's setStringValue:""
             return
         end if
+        if execlimit is less then "1" then
+            display dialog "Execution Limit must be at least 1!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
         try
             do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
             set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
