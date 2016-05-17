@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -38,10 +38,12 @@
                 <outlet property="mainWindow" destination="PO6-qi-PJf" id="G16-Me-Vw9"/>
                 <outlet property="password1" destination="kj0-xq-5Dc" id="W2z-S9-sur"/>
                 <outlet property="password2" destination="EUr-9y-8rG" id="mBO-Za-eca"/>
+                <outlet property="purchase" destination="aNm-b5-SQ7" id="4qq-MD-5hH"/>
                 <outlet property="quitItem" destination="yCb-Ds-K5D" id="moZ-tR-R9z"/>
                 <outlet property="regEmail" destination="zR5-K6-NqK" id="hAy-Rc-ndJ"/>
                 <outlet property="regFirstName" destination="svT-M7-0zk" id="wR0-Dd-3U7"/>
                 <outlet property="regOrg" destination="VEa-On-INm" id="dB7-JE-KA3"/>
+                <outlet property="regQuit" destination="8rx-1A-mwj" id="XfG-4R-X00"/>
                 <outlet property="regSerial" destination="vbA-45-31g" id="XO5-jF-9TX"/>
                 <outlet property="registrationButton" destination="dhi-Gs-bjk" id="dl2-cA-R5H"/>
                 <outlet property="registrationWindow" destination="48N-vL-7qV" id="k1A-OS-ifj"/>
@@ -227,12 +229,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Find" id="RGu-vA-Au6">
                                     <items>
-                                        <menuItem title="Findâ€¦" tag="1" keyEquivalent="f" id="lff-fE-uee">
+                                        <menuItem title="FindÃ¢â‚¬Â¦" tag="1" keyEquivalent="f" id="lff-fE-uee">
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="UyJ-om-OCs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Find and Replaceâ€¦" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
+                                        <menuItem title="Find and ReplaceÃ¢â‚¬Â¦" tag="12" keyEquivalent="f" id="6d8-Ff-D9T">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="0q8-Zr-Ygf"/>
@@ -568,7 +570,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8y-rW-a5E">
-                        <rect key="frame" x="163" y="57" width="4" height="217"/>
+                        <rect key="frame" x="163" y="57" width="5" height="217"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -584,24 +586,24 @@ DQ
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-Pv-g6s">
                         <rect key="frame" x="184" y="57" width="340" height="219"/>
                         <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="F9I-ZN-ysH">
-                            <rect key="frame" x="1" y="1" width="338" height="217"/>
+                            <rect key="frame" x="1" y="1" width="323" height="217"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="338" height="432"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="408"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="338" height="217"/>
+                                    <size key="minSize" width="323" height="217"/>
                                     <size key="maxSize" width="646" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
-                                            <mutableString key="content">Greetings from the SkeleKey Team! 
-
-We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another. 
-
-Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
-
--Thank You from the SkeleKey Team</mutableString>
+                                            <mutableString key="content">Greetings from the SkeleKey Team!
+                                                
+                                                We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another.
+                                                
+                                                Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
+                                                
+                                                -Thank You from the SkeleKey Team</mutableString>
                                             <attributes>
                                                 <font key="NSFont" metaFont="system"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -648,7 +650,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="338" height="217"/>
+                                    <size key="minSize" width="323" height="217"/>
                                     <size key="maxSize" width="646" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -658,13 +660,8 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-<<<<<<< HEAD
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="1" y="1" width="15" height="0.0"/>
-=======
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.91627906976744189" horizontal="NO" id="yE6-Mi-owZ">
-                            <rect key="frame" x="323" y="1" width="16" height="217"/>
->>>>>>> 5596e81be9903efdc3f7710295545b3b2376461d
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -685,11 +682,11 @@ DQ
                         <rect key="frame" x="40" y="59" width="96" height="85"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="IMQ-pp-DIe">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Mark Hedrick 
-Levi Muniz
-Jason Walker
-
-© 2015 - 2016</string>
+                            <string key="title">Mark Hedrick
+                                Levi Muniz
+                                Jason Walker
+                                
+                                Â© 2015 - 2016</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -843,15 +840,11 @@ DQ
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
                                 <view key="view" ambiguous="YES" id="PHJ-qU-ZFR">
-<<<<<<< HEAD
-                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
-=======
                                     <rect key="frame" x="10" y="33" width="352" height="0.0"/>
->>>>>>> 5596e81be9903efdc3f7710295545b3b2376461d
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
-                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <rect key="frame" x="15" y="-34" width="71" height="18"/>
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -861,7 +854,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-FS-NWp">
-                                            <rect key="frame" x="17" y="173" width="400" height="22"/>
+                                            <rect key="frame" x="17" y="-63" width="400" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="jJg-9j-QzH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -869,7 +862,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-cU-I1H">
-                                            <rect key="frame" x="42" y="117" width="351" height="17"/>
+                                            <rect key="frame" x="42" y="-119" width="351" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="azX-gv-4en">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -877,7 +870,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="79" y="17" width="277" height="148"/>
+                                            <rect key="frame" x="79" y="-219" width="277" height="148"/>
                                             <datePickerCell key="cell" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
@@ -934,8 +927,8 @@ DQ
                                             <rect key="frame" x="14" y="162" width="237" height="34"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="aMi-fe-h6i">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Click to have the login window addon 
-package copied to your Desktop.</string>
+                                                <string key="title">Click to have the login window addon
+                                                    package copied to your Desktop.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -977,8 +970,8 @@ package copied to your Desktop.</string>
                                             <rect key="frame" x="10" y="71" width="244" height="34"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="qjz-S8-e7n">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Click to install the login window addon 
-package.</string>
+                                                <string key="title">Click to install the login window addon
+                                                    package.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1006,10 +999,10 @@ package.</string>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Jfg-4a-VMe">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Select the number of times this SkeleKey Applet
-can authenticate with the supplied credentials. After
-authenticating the number of times selected, this 
-SkeleKey Applet will become invalidated, and will securely 
-remove itself from your USB storage device.</string>
+                                                    can authenticate with the supplied credentials. After
+                                                    authenticating the number of times selected, this
+                                                    SkeleKey Applet will become invalidated, and will securely
+                                                    remove itself from your USB storage device.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1127,11 +1120,11 @@ DQ
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="ceP-Bb-raq">
                             <font key="font" metaFont="system"/>
                             <string key="title">Select the USB storage
- device on the next screen 
-that you wish to create
-the SkeleKey Applet on.
-Ensure that the mode of
-operation is correct.</string>
+                                device on the next screen
+                                that you wish to create
+                                the SkeleKey Applet on.
+                                Ensure that the mode of
+                                operation is correct.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1140,12 +1133,12 @@ operation is correct.</string>
                         <rect key="frame" x="195" y="42" width="170" height="102"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="9sY-nD-uxy">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Enter administrator 
-account credentials for 
-the Applet that you 
-wish to create. Please 
-verify the accuracy of the
-credentials entered.</string>
+                            <string key="title">Enter administrator
+                                account credentials for
+                                the Applet that you
+                                wish to create. Please
+                                verify the accuracy of the
+                                credentials entered.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1154,12 +1147,12 @@ credentials entered.</string>
                         <rect key="frame" x="373" y="42" width="170" height="102"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Ua1-Qj-HLL">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Run the SkeleKey Applet 
-from previously specified
-USB storage device. Verify 
-the Applet successfully
-authenticates with the
-credentials entered.</string>
+                            <string key="title">Run the SkeleKey Applet
+                                from previously specified
+                                USB storage device. Verify
+                                the Applet successfully
+                                authenticates with the
+                                credentials entered.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
