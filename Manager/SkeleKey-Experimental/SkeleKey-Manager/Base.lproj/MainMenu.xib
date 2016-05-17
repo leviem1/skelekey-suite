@@ -570,7 +570,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8y-rW-a5E">
-                        <rect key="frame" x="163" y="57" width="5" height="217"/>
+                        <rect key="frame" x="163" y="57" width="4" height="217"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -590,20 +590,20 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="408"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="448"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
                                     <size key="maxSize" width="646" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
-                                            <mutableString key="content">Greetings from the SkeleKey Team!
-                                                
-                                                We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another.
-                                                
-                                                Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
-                                                
-                                                -Thank You from the SkeleKey Team</mutableString>
+                                            <mutableString key="content">Greetings from the SkeleKey Team! 
+
+We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users when protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes and word-of-mouth password leaks is a challenge that all IT departments have faced at one time or another. 
+
+Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other USB drives. Both the SkeleKey Manager and SkeleKey applets eliminate the need for an administrator to type in local computer passwords because the applet handles authentication at system password prompts.
+
+-Thank You from the SkeleKey Team</mutableString>
                                             <attributes>
                                                 <font key="NSFont" metaFont="system"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -661,7 +661,7 @@ DQ
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
-                            <rect key="frame" x="1" y="1" width="15" height="0.0"/>
+                            <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -678,24 +678,24 @@ DQ
                             <action selector="welcomeNext:" target="Voe-Tx-rLC" id="5Ji-yu-mWb"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yGT-gu-80N">
-                        <rect key="frame" x="40" y="59" width="96" height="85"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="IMQ-pp-DIe">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">Mark Hedrick
-                                Levi Muniz
-                                Jason Walker
-                                
-                                Â© 2015 - 2016</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZDF-T3-RL5">
                         <rect key="frame" x="30" y="34" width="122" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="www.skelekey.com" id="3N6-XU-1M4">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yGT-gu-80N">
+                        <rect key="frame" x="40" y="59" width="96" height="85"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="IMQ-pp-DIe">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Mark Hedrick 
+Levi Muniz
+Jason Walker
+
+© 2015 - 2016</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -927,8 +927,8 @@ DQ
                                             <rect key="frame" x="14" y="162" width="237" height="34"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="aMi-fe-h6i">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Click to have the login window addon
-                                                    package copied to your Desktop.</string>
+                                                <string key="title">Click to have the login window addon 
+package copied to your Desktop.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -970,8 +970,8 @@ DQ
                                             <rect key="frame" x="10" y="71" width="244" height="34"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="qjz-S8-e7n">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Click to install the login window addon
-                                                    package.</string>
+                                                <string key="title">Click to install the login window addon 
+package.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -999,10 +999,10 @@ DQ
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Jfg-4a-VMe">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Select the number of times this SkeleKey Applet
-                                                    can authenticate with the supplied credentials. After
-                                                    authenticating the number of times selected, this
-                                                    SkeleKey Applet will become invalidated, and will securely
-                                                    remove itself from your USB storage device.</string>
+can authenticate with the supplied credentials. After
+authenticating the number of times selected, this 
+SkeleKey Applet will become invalidated, and will securely 
+remove itself from your USB storage device.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1120,11 +1120,11 @@ DQ
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="ceP-Bb-raq">
                             <font key="font" metaFont="system"/>
                             <string key="title">Select the USB storage
-                                device on the next screen
-                                that you wish to create
-                                the SkeleKey Applet on.
-                                Ensure that the mode of
-                                operation is correct.</string>
+ device on the next screen 
+that you wish to create
+the SkeleKey Applet on.
+Ensure that the mode of
+operation is correct.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1133,12 +1133,12 @@ DQ
                         <rect key="frame" x="195" y="42" width="170" height="102"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="9sY-nD-uxy">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Enter administrator
-                                account credentials for
-                                the Applet that you
-                                wish to create. Please
-                                verify the accuracy of the
-                                credentials entered.</string>
+                            <string key="title">Enter administrator 
+account credentials for 
+the Applet that you 
+wish to create. Please 
+verify the accuracy of the
+credentials entered.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1147,12 +1147,12 @@ DQ
                         <rect key="frame" x="373" y="42" width="170" height="102"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Ua1-Qj-HLL">
                             <font key="font" metaFont="system"/>
-                            <string key="title">Run the SkeleKey Applet
-                                from previously specified
-                                USB storage device. Verify
-                                the Applet successfully
-                                authenticates with the
-                                credentials entered.</string>
+                            <string key="title">Run the SkeleKey Applet 
+from previously specified
+USB storage device. Verify 
+the Applet successfully
+authenticates with the
+credentials entered.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
