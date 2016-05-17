@@ -590,7 +590,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="352"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="448"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
@@ -660,7 +660,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.92207792207792205" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -1009,7 +1009,7 @@ remove itself from your USB storage device.</string>
                                         </textField>
                                         <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jg4-5v-XWG">
                                             <rect key="frame" x="179" y="80" width="60" height="22"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" placeholderString="0" bezelStyle="round" id="p1k-IW-fxL">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="1" placeholderString="1" bezelStyle="round" id="p1k-IW-fxL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1020,7 +1020,7 @@ remove itself from your USB storage device.</string>
                                         </textField>
                                         <stepper hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zs0-yj-Lbm">
                                             <rect key="frame" x="239" y="78" width="19" height="27"/>
-                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999999" valueWraps="YES" id="htz-KT-xlf"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999999" doubleValue="1" valueWraps="YES" id="htz-KT-xlf"/>
                                             <connections>
                                                 <action selector="stepper:" target="Voe-Tx-rLC" id="vj7-iQ-ih4"/>
                                                 <binding destination="ANp-PN-Mfv" name="value" keyPath="values.stepperValue" id="bEM-zU-pw2"/>

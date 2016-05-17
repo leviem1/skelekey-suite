@@ -444,8 +444,7 @@ script AppDelegate
             password2's setStringValue:""
             return
         end if
-        if execlimit is less then "1" then
-            display dialog "Execution Limit must be at least 1!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
+
         try
             do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
             set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
@@ -458,15 +457,14 @@ script AppDelegate
             if (length of epass) is greater than 2048 then
                 set epass to (characters 1 thru 2047 of epass) as string
             end if
-            if exp_date_e is "" or execlimit is "" then
-                set exp_date_e to "none"
-                set execlimit to "none"
-                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
-                execlimit_ext(usernameValue, execlimit, fileName2)
-            else
-                do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
-                execlimit_ext(usernameValue, execlimit, fileName2)
-            end if
+            
+            if exp_date_e is "" then set exp_date_e to "none"
+            if execlimit is "" then set execlimit to "none"
+            
+            do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+            
+            execlimit_ext(usernameValue, execlimit, fileName2)
+                
             try
                 set theNumber to 1
                 do shell script "test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"

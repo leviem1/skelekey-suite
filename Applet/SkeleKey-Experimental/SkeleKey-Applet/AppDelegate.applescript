@@ -84,11 +84,11 @@ script AppDelegate
                 do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.skelekey.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
             on error
-            error number 102
+                error number 102
         end try
     end assistiveaccess
     
-    on checkadmin(username, passwd, exp_date_e, execlimit)
+    on checkadmin(username, passwd, exp_date_e)
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
         if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
@@ -97,24 +97,26 @@ script AppDelegate
             do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "' > /dev/null &"
         end if
         try
-            if execlimit is less than "1" and execlimit is not "none" then
-                error number 104
-                quit
-            end if
-        on error
-            error number 104
-            quit
-        end try
-        try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
         on error
             error number 101
         end try
     end checkadmin
     
-    on execlimit_ext(usernameValue, drive)
+    on execlimit_ext(usernameValue, drive, execlimit_bin)
         global UnixPath
-        set numEL to do shell script "cat '" & drive & ".SK_EL_" & usernameValue & ".enc.bin' | rev | base64 -D | rev"
+        set execlimit_ext to do shell script "cat '" & drive & ".SK_EL_" & usernameValue & ".enc.bin' | rev | base64 -D | rev"
+        
+        if execlimit_ext is not equal to execlimit_bin then
+            if execlimit_ext is less than execlimit_bin then
+                set numEL to execlimit_ext
+                else if execlimit_ext is greater than execlimit_bin then
+                set numEL to execlimit_bin
+            end if
+        else
+            set numEL to execlimit_bin
+        end if
+        
         if numEL is not "none" then
             display dialog numEL
             if numEL is less than 1 then
@@ -123,7 +125,6 @@ script AppDelegate
                 do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "; srm -rf " & drive & ".SK_EL_" & usernameValue & ".enc.bin' > /dev/null &"
                 quit
             else if numEL is greater than 0 then
-                display dialog "test2"
                 set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
                 do shell script "printf '" & newNumEL & "' > " & drive & ".SK_EL_" & usernameValue & ".enc.bin" with administrator privileges
             end if
@@ -169,9 +170,9 @@ on main()
         set volumepath to "/Volumes/" & volumepath
         set volumepath2 to volumepath & "/"
         set authcred to decryptinfo(volumepath, authinfobin)
-        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred, item 4 of authcred)
+        checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
-        execlimit_ext(item 1 of authcred, volumepath2)
+        execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
         auth(item 1 of authcred, item 2 of authcred)
         on error number errorNumber
         if errorNumber is 101 then
