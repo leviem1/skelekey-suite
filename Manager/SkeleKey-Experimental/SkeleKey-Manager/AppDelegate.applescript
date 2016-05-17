@@ -44,7 +44,7 @@ script AppDelegate
     property regSerial : missing value
     property isBusy : false
     property fromStart : true
-    property modeString : "Install a SkeleKey"
+    property modeString : "Create a SkeleKey"
     property exp_date_e : ""
     property stepperTF : missing value
     property stepper : missing value
@@ -342,7 +342,7 @@ script AppDelegate
     #Main Window Start Button Function
     on buttonClicked:sender
         global currDate
-        if modeString is "Install a SkeleKey" then
+        if modeString is "Create a SkeleKey" then
             mainWindow's orderOut:sender
             set currDate to current date
             theDate's setDateValue:currDate
