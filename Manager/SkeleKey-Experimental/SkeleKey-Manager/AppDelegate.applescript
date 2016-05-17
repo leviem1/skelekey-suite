@@ -181,8 +181,6 @@ script AppDelegate
         
     end loginComponentInstaller:
     
-    
-    
     #Execution Checked Sender
     on limitChecked:sender
         if (limitEnabled's state()) is 0 then
@@ -237,6 +235,7 @@ script AppDelegate
         end if
     end webChecked:
     
+    #Web Support Enable
     on webPushBtnEnable:sender
         global webState
         if (webPushBtn's state()) is 0 then
@@ -277,6 +276,7 @@ script AppDelegate
     on regQuit:sender
         quit
     end regQuit:
+    
     #License Generator Function
     on licensekeygen(myname, myemail, myorg)
         set e_mn to do shell script "printf \"" & myname & "\" | rev"
