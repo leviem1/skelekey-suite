@@ -39,12 +39,13 @@ script AppDelegate
     property stateInformerDate : missing value
     property stateInformerLogin : missing value
     property stateInformerLimit : missing value
+    property stateInformerWeb : missing value
     property regEmail : missing value
     property regOrg : missing value
     property regSerial : missing value
     property isBusy : false
     property fromStart : true
-    property modeString : "Install a SkeleKey"
+    property modeString : "Create a SkeleKey"
     property exp_date_e : ""
     property stepperTF : missing value
     property stepper : missing value
@@ -57,6 +58,16 @@ script AppDelegate
     property loginComponentInfo4 : missing value
     property loginComponentDiv : missing value
     property execlimitDesc : missing value
+    property webEnabled : missing value
+    property webPushBtn : missing value
+    property webStatus : missing value
+    property detailsExp : missing value
+    property detailsExp2 : missing value
+    property detailsEL : missing value
+    property detailsEL2 : missing value
+    property detailsWeb : missing value
+    property detailsWeb2 : missing value
+    
  
  
     property beta_mode : true
@@ -102,13 +113,16 @@ script AppDelegate
             stateInformerDate's setHidden:false
             displayDate's setHidden:true
             installButton's setHidden:false
+            detailsExp's setHidden:true
+            detailsExp2's setHidden:true
             set exp_date_e to ""
         else if (dateEnabled's state()) is 1 then
             theDate's setEnabled:true
             theDate's setHidden:false
             stateInformerDate's setHidden:true
             displayDate's setHidden:false
-            #installButton's setHidden:true
+            detailsExp's setHidden:false
+            detailsExp2's setHidden:false
             set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
             set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
         end if
@@ -176,6 +190,8 @@ script AppDelegate
             stepperTF's setHidden:true
             execlimitDesc's setHidden:true
             stepper's setHidden:true
+            detailsEL's setHidden:true
+            detailsEL2's setHidden:true
         else if (limitEnabled's state()) is 1 then
             stateInformerLimit's setHidden:true
             stepperTF's setStringValue:"0"
@@ -183,6 +199,8 @@ script AppDelegate
             stepper's setHidden:false
             stepper's setStringValue:"0"
             execlimitDesc's setHidden:false
+            detailsEL's setHidden:false
+            detailsEL2's setHidden:false
         end if
     end limitChecked:
     
@@ -201,6 +219,34 @@ script AppDelegate
             display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
     end execlimit_ext
+    
+    #Web Checked
+    on webChecked:sender
+        if (webEnabled's state()) is 0 then
+            stateInformerWeb's setHidden:false
+            webPushBtn's setHidden:true
+            webStatus's setHidden:true
+            detailsWeb's setHidden:true
+            detailsWeb2's setHidden:true
+        else if (webEnabled's state()) is 1 then
+            stateInformerWeb's setHidden:true
+            webPushBtn's setHidden:false
+            webStatus's setHidden:false
+            detailsWeb's setHidden:false
+            detailsWeb2's setHidden:false
+        end if
+    end webChecked:
+    
+    on webPushBtnEnable:sender
+        global webState
+        if (webPushBtn's state()) is 0 then
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            set webState to "none"
+        else if (webPushBtn's state()) is 1 then
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusAvailable")
+            set webState to "WEBYES"
+        end if
+    end webPushBtnEnable:
 
     
     #Password Value Check Function
@@ -342,7 +388,7 @@ script AppDelegate
     #Main Window Start Button Function
     on buttonClicked:sender
         global currDate
-        if modeString is "Install a SkeleKey" then
+        if modeString is "Create a SkeleKey" then
             mainWindow's orderOut:sender
             set currDate to current date
             theDate's setDateValue:currDate
@@ -400,6 +446,7 @@ script AppDelegate
         global password1Value
         global password2Value
         global UnixPath
+        global webState
         set usernameValue to "" & (stringValue() of username)
         set password1Value to "" & (stringValue() of password1)
         set password2Value to "" & (stringValue() of password2)
@@ -460,11 +507,8 @@ script AppDelegate
             
             if exp_date_e is "" then set exp_date_e to "none"
             if execlimit is "" then set execlimit to "none"
-            
-            do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
-            
+            do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
             execlimit_ext(usernameValue, execlimit, fileName2)
-                
             try
                 set theNumber to 1
                 do shell script "test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"

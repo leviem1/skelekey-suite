@@ -19,6 +19,12 @@
                 <outlet property="dateEnabled" destination="iaW-rW-Sab" id="BCv-yx-yem"/>
                 <outlet property="delButton" destination="UKA-JI-xoR" id="ADR-kk-BhJ"/>
                 <outlet property="delFileName" destination="mwK-fz-jwa" id="HQF-Tn-0F0"/>
+                <outlet property="detailsEL" destination="sOZ-BM-yPo" id="8gH-Gn-Ckc"/>
+                <outlet property="detailsEL2" destination="7tC-ao-Ilo" id="vBj-Rs-igT"/>
+                <outlet property="detailsExp" destination="MbY-SM-4Ky" id="GXN-pv-YeY"/>
+                <outlet property="detailsExp2" destination="bO8-fJ-FN2" id="zSG-wx-vCT"/>
+                <outlet property="detailsWeb" destination="6z2-KD-XC4" id="GwF-Rz-jle"/>
+                <outlet property="detailsWeb2" destination="GkO-7H-Eoz" id="DLC-Ae-Vxw"/>
                 <outlet property="displayDate" destination="wvF-FS-NWp" id="Qaj-YR-MQB"/>
                 <outlet property="dontShow" destination="jrG-jd-6Kg" id="7tF-YZ-ueX"/>
                 <outlet property="execlimitDesc" destination="GnU-3T-GrY" id="ZFR-7I-ywS"/>
@@ -52,11 +58,15 @@
                 <outlet property="stateInformerDate" destination="2JR-cU-I1H" id="jeQ-M9-Ipx"/>
                 <outlet property="stateInformerLimit" destination="urP-mc-umD" id="Hla-ba-EOH"/>
                 <outlet property="stateInformerLogin" destination="DHK-1p-qrY" id="UZ6-ne-pLm"/>
+                <outlet property="stateInformerWeb" destination="jnS-P0-uJY" id="woW-An-oMP"/>
                 <outlet property="stepper" destination="zs0-yj-Lbm" id="lNF-PU-BqO"/>
                 <outlet property="stepperTF" destination="Jg4-5v-XWG" id="WM5-FX-u27"/>
                 <outlet property="theDate" destination="c70-eM-acp" id="FnZ-oQ-L7J"/>
                 <outlet property="tutorialWindow" destination="HJU-0l-vvI" id="uOa-mN-o9a"/>
                 <outlet property="username" destination="XN4-9y-0kf" id="cQN-zQ-Hpd"/>
+                <outlet property="webEnabled" destination="fVW-WI-37t" id="Vqc-MD-hX3"/>
+                <outlet property="webPushBtn" destination="ahn-od-ov8" id="LDe-Ad-YFE"/>
+                <outlet property="webStatus" destination="MUV-4O-SYz" id="eMU-aG-9hW"/>
                 <outlet property="welcomeWindow" destination="xLt-ws-R6g" id="1jV-TK-NJy"/>
             </connections>
         </customObject>
@@ -660,7 +670,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.92207792207792205" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.65800865800865804" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -834,13 +844,21 @@ DQ
                             <action selector="installButton:" target="Voe-Tx-rLC" id="vbf-zN-RUZ"/>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-vH-UoQ">
+                        <rect key="frame" x="89" y="315" width="302" height="20"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="OSt-q1-fp8">
+                            <font key="font" metaFont="system" size="14"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <tabView fixedFrame="YES" allowsTruncatedLabels="NO" initialItem="WIq-83-6zM" translatesAutoresizingMaskIntoConstraints="NO" id="sm8-Ev-li2">
                         <rect key="frame" x="13" y="31" width="454" height="282"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
                                 <view key="view" id="PHJ-qU-ZFR">
-                                    <rect key="frame" x="10" y="33" width="352" height="0.0"/>
+                                    <rect key="frame" x="10" y="33" width="402" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
@@ -870,7 +888,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="79" y="-219" width="277" height="148"/>
+                                            <rect key="frame" x="17" y="-219" width="277" height="148"/>
                                             <datePickerCell key="cell" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
@@ -887,6 +905,22 @@ DQ
                                                 <action selector="displayData:" target="Voe-Tx-rLC" id="8CM-xb-Qfo"/>
                                             </connections>
                                         </datePicker>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
+                                            <rect key="frame" x="336" y="-94" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-SM-4Ky">
+                                            <rect key="frame" x="299" y="-219" width="134" height="126"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" title="This SkeleKey Suite add-on forces your SkeleKey Applet to stop authenticating at a specified date and time." id="S8d-L8-uyi">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -980,7 +1014,7 @@ package.</string>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
-                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
+                                <view key="view" id="9eh-em-h1U">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -994,21 +1028,16 @@ package.</string>
                                                 <action selector="limitChecked:" target="Voe-Tx-rLC" id="tJ5-QM-URN"/>
                                             </connections>
                                         </button>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GnU-3T-GrY">
-                                            <rect key="frame" x="38" y="110" width="358" height="85"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Jfg-4a-VMe">
-                                                <font key="font" metaFont="system"/>
-                                                <string key="title">Select the number of times this SkeleKey Applet
-can authenticate with the supplied credentials. After
-authenticating the number of times selected, this 
-SkeleKey Applet will become invalidated, and will securely 
-remove itself from your USB storage device.</string>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urP-mc-umD">
+                                            <rect key="frame" x="42" y="117" width="351" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="g2h-XA-PIM">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jg4-5v-XWG">
-                                            <rect key="frame" x="179" y="80" width="60" height="22"/>
+                                            <rect key="frame" x="95" y="24" width="60" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="1" placeholderString="1" bezelStyle="round" id="p1k-IW-fxL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1019,17 +1048,42 @@ remove itself from your USB storage device.</string>
                                             </connections>
                                         </textField>
                                         <stepper hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zs0-yj-Lbm">
-                                            <rect key="frame" x="239" y="78" width="19" height="27"/>
+                                            <rect key="frame" x="155" y="22" width="19" height="27"/>
                                             <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999999" doubleValue="1" valueWraps="YES" id="htz-KT-xlf"/>
                                             <connections>
                                                 <action selector="stepper:" target="Voe-Tx-rLC" id="vj7-iQ-ih4"/>
                                                 <binding destination="ANp-PN-Mfv" name="value" keyPath="values.stepperValue" id="bEM-zU-pw2"/>
                                             </connections>
                                         </stepper>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urP-mc-umD">
-                                            <rect key="frame" x="42" y="117" width="351" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="g2h-XA-PIM">
-                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOZ-BM-yPo">
+                                            <rect key="frame" x="250" y="45" width="167" height="153"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" drawsBackground="YES" id="d6l-4L-vDK">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">This SkeleKey Suite add-on enables your SkeleKey Applet to authenticate for a set number of times. After running the Applet this many times, the Applet will self erase using a secure removal algorithm.</string>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7tC-ao-Ilo">
+                                            <rect key="frame" x="307" y="203" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="5aD-Y5-pSc">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GnU-3T-GrY">
+                                            <rect key="frame" x="15" y="55" width="225" height="141"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Jfg-4a-VMe">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">Select the number of times this 
+SkeleKey Applet can authenticate 
+with the supplied credentials. After 
+authenticating the number of times 
+selected, this  SkeleKey Applet will 
+become invalidated, and will 
+securely remove itself from 
+your USB storage device.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1037,16 +1091,65 @@ remove itself from your USB storage device.</string>
                                     </subviews>
                                 </view>
                             </tabViewItem>
+                            <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
+                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
+                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fVW-WI-37t">
+                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Mgg-vn-fKK">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="webChecked:" target="Voe-Tx-rLC" id="v0y-O0-EdW"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnS-P0-uJY">
+                                            <rect key="frame" x="42" y="117" width="351" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="mku-rY-ehn">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6z2-KD-XC4">
+                                            <rect key="frame" x="95" y="65" width="245" height="108"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="pUK-rD-b0w">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">This SkeleKey Suite add-on enables your SkeleKey Applet to authenticate with your credentials at websites! Launch the created SkeleKey Applet while at the website of your choice when using the Safari browser.</string>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GkO-7H-Eoz">
+                                            <rect key="frame" x="191" y="181" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="ERd-77-eFJ">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahn-od-ov8">
+                                            <rect key="frame" x="141" y="38" width="150" height="19"/>
+                                            <buttonCell key="cell" type="roundRect" title="Enable Website Logins" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gFI-iH-6Ci">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                <font key="font" metaFont="cellTitle"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="webPushBtnEnable:" target="Voe-Tx-rLC" id="wLT-qa-F8B"/>
+                                            </connections>
+                                        </button>
+                                        <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MUV-4O-SYz">
+                                            <rect key="frame" x="299" y="40" width="16" height="16"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="rIs-gw-9um"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
                         </tabViewItems>
                     </tabView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-vH-UoQ">
-                        <rect key="frame" x="89" y="315" width="302" height="20"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Configure the following optional components:" id="OSt-q1-fp8">
-                            <font key="font" metaFont="system" size="14"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
             </view>
             <contentBorderThickness minY="32"/>
@@ -1324,6 +1427,7 @@ Gw
         <image name="NSComputer" width="32" height="32"/>
         <image name="NSLockLockedTemplate" width="10" height="14"/>
         <image name="NSStatusPartiallyAvailable" width="16" height="16"/>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
         <image name="NSUserGroup" width="32" height="32"/>
     </resources>
 </document>

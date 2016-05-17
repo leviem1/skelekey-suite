@@ -72,7 +72,8 @@ script AppDelegate
         set passwd to paragraph 2 of encContents
         set exp_date_e to paragraph 3 of encContents
         set execlimit to paragraph 4 of encContents
-        return {username, passwd, exp_date_e, execlimit}
+        set webState to paragraph 5 of encContents
+        return {username, passwd, exp_date_e, execlimit, webState}
     end decryptinfo
     
     on assistiveaccess(username, passwd)
@@ -154,6 +155,10 @@ script AppDelegate
             #subtract one
         end if
     end auth
+    
+    on web(username, passwd, url)
+        #WEB STUFF HERE
+    end web
 
 on main()
     global UnixPath
@@ -173,7 +178,11 @@ on main()
         checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
         assistiveaccess(item 1 of authcred, item 2 of authcred)
         execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
-        auth(item 1 of authcred, item 2 of authcred)
+        if (item 5 of authcred) is not "none"
+            auth(item 1 of authcred, item 2 of authcred)
+        else if (item 5 of authcred) is "WEBYES"
+            web(item 1 of authcred, item 2 of authcred)
+        end if
         on error number errorNumber
         if errorNumber is 101 then
             display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
