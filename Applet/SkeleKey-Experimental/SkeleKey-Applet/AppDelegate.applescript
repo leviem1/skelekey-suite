@@ -151,9 +151,6 @@ script AppDelegate
             else
             guiauth(username, passwd)
         end if
-        if execlimit is greater than "1" and not "none" then
-            #subtract one
-        end if
     end auth
     
     on inputByID(theId, theValue)

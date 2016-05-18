@@ -74,6 +74,10 @@ script AppDelegate
 	
 	property beta_mode : true
 	
+    ################
+    #  ESSENTIALS  #
+    ################
+    
 	#Window Math Function (Thanks to Holly Lakin for helping us with the math in this function)
 	on windowMath(window1, window2)
 		set origin to origin of window1's frame()
@@ -106,29 +110,26 @@ script AppDelegate
 		set modeString to sender's title as text
 	end radioOption:
 	
+    #Take to Purchase Page Function
+    on purchaseBtn:sender
+        do shell script "open 'http://www.skelekey.com/#purchase'"
+    end purchaseBtn:
+    
+    #Registration Window Quit Function
+    on regQuit:sender
+        quit
+    end regQuit:
+    
+    #############
+    #  ADD-Ons  #
+    #############
 	#Date Checked Sender
 	on dateChecked:sender
 		global currDate
 		if (dateEnabled's state()) is 0 then
-			theDate's setEnabled:false
-			theDate's setHidden:true
-			stateInformerDate's setHidden:false
-			displayDate's setHidden:true
-			installButton's setHidden:false
-			detailsExp's setHidden:true
-			detailsExp2's setHidden:true
-            detailsExpDiv's setHidden:true
-			set exp_date_e to ""
+			housekeeping("Date Unchecked")
 		else if (dateEnabled's state()) is 1 then
-			theDate's setEnabled:true
-			theDate's setHidden:false
-			stateInformerDate's setHidden:true
-			displayDate's setHidden:false
-			detailsExp's setHidden:false
-			detailsExp2's setHidden:false
-            detailsExpDiv's setHidden:false
-			set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
-			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+			housekeeping("Date Checked")
 		end if
 	end dateChecked:
 	
@@ -143,25 +144,9 @@ script AppDelegate
 	#Login Checked Sender
 	on loginChecked:sender
 		if (loginEnabled's state()) is 0 then
-			stateInformerLogin's setHidden:false
-			loginComponentInfo1's setHidden:true
-			loginComponentInfo2's setHidden:true
-			loginComponentInfo3's setHidden:true
-			loginComponentInfo4's setHidden:true
-			loginComponentMover's setHidden:true
-			loginComponentInstaller's setHidden:true
-			loginComponentDiv's setHidden:true
-            loginComponentDiv2's setHidden:true
+			housekeeping("Login Unchecked")
 		else if (loginEnabled's state()) is 1 then
-			stateInformerLogin's setHidden:true
-			loginComponentInfo1's setHidden:false
-			loginComponentInfo2's setHidden:false
-			loginComponentInfo3's setHidden:false
-			loginComponentInfo4's setHidden:false
-			loginComponentMover's setHidden:false
-			loginComponentInstaller's setHidden:false
-			loginComponentDiv's setHidden:false
-            loginComponentDiv2's setHidden:false
+			housekeeping("Login Checked")
 		end if
 	end loginChecked:
 	
@@ -191,26 +176,9 @@ script AppDelegate
 	on limitChecked:sender
 		global execlimit
 		if (limitEnabled's state()) is 0 then
-			stateInformerLimit's setHidden:false
-			stepperTF's setHidden:true
-			execlimitDesc's setHidden:true
-			stepper's setHidden:true
-			detailsEL's setHidden:true
-			detailsEL2's setHidden:true
-            detailsELDiv's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepper's setStringValue:"0"
-			set execlimit to ""
+			housekeeping("Exec Unchecked")
 		else if (limitEnabled's state()) is 1 then
-			stateInformerLimit's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepperTF's setHidden:false
-			stepper's setHidden:false
-			stepper's setStringValue:"0"
-			execlimitDesc's setHidden:false
-			detailsEL's setHidden:false
-			detailsEL2's setHidden:false
-            detailsELDiv's setHidden:false
+			housekeeping("Exec Checked")
 		end if
 	end limitChecked:
 	
@@ -233,22 +201,9 @@ script AppDelegate
 	#Web Checked
 	on webChecked:sender
 		if (webEnabled's state()) is 0 then
-			stateInformerWeb's setHidden:false
-			webPushBtn's setHidden:true
-			webStatus's setHidden:true
-			detailsWeb's setHidden:true
-			detailsWeb2's setHidden:true
-            detailsWebDiv's setHidden:true
-			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-			set webState to "none"
-			webPushBtn's setState:0
-		else if (webEnabled's state()) is 1 then
-			stateInformerWeb's setHidden:true
-			webPushBtn's setHidden:false
-			webStatus's setHidden:false
-			detailsWeb's setHidden:false
-			detailsWeb2's setHidden:false
-            detailsWebDiv's setHidden:false
+            housekeeping("Web Unchecked")
+        else if (webEnabled's state()) is 1 then
+			housekeeping("Web Checked")
 		end if
 	end webChecked:
 	
@@ -264,7 +219,9 @@ script AppDelegate
 		end if
 	end webPushBtnEnable:
 	
-	
+    ##########
+    #  BASE  #
+    ##########
 	#Password Value Check Function
 	on checkPasswords()
 		global isLicensed
@@ -283,17 +240,7 @@ script AppDelegate
 			installButton's setEnabled:false
 		end if
 	end checkPasswords
-	
-	#Take to Purchase Page Function
-	on purchaseBtn:sender
-		do shell script "open 'http://www.skelekey.com/#purchase'"
-	end purchaseBtn:
-	
-	#Registration Window Quit Function
-	on regQuit:sender
-		quit
-	end regQuit:
-	
+
 	#License Generator Function
 	on licensekeygen(myname, myemail, myorg)
 		set e_mn to do shell script "printf \"" & myname & "\" | rev"
@@ -548,8 +495,8 @@ script AppDelegate
 			display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
 			display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
-		housekeeping_(sender)
-		houseKeepingInstall_(sender)
+		housekeeping("Main Window")
+		housekeeping("Install Window")
 		installWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(installWindow, mainWindow)
@@ -592,7 +539,7 @@ script AppDelegate
 		end try
 		set isBusy to false
 		quitItem's setEnabled:true
-		housekeeping_(sender)
+		housekeeping("Main Window")
 		finishedDel_(sender)
 	end delButton:
 	
@@ -623,93 +570,162 @@ script AppDelegate
 		end if
 	end welcomeNext:
 	
-	#Main Window Housekeeping
-	on housekeeping:sender
-		global fileName2
-		fileName's setStringValue:""
-		fileName's setToolTip:""
-		startButton's setEnabled:false
-		set fileName2 to ""
-	end housekeeping:
+    on housekeeping(flavor)
+        if flavor is "Main Window" then
+            global fileName2
+            fileName's setStringValue:""
+            fileName's setToolTip:""
+            startButton's setEnabled:false
+            set fileName2 to ""
+        else if flavor is "Install Window" then
+            global usernameValue
+            global password1Value
+            global password2Value
+            username's setStringValue:""
+            password1's setStringValue:""
+            password2's setStringValue:""
+            set usernameValue to ""
+            set password1Value to ""
+            set password2Value to ""
+            theDate's setEnabled:false
+            theDate's setHidden:true
+            installButton's setEnabled:false
+            installButton's setHidden:false
+            displayDate's setStringValue:""
+            displayDate's setHidden:true
+            dateEnabled's setState:0
+            stateInformerDate's setHidden:false
+            stateInformerLimit's setHidden:false
+            stateInformerWeb's setHidden:false
+            stateInformerLogin's setHidden:false
+            detailsExp's setHidden:true
+            detailsExp2's setHidden:true
+            detailsEL's setHidden:true
+            detailsEL2's setHidden:true
+            detailsWeb's setHidden:true
+            detailsWeb2's setHidden:true
+            set exp_date_e to ""
+            loginEnabled's setState:0
+            loginComponentInfo1's setHidden:true
+            loginComponentInfo2's setHidden:true
+            loginComponentInfo3's setHidden:true
+            loginComponentInfo4's setHidden:true
+            loginComponentMover's setHidden:true
+            loginComponentInstaller's setHidden:true
+            loginComponentDiv's setHidden:true
+            limitEnabled's setState:0
+            stepperTF's setHidden:true
+            execlimitDesc's setHidden:true
+            stepper's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepper's setStringValue:"0"
+            set execlimit to ""
+            webEnabled's setState:0
+            webPushBtn's setHidden:true
+            webStatus's setHidden:true
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            set webState to "none"
+            webPushBtn's setState:0
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+        else if flavor is "Removal Window" then
+            global delApp
+            delFileName's setStringValue:""
+            delFileName's setToolTip:""
+            delButton's setEnabled:false
+            set delApp to ""
+        else if flavor is "Date Unchecked" then
+            global currDate
+            theDate's setEnabled:false
+            theDate's setHidden:true
+            stateInformerDate's setHidden:false
+            displayDate's setHidden:true
+            installButton's setHidden:false
+            detailsExp's setHidden:true
+            detailsExp2's setHidden:true
+            detailsExpDiv's setHidden:true
+            set exp_date_e to ""
+        else if flavor is "Date Checked" then
+            theDate's setEnabled:true
+            theDate's setHidden:false
+            stateInformerDate's setHidden:true
+            displayDate's setHidden:false
+            detailsExp's setHidden:false
+            detailsExp2's setHidden:false
+            detailsExpDiv's setHidden:false
+            set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+        else if flavor is "Login Unchecked" then
+            stateInformerLogin's setHidden:false
+            loginComponentInfo1's setHidden:true
+            loginComponentInfo2's setHidden:true
+            loginComponentInfo3's setHidden:true
+            loginComponentInfo4's setHidden:true
+            loginComponentMover's setHidden:true
+            loginComponentInstaller's setHidden:true
+            loginComponentDiv's setHidden:true
+            loginComponentDiv2's setHidden:true
+        else if flavor is "Login Checked" then
+            stateInformerLogin's setHidden:true
+            loginComponentInfo1's setHidden:false
+            loginComponentInfo2's setHidden:false
+            loginComponentInfo3's setHidden:false
+            loginComponentInfo4's setHidden:false
+            loginComponentMover's setHidden:false
+            loginComponentInstaller's setHidden:false
+            loginComponentDiv's setHidden:false
+            loginComponentDiv2's setHidden:false
+        else if flavor is "Exec Unchecked" then
+            stateInformerLimit's setHidden:false
+            stepperTF's setHidden:true
+            execlimitDesc's setHidden:true
+            stepper's setHidden:true
+            detailsEL's setHidden:true
+            detailsEL2's setHidden:true
+            detailsELDiv's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepper's setStringValue:"0"
+            set execlimit to ""
+        else if flavor is "Exec Checked" then
+            stateInformerLimit's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepperTF's setHidden:false
+            stepper's setHidden:false
+            stepper's setStringValue:"0"
+            execlimitDesc's setHidden:false
+            detailsEL's setHidden:false
+            detailsEL2's setHidden:false
+            detailsELDiv's setHidden:false
+        else if flavor is "Web Unchecked" then
+            stateInformerWeb's setHidden:false
+            webPushBtn's setHidden:true
+            webStatus's setHidden:true
+            detailsWeb's setHidden:true
+            detailsWeb2's setHidden:true
+            detailsWebDiv's setHidden:true
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            set webState to "none"
+            webPushBtn's setState:0
+        else if flavor is "Web Checked" then
+            stateInformerWeb's setHidden:true
+            webPushBtn's setHidden:false
+            webStatus's setHidden:false
+            detailsWeb's setHidden:false
+            detailsWeb2's setHidden:false
+            detailsWebDiv's setHidden:false
+        end if
+    end housekeeping
+    
+    #Install Window Back Button
+    on backButtonInstaller:sender
+        housekeeping("Install Window")
+        installWindow's orderOut:sender
+        mainWindow's makeKeyAndOrderFront:me
+        windowMath(installWindow, mainWindow)
+    end backButtonInstaller
 	
-	#Install Window Housekeeping
-	on houseKeepingInstall:sender
-		global usernameValue
-		global password1Value
-		global password2Value
-		username's setStringValue:""
-		password1's setStringValue:""
-		password2's setStringValue:""
-		set usernameValue to ""
-		set password1Value to ""
-		set password2Value to ""
-		theDate's setEnabled:false
-		theDate's setHidden:true
-		installButton's setEnabled:false
-		installButton's setHidden:false
-		displayDate's setStringValue:""
-		displayDate's setHidden:true
-		dateEnabled's setState:0
-		
-		dateEnabled's setState:0
-		theDate's setEnabled:false
-		theDate's setHidden:true
-		stateInformerDate's setHidden:false
-		displayDate's setHidden:true
-		installButton's setHidden:false
-		detailsExp's setHidden:true
-		detailsExp2's setHidden:true
-		set exp_date_e to ""
-		
-		loginEnabled's setState:0
-		stateInformerLogin's setHidden:false
-		loginComponentInfo1's setHidden:true
-		loginComponentInfo2's setHidden:true
-		loginComponentInfo3's setHidden:true
-		loginComponentInfo4's setHidden:true
-		loginComponentMover's setHidden:true
-		loginComponentInstaller's setHidden:true
-		loginComponentDiv's setHidden:true
-		
-		limitEnabled's setState:0
-		stateInformerLimit's setHidden:false
-		stepperTF's setHidden:true
-		execlimitDesc's setHidden:true
-		stepper's setHidden:true
-		detailsEL's setHidden:true
-		detailsEL2's setHidden:true
-		stepperTF's setStringValue:"0"
-		stepper's setStringValue:"0"
-		set execlimit to ""
-		
-		webEnabled's setState:0
-		stateInformerWeb's setHidden:false
-		webPushBtn's setHidden:true
-		webStatus's setHidden:true
-		detailsWeb's setHidden:true
-		detailsWeb2's setHidden:true
-		webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-		set webState to "none"
-		webPushBtn's setState:0
-		
-		checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
-		installWindow's orderOut:sender
-		mainWindow's makeKeyAndOrderFront:me
-		windowMath(installWindow, mainWindow)
-	end houseKeepingInstall:
-	
-	#Remove Window Housekeeping
-	on houseKeepingDel_()
-		global delApp
-		delFileName's setStringValue:""
-		delFileName's setToolTip:""
-		delButton's setEnabled:false
-		set delApp to ""
-	end houseKeepingDel_
-	
-	#Remove Window Cancelled Function
+	#Removal Window Cancelled Function
 	on cancelDel:sender
-		houseKeepingDel_()
+		housekeeping("Removal Window")
 		removeWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(removeWindow, mainWindow)
@@ -717,7 +733,7 @@ script AppDelegate
 	
 	#Remove Window Complete Function
 	on finishedDel:sender
-		houseKeepingDel_()
+		housekeeping("Removal Window")
 		loadingWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(loadingWindow, mainWindow)
