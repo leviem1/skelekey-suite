@@ -21,10 +21,13 @@
                 <outlet property="delFileName" destination="mwK-fz-jwa" id="HQF-Tn-0F0"/>
                 <outlet property="detailsEL" destination="sOZ-BM-yPo" id="8gH-Gn-Ckc"/>
                 <outlet property="detailsEL2" destination="7tC-ao-Ilo" id="vBj-Rs-igT"/>
+                <outlet property="detailsELDiv" destination="TOk-zT-CgU" id="tbK-Mo-PUK"/>
                 <outlet property="detailsExp" destination="MbY-SM-4Ky" id="GXN-pv-YeY"/>
                 <outlet property="detailsExp2" destination="bO8-fJ-FN2" id="zSG-wx-vCT"/>
+                <outlet property="detailsExpDiv" destination="tIT-dS-6Th" id="D4j-az-DXx"/>
                 <outlet property="detailsWeb" destination="6z2-KD-XC4" id="GwF-Rz-jle"/>
                 <outlet property="detailsWeb2" destination="GkO-7H-Eoz" id="DLC-Ae-Vxw"/>
+                <outlet property="detailsWebDiv" destination="ZpM-4q-Hmp" id="gmK-80-rXb"/>
                 <outlet property="displayDate" destination="wvF-FS-NWp" id="Qaj-YR-MQB"/>
                 <outlet property="dontShow" destination="jrG-jd-6Kg" id="7tF-YZ-ueX"/>
                 <outlet property="execlimitDesc" destination="GnU-3T-GrY" id="ZFR-7I-ywS"/>
@@ -34,6 +37,7 @@
                 <outlet property="limitEnabled" destination="XUA-1V-REC" id="Xym-2C-lTN"/>
                 <outlet property="loadingWindow" destination="XBI-rp-gAe" id="TxJ-DX-ZR9"/>
                 <outlet property="loginComponentDiv" destination="bBi-DG-rV5" id="FRX-E5-9lr"/>
+                <outlet property="loginComponentDiv2" destination="MbA-9g-i2q" id="xdi-kn-hCE"/>
                 <outlet property="loginComponentInfo1" destination="cwZ-RG-975" id="Ojq-UH-pPJ"/>
                 <outlet property="loginComponentInfo2" destination="T53-Xd-srQ" id="65p-xU-WrK"/>
                 <outlet property="loginComponentInfo3" destination="O8k-7R-6fP" id="VjE-en-Txo"/>
@@ -855,7 +859,7 @@ DQ
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
-                                <view key="view" ambiguous="YES" id="PHJ-qU-ZFR">
+                                <view key="view" id="PHJ-qU-ZFR">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -903,20 +907,26 @@ DQ
                                                 <action selector="displayData:" target="Voe-Tx-rLC" id="8CM-xb-Qfo"/>
                                             </connections>
                                         </datePicker>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
-                                            <rect key="frame" x="336" y="142" width="46" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
+                                        <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tIT-dS-6Th">
+                                            <rect key="frame" x="299" y="17" width="5" height="148"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
                                         <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-SM-4Ky">
                                             <rect key="frame" x="299" y="17" width="134" height="126"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" title="This SkeleKey Suite add-on forces your SkeleKey Applet to stop authenticating at a specified date and time." id="S8d-L8-uyi">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
+                                            <rect key="frame" x="343" y="142" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
+                                                <font key="font" metaFont="systemMedium" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
@@ -965,19 +975,10 @@ package copied to your Desktop.</string>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ern-1U-555">
-                                            <rect key="frame" x="257" y="17" width="167" height="179"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" drawsBackground="YES" id="b6o-ck-R2w">
-                                                <font key="font" metaFont="system"/>
-                                                <string key="title">This SkeleKey Suite add-on enables your SkeleKey Applet to log in to your Mac for you. Just plug in the USB storage device containing your SkeleKey Applet when at the Login Window, and we'll take care of the rest!</string>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O8k-7R-6fP">
                                             <rect key="frame" x="314" y="201" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="Dd7-5b-TsJ">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1008,11 +1009,26 @@ package.</string>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="MbA-9g-i2q">
+                                            <rect key="frame" x="258" y="9" width="5" height="187"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ern-1U-555">
+                                            <rect key="frame" x="267" y="17" width="167" height="179"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="b6o-ck-R2w">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">This SkeleKey Suite add-on enables your SkeleKey Applet to log in to your Mac for you. Just plug in the USB storage device containing your SkeleKey Applet when at the Login Window, and we'll take care of the rest!</string>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
-                                <view key="view" id="9eh-em-h1U">
+                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1055,7 +1071,7 @@ package.</string>
                                         </stepper>
                                         <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOZ-BM-yPo">
                                             <rect key="frame" x="250" y="45" width="167" height="153"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" drawsBackground="YES" id="d6l-4L-vDK">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="d6l-4L-vDK">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This SkeleKey Suite add-on enables your SkeleKey Applet to authenticate for a set number of times. After running the Applet this many times, the Applet will self erase using a secure removal algorithm.</string>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1065,7 +1081,7 @@ package.</string>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7tC-ao-Ilo">
                                             <rect key="frame" x="307" y="203" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="5aD-Y5-pSc">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1086,6 +1102,12 @@ your USB storage device.</string>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="TOk-zT-CgU">
+                                            <rect key="frame" x="244" y="24" width="5" height="172"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1124,13 +1146,19 @@ your USB storage device.</string>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GkO-7H-Eoz">
                                             <rect key="frame" x="191" y="181" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="ERd-77-eFJ">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ZpM-4q-Hmp">
+                                            <rect key="frame" x="44" y="62" width="347" height="5"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
                                         <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahn-od-ov8">
-                                            <rect key="frame" x="141" y="38" width="150" height="19"/>
+                                            <rect key="frame" x="141" y="37" width="150" height="19"/>
                                             <buttonCell key="cell" type="roundRect" title="Enable Website Logins" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gFI-iH-6Ci">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                                 <font key="font" metaFont="cellTitle"/>
@@ -1140,7 +1168,7 @@ your USB storage device.</string>
                                             </connections>
                                         </button>
                                         <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MUV-4O-SYz">
-                                            <rect key="frame" x="299" y="40" width="16" height="16"/>
+                                            <rect key="frame" x="299" y="39" width="16" height="16"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="rIs-gw-9um"/>
                                         </imageView>
                                     </subviews>
