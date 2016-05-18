@@ -192,7 +192,7 @@ script AppDelegate
 	on execlimit_ext(user, limit, drive)
 		set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
 		try
-			do shell script "printf '" & execlimitEL & "' > " & drive & ".SK_EL_" & user & ".enc.bin" with administrator privileges
+			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & user & ".enc.bin'"
 		on error
 			display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try

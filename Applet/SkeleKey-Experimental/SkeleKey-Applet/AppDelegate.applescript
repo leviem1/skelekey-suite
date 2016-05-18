@@ -153,6 +153,27 @@ script AppDelegate
         end if
     end auth
     
+    on searchWPage(theUrl)
+        set ufields to {"accountname", "username", "email"}
+        set pfields to {"password", "Passwd"}
+        
+        set theContents to do shell script "curl " & theUrl
+        
+        repeat with field in ufields
+            set logintype to do shell script "printf '" & theContents & "' | egrep '(input.id." & field & ")'"
+            if logintype is not "" then exit repeat
+        end repeat
+            
+        repeat with field in ufields
+            set passwdtype to do shell script "printf '" & theContents & "' | egrep '(input.id." & field & ")'"
+            if passwdtype is not "" then exit repeat
+        end repeat
+        
+        log logintype
+        log passwdtype
+        
+    end searchWPage
+    
     on inputByID(theId, theValue)
         tell application "Safari"
             do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
@@ -171,6 +192,7 @@ script AppDelegate
         tell application "Safari"
             set website to get URL of front document
         end tell
+        
         if website contains "idmsa.apple.com" then
             try
                 inputByID("accountname", username)

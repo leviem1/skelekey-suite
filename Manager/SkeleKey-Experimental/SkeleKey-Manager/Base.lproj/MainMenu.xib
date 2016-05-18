@@ -499,7 +499,7 @@ Gw
                         <buttonCell key="cell" type="radio" title="Create a SkeleKey" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8k9-vm-zxP">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent">i</string>
+                            <string key="keyEquivalent">c</string>
                         </buttonCell>
                         <connections>
                             <action selector="radioOption:" target="Voe-Tx-rLC" id="mtG-r3-Inp"/>
@@ -602,7 +602,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="430"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="448"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
@@ -672,7 +672,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.78787878787878785" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -725,8 +725,8 @@ Jason Walker
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cCB-io-tkd">
-                        <rect key="frame" x="20" y="62" width="253" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Removing SkeleKey Applet... Please wait" id="z6d-X7-gTo">
+                        <rect key="frame" x="20" y="62" width="346" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Removing SkeleKey Applet... Please wait" id="z6d-X7-gTo">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -859,7 +859,7 @@ DQ
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
-                                <view key="view" id="PHJ-qU-ZFR">
+                                <view key="view" ambiguous="YES" id="PHJ-qU-ZFR">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -890,8 +890,8 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="17" y="17" width="277" height="148"/>
-                                            <datePickerCell key="cell" state="on" alignment="left" datePickerStyle="clockAndCalendar" id="xFn-3q-2JK">
+                                            <rect key="frame" x="17" y="138" width="277" height="27"/>
+                                            <datePickerCell key="cell" state="on" alignment="left" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
                                                     <!--2016-06-28 23:00:00 +0000-->
@@ -1112,7 +1112,7 @@ your USB storage device.</string>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
-                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
+                                <view key="view" id="ibf-El-uf3">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
