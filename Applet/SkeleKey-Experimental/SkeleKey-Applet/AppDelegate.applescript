@@ -165,6 +165,9 @@ script AppDelegate
     end clickID
     
     on web(username, passwd)
+        tell application "System Events" to (name of processes) contains "Safari"
+        set safariRunning to result
+        if safariRunning is false then display dialog "Safari is not running! Please open Safari to use the SkeleKey Web Add-on!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
         tell application "Safari"
             set website to get URL of front document
         end tell
@@ -174,13 +177,20 @@ script AppDelegate
                 inputByID("accountpassword", passwd)
                 clickID("submitButton2")
             end try
-            else if website contains "accounts.google.com" then
+        else if website contains "accounts.google.com" then
             try
                 inputByID("Email", username)
                 clickID("next")
                 delay 0.25
                 inputByID("Passwd", passwd)
                 clickID("signIn")
+            end try
+        else if website contains "sebs-moodle.district70.org" then
+            try
+                inputByID("login_username", username)
+                clickID("next")
+                inputByID("login_password", passwd)
+                clickID("submit")
             end try
         end if
     end web
@@ -205,7 +215,8 @@ script AppDelegate
                 assistiveaccess(item 1 of authcred, item 2 of authcred)
                 execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
                 auth(item 1 of authcred, item 2 of authcred)
-                else if (item 5 of authcred) is "WEBYES" then
+            else if (item 5 of authcred) is "WEBYES" then
+                execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
                 web(item 1 of authcred, item 2 of authcred)
             end if
             on error number errorNumber
