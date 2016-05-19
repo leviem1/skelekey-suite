@@ -58,6 +58,7 @@ script AppDelegate
 	property webStatus : missing value
 	property webState : ""
 	property beta_mode : true
+    property loginFile : ""
 	
 	################
 	#  ESSENTIALS  #
