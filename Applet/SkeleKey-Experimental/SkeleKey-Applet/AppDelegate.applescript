@@ -68,6 +68,7 @@ script AppDelegate
 			set epass to (characters 1 thru 2047 of epass) as string
 		end if
 		set encContents to (do shell script "openssl enc -aes-256-cbc -d -in '" & authinfobin & "' -pass pass:\"" & epass & "\"")
+		
 		set username to paragraph 1 of encContents
 		set passwd to paragraph 2 of encContents
 		set exp_date_e to paragraph 3 of encContents
@@ -100,7 +101,6 @@ script AppDelegate
 	end expCheck
 	
 	on checkadmin(username, passwd, exp_date_e)
-		global UnixPath
 		expCheck(exp_date_e)
 		try
 			do shell script "sudo printf elevate" user name username password passwd with administrator privileges
@@ -124,7 +124,6 @@ script AppDelegate
 		end if
 		
 		if numEL is not "none" then
-			display dialog numEL
 			if numEL is less than 1 then
 				display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
 				do shell script "chflags hidden '" & UnixPath & "'"
@@ -151,15 +150,17 @@ script AppDelegate
 	
 	on auth(username, passwd)
 		set fullnames to {}
+		
 		set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)'") as list
+		
 		repeat with acct in localusers
 			set fn to do shell script "dscacheutil -q user -a name '" & acct & "' | grep 'gecos' | sed -e 's/.*gecos: \\(.*\\)/\\1/'"
 			set fullnames to fullnames & fn
 		end repeat
-		if username is not in fullnames or username is not in localusers then
-			display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
-		else
+		if (fullnames contains username) or (localusers contains username) then
 			guiauth(username, passwd)
+		else
+			error number 105
 		end if
 	end auth
 	(*
@@ -263,8 +264,12 @@ script AppDelegate
 				return
 			else if errorNumber is 103 then
 				display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+				return
 			else if errorNumber is 104 then
 				display dialog "Error! This SkeleKey is no longer valid and has reached the execution limit! Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+				return
+			else if errorNumber is 105 then
+				display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				return
 			end if
 		end try
