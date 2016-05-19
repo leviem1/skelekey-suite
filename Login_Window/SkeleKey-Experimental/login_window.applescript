@@ -119,11 +119,11 @@ say "test1"
 repeat with uuid in drive_uuids
 	set nums to returnNumbersInString(uuid)
 	repeat with char in nums
-		set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+		set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
 		set epass to epass & encstring
 	end repeat
-	#set epass to epass as text
-	set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+	set epass to epass as text
+	set epass to do shell script "printf \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
 	if (length of epass) is greater than 2048 then
 		set epass to (characters 1 thru 2047 of epass) as string
 	end if
@@ -137,6 +137,7 @@ repeat (count of drive_names) times
 	set drive to item (count_dec + 1) in drive_names
 	set epass to item (count_dec + 1) in epasses
 	set detect_skeles to do shell script "cd '/Volumes/" & drive & "';  ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled"
+	#return detect_skeles
 	set detect_skeles to paragraphs of detect_skeles
 	repeat with name_ in detect_skeles
 		if name_ contains "-SkeleKey-Applet.app" then
@@ -145,10 +146,9 @@ repeat (count of drive_names) times
 		end if
 	end repeat
 	repeat with skname in sk_names
-		set _username to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\" | sed '1q;d'")
-		set _passwd to (do shell script "openssl enc -aes-256-cbc -d -in /Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin -pass pass:\"" & epass & "\" | sed '2q;d'")
-		set ucreds to ucreds & _username
-		set pcreds to pcreds & _passwd
+		set encContents to (do shell script "openssl enc -aes-256-cbc -d -in '/Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\"")
+		set ucreds to ucreds & (paragraph 1 of encContents)
+		set pcreds to pcreds & (paragraph 2 of encContents)
 	end repeat
 	set drive_ to drive
 end repeat
@@ -166,37 +166,6 @@ repeat with users in ucreds
 		set matching_users to matching_users & users
 	end if
 end repeat
-(*
-try
-	if matching_users is "" then quit
-		
-		set randStr to do shell script "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1"
-		do shell script "echo 'on run arg
-	set uname to item 1 of arg
-	set passwd to item 2 of arg
-	try
-		do shell script \"sudo echo elevate\" user name uname password passwd with administrator privileges
-		return uname & \"
-\" & passwd
-	on error
-		return \"auth error\"
-	end try
-end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
-		repeat (count of matching_users) times
-			set user_ to item (count_atmpt_auth + 1) in matching_users
-			set pass_ to item (count_atmpt_auth + 1) in pcreds
-			set auth to do shell script "osascript /tmp/SK-LW-UA-" & randStr & ".applescript '" & user_ & "'" & space & "'" & pass_ & "'"
-			set auth to paragraphs of auth
-			set uname to item 1 of auth
-			set passwd to item 2 of auth
-		end repeat
-		quit
-	end if
-		do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
-on error
-	return "Could not authenticate with any of the provided credentials!"
-end try
-*)
 if matching_users is "" then
 	say "Blank"
 	quit
