@@ -127,19 +127,21 @@ script AppDelegate
 	
 	#Login Checked Sender
 	on loginChecked:sender
+        global loginFile
 		if (loginEnabled's state()) is 0 then
 			housekeeping("Login Unchecked")
+            set loginFile to false
 		else if (loginEnabled's state()) is 1 then
 			housekeeping("Login Checked")
+            set loginFile to true
 		end if
 	end loginChecked:
 	
 	#Move Login Window PKG to User's Desktop
 	on loginComponentMover:sender
-		global UnixPath
 		try
-			do shell script "mkdir ~/Desktop/SkeleKey-LoginWindow"
-			do shell script "cp '" & UnixPath & "/Contents/Resources/SKLWH.pkg' ~/Desktop/SkeleKey-LoginWindow"
+			do shell script "mkdir -p ~/Desktop/SkeleKey-LoginWindow"
+			do shell script "cp '" & UnixPath & "/Contents/Resources/SKLWH.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SKLWH.pkg"
 		on error
 			display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SKLWH.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
@@ -396,6 +398,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		global UnixPath
 		global webState
 		global execlimit
+        global loginFile
 		
 		set usernameValue to "" & (stringValue() of username)
 		
@@ -458,12 +461,12 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 			if exp_date_e is "" then set exp_date_e to "none"
 			if execlimit is "" then set execlimit to "none"
 			if webState is "" then set webState to "none"
-			do shell script "printf '" & usernameValue & "
-" & password2Value & "
-" & exp_date_e & "
-" & execlimit & "
-" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)
+            if loginFile is true then
+                do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
+            end if
+
 			try
 				set theNumber to 1
 				

@@ -52,14 +52,6 @@ set nine to sha512256 & md5 & rev_e
 set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
 
 #FUNCTIONS
-on replace_chars(this_text, search_string, replacement_string)
-	set AppleScript's text item delimiters to the search_string
-	set the item_list to every text item of this_text
-	set AppleScript's text item delimiters to the replacement_string
-	set this_text to the item_list as string
-	set AppleScript's text item delimiters to ""
-	return this_text
-end replace_chars
 on returnNumbersInString(inputString)
 	set inputString to quoted form of inputString
 	do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
@@ -77,7 +69,7 @@ end returnNumbersInString
 
 set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
-		return 1
+	return 1
 end if
 #CODE
 ################################
@@ -90,9 +82,8 @@ on error
 	return "Could not list volumes!"
 end try
 repeat with vol in discoverVol
-	set vol to replace_chars(vol, " ", "\\ ")
 	try
-		set isValid to do shell script "diskutil info /Volumes/" & vol & " | grep \"Protocol\" | awk '{print $2}'"
+		set isValid to do shell script "diskutil info '/Volumes/" & vol & "' | grep \"Protocol\" | awk '{print $2}'"
 	on error
 		set isValid to "False"
 	end try
@@ -102,8 +93,7 @@ repeat with vol in discoverVol
 end repeat
 repeat with vol in validVols
 	try
-		set vol to replace_chars(vol, " ", "\\ ")
-		set findSKA to do shell script "cd /Volumes/" & vol & "; ls -ldA1 *-SkeleKey-Applet.app"
+		set findSKA to do shell script "cd '/Volumes/" & vol & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled"
 		if findSKA is not "" then
 			set drive_names to drive_names & vol
 		end if
@@ -173,8 +163,9 @@ repeat with users in ucreds
 		set matching_users to matching_users & users
 	end if
 end repeat
+(*
 try
-	if matching_users is not "" then
+	if matching_users is "" then quit
 		
 		set randStr to do shell script "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1"
 		do shell script "echo 'on run arg
@@ -196,13 +187,13 @@ end run' > /tmp/SK-LW-UA-" & randStr & ".applescript"
 			set uname to item 1 of auth
 			set passwd to item 2 of auth
 		end repeat
-	else
-		#quit
+		quit
 	end if
-	do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
+		do shell script "rm -r /tmp/SK-LW-UA-" & randStr & ".applescript"
 on error
 	return "Could not authenticate with any of the provided credentials!"
 end try
+*)
 ########################
 #   Figure out login window format   #
 ########################
