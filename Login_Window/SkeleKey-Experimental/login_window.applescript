@@ -69,7 +69,7 @@ end returnNumbersInString
 
 set loggedusers to do shell script "last | grep 'logged in' | awk {'print $1'}"
 if loggedusers is not "" then
-	return 1
+	#return 1
 end if
 #CODE
 ################################
@@ -98,7 +98,7 @@ repeat with vol in validVols
 			set drive_names to drive_names & vol
 		end if
 	on error
-		#quit
+		quit
 	end try
 end repeat
 #####################
@@ -109,9 +109,10 @@ repeat with vol in drive_names
 		set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
 		set drive_uuids to drive_uuids & uuid
 	on error
-		#quit
+		quit
 	end try
 end repeat
+say "test1"
 ###########################
 #   Generate epass for each set of creds    #
 ###########################
@@ -128,13 +129,14 @@ repeat with uuid in drive_uuids
 	end if
 	set epasses to epasses & epass
 end repeat
+say "test2"
 #########################
 #   Attempt to Decrypt All Credenials   #
 #########################
 repeat (count of drive_names) times
 	set drive to item (count_dec + 1) in drive_names
 	set epass to item (count_dec + 1) in epasses
-	set detect_skeles to do shell script "cd /Volumes/" & drive & ";  ls -ldA1 *-SkeleKey-Applet.app"
+	set detect_skeles to do shell script "cd '/Volumes/" & drive & "';  ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled"
 	set detect_skeles to paragraphs of detect_skeles
 	repeat with name_ in detect_skeles
 		if name_ contains "-SkeleKey-Applet.app" then
@@ -150,13 +152,14 @@ repeat (count of drive_names) times
 	end repeat
 	set drive_ to drive
 end repeat
+say "test3"
 #########################
 #   Attempt to authenticate local users  #
 #########################
 try
 	set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list --Find all local user accounts
 on error
-	#quit
+	quit
 end try
 repeat with users in ucreds
 	if users is in localusers then
@@ -194,6 +197,13 @@ on error
 	return "Could not authenticate with any of the provided credentials!"
 end try
 *)
+if matching_users is "" then
+	say "Blank"
+	quit
+end if
+set uname to item 1 in matching_users
+set passwd to item 1 in pcreds
+say "test4"
 ########################
 #   Figure out login window format   #
 ########################
@@ -213,6 +223,7 @@ try
 on error
 	set test_for_txtlgn to "false"
 end try
+say "test5"
 ####################
 #   Finally, the login window!   #
 ####################
@@ -240,6 +251,7 @@ if test_for_txtlgn is "true" then --text only login window
 		end try
 	end if
 else --graphical item login window
+	say "graphical"
 	try
 		do shell script "killall \"System Events\""
 	end try
@@ -252,7 +264,9 @@ else --graphical item login window
 	try
 		tell application "Bluetooth Setup Assistant" to quit
 	end try
+	say "close"
 	set uid to do shell script "dscl . list /Users UniqueID | grep '" & uname & "' | awk {'print $2'}"
+	say "no cigar"
 	try
 		set hidesub500 to do shell script "/usr/libexec/PlistBuddy -c 'print :Hide500Users' /Library/Preferences/com.apple.loginwindow.plist"
 	on error
@@ -265,6 +279,7 @@ else --graphical item login window
 	end try
 	if ishidden is "" then set ishidden to "0"
 	if (uid is less than 500 and hidesub500 is "true") or ishidden is "1" then
+		say "hidden"
 		tell application "System Events"
 			keystroke "Othe"
 			delay 0.25
@@ -280,6 +295,7 @@ else --graphical item login window
 			say "Welcome back " & uname
 		end tell
 	else --if no users hidden
+		say "no hidden"
 		set fullname to do shell script "dscacheutil -q user -a name '" & uname & "' | grep 'gecos' | sed -e 's/.*gecos: \\(.*\\)/\\1/'"
 		delay 0.25
 		tell application "System Events"
@@ -306,3 +322,4 @@ else --graphical item login window
 		end try
 	end if
 end if
+say "test6"
