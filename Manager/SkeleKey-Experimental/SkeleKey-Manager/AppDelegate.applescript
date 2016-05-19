@@ -31,7 +31,7 @@ script AppDelegate
 	property registrationButton : missing value
 	property delButton : missing value
 	property theDate : missing value
-	property displayDate : missing value
+    property theDateID : missing value
 	property dateEnabled : missing value
 	property loginEnabled : missing value
 	property limitEnabled : missing value
@@ -51,27 +51,11 @@ script AppDelegate
 	property stepper : missing value
 	property execlimit : ""
 	property loginComponentInstaller : missing value
-	property loginComponentMover : missing value
-	property loginComponentInfo1 : missing value
 	property loginComponentInfo2 : missing value
-	property loginComponentInfo3 : missing value
-	property loginComponentInfo4 : missing value
-	property loginComponentDiv : missing value
-    property loginComponentDiv2 : missing value
 	property execlimitDesc : missing value
 	property webEnabled : missing value
 	property webPushBtn : missing value
 	property webStatus : missing value
-	property detailsExp : missing value
-	property detailsExp2 : missing value
-    property detailsExpDiv : missing value
-	property detailsEL : missing value
-	property detailsEL2 : missing value
-    property detailsELDiv : missing value
-	property detailsWeb : missing value
-	property detailsWeb2 : missing value
-    property detailsWebDiv : missing value
-	
 	property beta_mode : true
 	
     ################
@@ -136,7 +120,6 @@ script AppDelegate
 	#Display Expiration Date Function
 	on displayData:sender
 		set exp_date to theDate's dateValue()
-		displayDate's setStringValue:exp_date
 		set exp_date to theDate's dateValue()'s |description| as Unicode text
 		set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
 	end displayData:
@@ -355,9 +338,8 @@ script AppDelegate
 		if modeString is "Create a SkeleKey" then
 			mainWindow's orderOut:sender
 			set currDate to current date
-			theDate's setDateValue:currDate
-			theDate's setMinDate:currDate
-			displayDate's setStringValue:currDate
+            theDate's setDateValue:currDate
+            theDate's setMinDate:currDate
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -589,30 +571,18 @@ script AppDelegate
             set password2Value to ""
             theDate's setEnabled:false
             theDate's setHidden:true
+            theDateID's setHidden:true
             installButton's setEnabled:false
             installButton's setHidden:false
-            displayDate's setStringValue:""
-            displayDate's setHidden:true
             dateEnabled's setState:0
             stateInformerDate's setHidden:false
             stateInformerLimit's setHidden:false
             stateInformerWeb's setHidden:false
             stateInformerLogin's setHidden:false
-            detailsExp's setHidden:true
-            detailsExp2's setHidden:true
-            detailsEL's setHidden:true
-            detailsEL2's setHidden:true
-            detailsWeb's setHidden:true
-            detailsWeb2's setHidden:true
             set exp_date_e to ""
             loginEnabled's setState:0
-            loginComponentInfo1's setHidden:true
             loginComponentInfo2's setHidden:true
-            loginComponentInfo3's setHidden:true
-            loginComponentInfo4's setHidden:true
-            loginComponentMover's setHidden:true
             loginComponentInstaller's setHidden:true
-            loginComponentDiv's setHidden:true
             limitEnabled's setState:0
             stepperTF's setHidden:true
             execlimitDesc's setHidden:true
@@ -637,51 +607,31 @@ script AppDelegate
             global currDate
             theDate's setEnabled:false
             theDate's setHidden:true
+            theDateID's setHidden:true
             stateInformerDate's setHidden:false
-            displayDate's setHidden:true
             installButton's setHidden:false
-            detailsExp's setHidden:true
-            detailsExp2's setHidden:true
-            detailsExpDiv's setHidden:true
             set exp_date_e to ""
         else if flavor is "Date Checked" then
             theDate's setEnabled:true
             theDate's setHidden:false
+            theDateID's setHidden:false
             stateInformerDate's setHidden:true
-            displayDate's setHidden:false
-            detailsExp's setHidden:false
-            detailsExp2's setHidden:false
-            detailsExpDiv's setHidden:false
             set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
             set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
         else if flavor is "Login Unchecked" then
             stateInformerLogin's setHidden:false
-            loginComponentInfo1's setHidden:true
             loginComponentInfo2's setHidden:true
-            loginComponentInfo3's setHidden:true
-            loginComponentInfo4's setHidden:true
-            loginComponentMover's setHidden:true
             loginComponentInstaller's setHidden:true
-            loginComponentDiv's setHidden:true
-            loginComponentDiv2's setHidden:true
+
         else if flavor is "Login Checked" then
             stateInformerLogin's setHidden:true
-            loginComponentInfo1's setHidden:false
             loginComponentInfo2's setHidden:false
-            loginComponentInfo3's setHidden:false
-            loginComponentInfo4's setHidden:false
-            loginComponentMover's setHidden:false
             loginComponentInstaller's setHidden:false
-            loginComponentDiv's setHidden:false
-            loginComponentDiv2's setHidden:false
         else if flavor is "Exec Unchecked" then
             stateInformerLimit's setHidden:false
             stepperTF's setHidden:true
             execlimitDesc's setHidden:true
             stepper's setHidden:true
-            detailsEL's setHidden:true
-            detailsEL2's setHidden:true
-            detailsELDiv's setHidden:true
             stepperTF's setStringValue:"0"
             stepper's setStringValue:"0"
             set execlimit to ""
@@ -692,16 +642,10 @@ script AppDelegate
             stepper's setHidden:false
             stepper's setStringValue:"0"
             execlimitDesc's setHidden:false
-            detailsEL's setHidden:false
-            detailsEL2's setHidden:false
-            detailsELDiv's setHidden:false
         else if flavor is "Web Unchecked" then
             stateInformerWeb's setHidden:false
             webPushBtn's setHidden:true
             webStatus's setHidden:true
-            detailsWeb's setHidden:true
-            detailsWeb2's setHidden:true
-            detailsWebDiv's setHidden:true
             webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             set webState to "none"
             webPushBtn's setState:0
@@ -709,9 +653,6 @@ script AppDelegate
             stateInformerWeb's setHidden:true
             webPushBtn's setHidden:false
             webStatus's setHidden:false
-            detailsWeb's setHidden:false
-            detailsWeb2's setHidden:false
-            detailsWebDiv's setHidden:false
         end if
     end housekeeping
     

@@ -89,14 +89,19 @@ script AppDelegate
         end try
     end assistiveaccess
     
-    on checkadmin(username, passwd, exp_date_e)
+    on expCheck(expireDate)
         global UnixPath
         set current_date_e to do shell script "date -u '+%s'"
-        if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
+        if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
             do shell script "chflags hidden '" & UnixPath & "'"
             do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "' > /dev/null &"
         end if
+    end expCheck
+    
+    on checkadmin(username, passwd, exp_date_e)
+        global UnixPath
+        expCheck(exp_date_e)
         try
             do shell script "sudo printf elevate" user name username password passwd with administrator privileges
             on error
@@ -152,7 +157,7 @@ script AppDelegate
             guiauth(username, passwd)
         end if
     end auth
-    
+    (*
     on searchWPage(theUrl)
         set ufields to {"accountname", "username", "email"}
         set pfields to {"password", "Passwd"}
@@ -173,7 +178,7 @@ script AppDelegate
         log passwdtype
         
     end searchWPage
-    
+    *)
     on inputByID(theId, theValue)
         tell application "Safari"
             do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
@@ -232,12 +237,15 @@ script AppDelegate
             set volumepath to "/Volumes/" & volumepath
             set volumepath2 to volumepath & "/"
             set authcred to decryptinfo(volumepath, authinfobin)
+            #Regular Run
             if (item 5 of authcred) is "none" then
                 checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
                 assistiveaccess(item 1 of authcred, item 2 of authcred)
                 execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
                 auth(item 1 of authcred, item 2 of authcred)
+            #Web Only Run
             else if (item 5 of authcred) is "WEBYES" then
+                expCheck(item 3 of authcred)
                 execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
                 web(item 1 of authcred, item 2 of authcred)
             end if
