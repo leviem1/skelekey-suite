@@ -31,7 +31,7 @@ script AppDelegate
 	property registrationButton : missing value
 	property delButton : missing value
 	property theDate : missing value
-    property theDateID : missing value
+	property theDateID : missing value
 	property dateEnabled : missing value
 	property loginEnabled : missing value
 	property limitEnabled : missing value
@@ -56,12 +56,13 @@ script AppDelegate
 	property webEnabled : missing value
 	property webPushBtn : missing value
 	property webStatus : missing value
+	property webState : ""
 	property beta_mode : true
 	
-    ################
-    #  ESSENTIALS  #
-    ################
-    
+	################
+	#  ESSENTIALS  #
+	################
+	
 	#Window Math Function (Thanks to Holly Lakin for helping us with the math in this function)
 	on windowMath(window1, window2)
 		set origin to origin of window1's frame()
@@ -94,19 +95,19 @@ script AppDelegate
 		set modeString to sender's title as text
 	end radioOption:
 	
-    #Take to Purchase Page Function
-    on purchaseBtn:sender
-        do shell script "open 'http://www.skelekey.com/#purchase'"
-    end purchaseBtn:
-    
-    #Registration Window Quit Function
-    on regQuit:sender
-        quit
-    end regQuit:
-    
-    #############
-    #  ADD-Ons  #
-    #############
+	#Take to Purchase Page Function
+	on purchaseBtn:sender
+		do shell script "open 'http://www.skelekey.com/#purchase'"
+	end purchaseBtn:
+	
+	#Registration Window Quit Function
+	on regQuit:sender
+		quit
+	end regQuit:
+	
+	#############
+	#  ADD-Ons  #
+	#############
 	#Date Checked Sender
 	on dateChecked:sender
 		global currDate
@@ -184,8 +185,8 @@ script AppDelegate
 	#Web Checked
 	on webChecked:sender
 		if (webEnabled's state()) is 0 then
-            housekeeping("Web Unchecked")
-        else if (webEnabled's state()) is 1 then
+			housekeeping("Web Unchecked")
+		else if (webEnabled's state()) is 1 then
 			housekeeping("Web Checked")
 		end if
 	end webChecked:
@@ -202,9 +203,9 @@ script AppDelegate
 		end if
 	end webPushBtnEnable:
 	
-    ##########
-    #  BASE  #
-    ##########
+	##########
+	#  BASE  #
+	##########
 	#Password Value Check Function
 	on checkPasswords()
 		global isLicensed
@@ -223,7 +224,7 @@ script AppDelegate
 			installButton's setEnabled:false
 		end if
 	end checkPasswords
-
+	
 	#License Generator Function
 	on licensekeygen(myname, myemail, myorg)
 		set e_mn to do shell script "printf \"" & myname & "\" | rev"
@@ -303,7 +304,8 @@ script AppDelegate
 			regEmail's setStringValue:""
 			regSerial's setStringValue:""
 			registrationButton's setEnabled:false
-			display dialog "The license key you have entered has been disabled!\nPlease contact us at admin@skelekey.com if you have questions." with icon 0 with title "SkeleKey Manager" buttons {"OK"}
+			display dialog "The license key you have entered has been disabled!
+Please contact us at admin@skelekey.com if you have questions." with icon 0 with title "SkeleKey Manager" buttons {"OK"}
 			
 		else
 			set isLicensed to true
@@ -338,8 +340,8 @@ script AppDelegate
 		if modeString is "Create a SkeleKey" then
 			mainWindow's orderOut:sender
 			set currDate to current date
-            theDate's setDateValue:currDate
-            theDate's setMinDate:currDate
+			theDate's setDateValue:currDate
+			theDate's setMinDate:currDate
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -393,7 +395,10 @@ script AppDelegate
 		global password2Value
 		global UnixPath
 		global webState
+		global execlimit
+		
 		set usernameValue to "" & (stringValue() of username)
+		
 		set password1Value to "" & (stringValue() of password1)
 		set password2Value to "" & (stringValue() of password2)
 		set md5 to " md5 | "
@@ -450,13 +455,18 @@ script AppDelegate
 			if (length of epass) is greater than 2048 then
 				set epass to (characters 1 thru 2047 of epass) as string
 			end if
-			
 			if exp_date_e is "" then set exp_date_e to "none"
 			if execlimit is "" then set execlimit to "none"
-			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+			if webState is "" then set webState to "none"
+			do shell script "printf '" & usernameValue & "
+" & password2Value & "
+" & exp_date_e & "
+" & execlimit & "
+" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)
 			try
 				set theNumber to 1
+				
 				do shell script "test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
 				repeat
 					try
@@ -515,7 +525,8 @@ script AppDelegate
 		delay 0.25
 		try
 			do shell script "srm -rf '" & delApp & "'"
-			display dialog "Sucessfully securely removed app at location: \n" & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
+			display dialog "Sucessfully securely removed app at location: 
+" & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
 		on error
 			display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
@@ -552,117 +563,117 @@ script AppDelegate
 		end if
 	end welcomeNext:
 	
-    on housekeeping(flavor)
-        if flavor is "Main Window" then
-            global fileName2
-            fileName's setStringValue:""
-            fileName's setToolTip:""
-            startButton's setEnabled:false
-            set fileName2 to ""
-        else if flavor is "Install Window" then
-            global usernameValue
-            global password1Value
-            global password2Value
-            username's setStringValue:""
-            password1's setStringValue:""
-            password2's setStringValue:""
-            set usernameValue to ""
-            set password1Value to ""
-            set password2Value to ""
-            theDate's setEnabled:false
-            theDate's setHidden:true
-            theDateID's setHidden:true
-            installButton's setEnabled:false
-            installButton's setHidden:false
-            dateEnabled's setState:0
-            stateInformerDate's setHidden:false
-            stateInformerLimit's setHidden:false
-            stateInformerWeb's setHidden:false
-            stateInformerLogin's setHidden:false
-            set exp_date_e to ""
-            loginEnabled's setState:0
-            loginComponentInfo2's setHidden:true
-            loginComponentInstaller's setHidden:true
-            limitEnabled's setState:0
-            stepperTF's setHidden:true
-            execlimitDesc's setHidden:true
-            stepper's setHidden:true
-            stepperTF's setStringValue:"0"
-            stepper's setStringValue:"0"
-            set execlimit to ""
-            webEnabled's setState:0
-            webPushBtn's setHidden:true
-            webStatus's setHidden:true
-            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-            set webState to "none"
-            webPushBtn's setState:0
-            checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
-        else if flavor is "Removal Window" then
-            global delApp
-            delFileName's setStringValue:""
-            delFileName's setToolTip:""
-            delButton's setEnabled:false
-            set delApp to ""
-        else if flavor is "Date Unchecked" then
-            global currDate
-            theDate's setEnabled:false
-            theDate's setHidden:true
-            theDateID's setHidden:true
-            stateInformerDate's setHidden:false
-            installButton's setHidden:false
-            set exp_date_e to ""
-        else if flavor is "Date Checked" then
-            theDate's setEnabled:true
-            theDate's setHidden:false
-            theDateID's setHidden:false
-            stateInformerDate's setHidden:true
-            set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
-            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
-        else if flavor is "Login Unchecked" then
-            stateInformerLogin's setHidden:false
-            loginComponentInfo2's setHidden:true
-            loginComponentInstaller's setHidden:true
-
-        else if flavor is "Login Checked" then
-            stateInformerLogin's setHidden:true
-            loginComponentInfo2's setHidden:false
-            loginComponentInstaller's setHidden:false
-        else if flavor is "Exec Unchecked" then
-            stateInformerLimit's setHidden:false
-            stepperTF's setHidden:true
-            execlimitDesc's setHidden:true
-            stepper's setHidden:true
-            stepperTF's setStringValue:"0"
-            stepper's setStringValue:"0"
-            set execlimit to ""
-        else if flavor is "Exec Checked" then
-            stateInformerLimit's setHidden:true
-            stepperTF's setStringValue:"0"
-            stepperTF's setHidden:false
-            stepper's setHidden:false
-            stepper's setStringValue:"0"
-            execlimitDesc's setHidden:false
-        else if flavor is "Web Unchecked" then
-            stateInformerWeb's setHidden:false
-            webPushBtn's setHidden:true
-            webStatus's setHidden:true
-            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-            set webState to "none"
-            webPushBtn's setState:0
-        else if flavor is "Web Checked" then
-            stateInformerWeb's setHidden:true
-            webPushBtn's setHidden:false
-            webStatus's setHidden:false
-        end if
-    end housekeeping
-    
-    #Install Window Back Button
-    on backButtonInstaller:sender
-        housekeeping("Install Window")
-        installWindow's orderOut:sender
-        mainWindow's makeKeyAndOrderFront:me
-        windowMath(installWindow, mainWindow)
-    end backButtonInstaller
+	on housekeeping(flavor)
+		if flavor is "Main Window" then
+			global fileName2
+			fileName's setStringValue:""
+			fileName's setToolTip:""
+			startButton's setEnabled:false
+			set fileName2 to ""
+		else if flavor is "Install Window" then
+			global usernameValue
+			global password1Value
+			global password2Value
+			username's setStringValue:""
+			password1's setStringValue:""
+			password2's setStringValue:""
+			set usernameValue to ""
+			set password1Value to ""
+			set password2Value to ""
+			theDate's setEnabled:false
+			theDate's setHidden:true
+			theDateID's setHidden:true
+			installButton's setEnabled:false
+			installButton's setHidden:false
+			dateEnabled's setState:0
+			stateInformerDate's setHidden:false
+			stateInformerLimit's setHidden:false
+			stateInformerWeb's setHidden:false
+			stateInformerLogin's setHidden:false
+			set exp_date_e to ""
+			loginEnabled's setState:0
+			loginComponentInfo2's setHidden:true
+			loginComponentInstaller's setHidden:true
+			limitEnabled's setState:0
+			stepperTF's setHidden:true
+			execlimitDesc's setHidden:true
+			stepper's setHidden:true
+			stepperTF's setStringValue:"0"
+			stepper's setStringValue:"0"
+			set execlimit to ""
+			webEnabled's setState:0
+			webPushBtn's setHidden:true
+			webStatus's setHidden:true
+			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+			set webState to "none"
+			webPushBtn's setState:0
+			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+		else if flavor is "Removal Window" then
+			global delApp
+			delFileName's setStringValue:""
+			delFileName's setToolTip:""
+			delButton's setEnabled:false
+			set delApp to ""
+		else if flavor is "Date Unchecked" then
+			global currDate
+			theDate's setEnabled:false
+			theDate's setHidden:true
+			theDateID's setHidden:true
+			stateInformerDate's setHidden:false
+			installButton's setHidden:false
+			set exp_date_e to ""
+		else if flavor is "Date Checked" then
+			theDate's setEnabled:true
+			theDate's setHidden:false
+			theDateID's setHidden:false
+			stateInformerDate's setHidden:true
+			set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+		else if flavor is "Login Unchecked" then
+			stateInformerLogin's setHidden:false
+			loginComponentInfo2's setHidden:true
+			loginComponentInstaller's setHidden:true
+			
+		else if flavor is "Login Checked" then
+			stateInformerLogin's setHidden:true
+			loginComponentInfo2's setHidden:false
+			loginComponentInstaller's setHidden:false
+		else if flavor is "Exec Unchecked" then
+			stateInformerLimit's setHidden:false
+			stepperTF's setHidden:true
+			execlimitDesc's setHidden:true
+			stepper's setHidden:true
+			stepperTF's setStringValue:"0"
+			stepper's setStringValue:"0"
+			set execlimit to ""
+		else if flavor is "Exec Checked" then
+			stateInformerLimit's setHidden:true
+			stepperTF's setStringValue:"0"
+			stepperTF's setHidden:false
+			stepper's setHidden:false
+			stepper's setStringValue:"0"
+			execlimitDesc's setHidden:false
+		else if flavor is "Web Unchecked" then
+			stateInformerWeb's setHidden:false
+			webPushBtn's setHidden:true
+			webStatus's setHidden:true
+			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+			set webState to "none"
+			webPushBtn's setState:0
+		else if flavor is "Web Checked" then
+			stateInformerWeb's setHidden:true
+			webPushBtn's setHidden:false
+			webStatus's setHidden:false
+		end if
+	end housekeeping
+	
+	#Install Window Back Button
+	on backButtonInstaller:sender
+		housekeeping("Install Window")
+		installWindow's orderOut:sender
+		mainWindow's makeKeyAndOrderFront:me
+		windowMath(installWindow, mainWindow)
+	end backButtonInstaller:
 	
 	#Removal Window Cancelled Function
 	on cancelDel:sender
