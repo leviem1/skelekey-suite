@@ -53,7 +53,6 @@ script AppDelegate
 	property loginComponentInstaller : missing value
 	property loginComponentInfo2 : missing value
 	property execlimitDesc : missing value
-	property webEnabled : missing value
 	property webPushBtn : missing value
 	property webStatus : missing value
 	property webState : ""
@@ -186,27 +185,18 @@ script AppDelegate
 		end try
 	end execlimit_ext
 	
-	#Web Checked
-	on webChecked:sender
-        global webFile
-		if (webEnabled's state()) is 0 then
-			housekeeping("Web Unchecked")
-            set webFile to false
-		else if (webEnabled's state()) is 1 then
-			housekeeping("Web Checked")
-            set webFile to true
-		end if
-	end webChecked:
-	
 	#Web Support Enable
 	on webPushBtnEnable:sender
 		global webState
+        global webFile
 		if (webPushBtn's state()) is 0 then
 			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
 			set webState to "none"
+            set webFile to false
 		else if (webPushBtn's state()) is 1 then
 			webStatus's setImage:(NSImage's imageNamed:"NSStatusAvailable")
 			set webState to "WEBYES"
+            set webFile to true
 		end if
 	end webPushBtnEnable:
 	
@@ -615,7 +605,6 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 			stepperTF's setStringValue:"0"
 			stepper's setStringValue:"0"
 			set execlimit to ""
-			webEnabled's setState:0
 			webPushBtn's setHidden:true
 			webStatus's setHidden:true
 			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")

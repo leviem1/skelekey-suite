@@ -44,14 +44,12 @@
                 <outlet property="stateInformerDate" destination="2JR-cU-I1H" id="jeQ-M9-Ipx"/>
                 <outlet property="stateInformerLimit" destination="urP-mc-umD" id="Hla-ba-EOH"/>
                 <outlet property="stateInformerLogin" destination="DHK-1p-qrY" id="UZ6-ne-pLm"/>
-                <outlet property="stateInformerWeb" destination="jnS-P0-uJY" id="woW-An-oMP"/>
                 <outlet property="stepper" destination="zs0-yj-Lbm" id="lNF-PU-BqO"/>
                 <outlet property="stepperTF" destination="Jg4-5v-XWG" id="WM5-FX-u27"/>
                 <outlet property="theDate" destination="c70-eM-acp" id="FnZ-oQ-L7J"/>
                 <outlet property="theDateID" destination="VjT-1Y-PLA" id="izV-JH-AuG"/>
                 <outlet property="tutorialWindow" destination="HJU-0l-vvI" id="uOa-mN-o9a"/>
                 <outlet property="username" destination="XN4-9y-0kf" id="cQN-zQ-Hpd"/>
-                <outlet property="webEnabled" destination="fVW-WI-37t" id="Vqc-MD-hX3"/>
                 <outlet property="webPushBtn" destination="ahn-od-ov8" id="LDe-Ad-YFE"/>
                 <outlet property="webStatus" destination="MUV-4O-SYz" id="eMU-aG-9hW"/>
                 <outlet property="welcomeWindow" destination="xLt-ws-R6g" id="1jV-TK-NJy"/>
@@ -600,7 +598,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="352"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="430"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
@@ -819,7 +817,7 @@ Gw
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="Ude-jI-FFk"/>
                         </connections>
                     </secureTextField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-9y-0kf">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-9y-0kf">
                         <rect key="frame" x="98" y="413" width="332" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" bezelStyle="round" id="ir0-NJ-84X">
                             <font key="font" metaFont="system"/>
@@ -853,22 +851,23 @@ DQ
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
-                                <view key="view" ambiguous="YES" id="PHJ-qU-ZFR">
-                                    <rect key="frame" x="10" y="33" width="402" height="0.0"/>
+                                <view key="view" id="PHJ-qU-ZFR">
+                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
-                                            <rect key="frame" x="15" y="-34" width="71" height="18"/>
+                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent">e</string>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="dateChecked:" target="Voe-Tx-rLC" id="7DY-7t-Kex"/>
                                             </connections>
                                         </button>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="172" y="-83" width="198" height="27"/>
+                                            <rect key="frame" x="172" y="153" width="198" height="27"/>
                                             <datePickerCell key="cell" state="on" alignment="left" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
@@ -886,7 +885,7 @@ DQ
                                             </connections>
                                         </datePicker>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
-                                            <rect key="frame" x="194" y="-117" width="46" height="17"/>
+                                            <rect key="frame" x="194" y="119" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
                                                 <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -894,7 +893,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-SM-4Ky">
-                                            <rect key="frame" x="15" y="-219" width="404" height="85"/>
+                                            <rect key="frame" x="15" y="17" width="404" height="85"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="S8d-L8-uyi">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This SkeleKey Suite add-on forces your SkeleKey Applet to stop authenticating at a specified date and time. After the predetermined date, the Applet will no longer authenticate with your credentials. It also securely self-erases if launched after the expiration date.</string>
@@ -903,13 +902,13 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jJq-vl-82p">
-                                            <rect key="frame" x="55" y="-128" width="325" height="5"/>
+                                            <rect key="frame" x="55" y="108" width="325" height="4"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjT-1Y-PLA">
-                                            <rect key="frame" x="66" y="-80" width="100" height="17"/>
+                                            <rect key="frame" x="66" y="156" width="100" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Expiration Date:" id="VDB-eX-hZR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -917,7 +916,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-cU-I1H">
-                                            <rect key="frame" x="41" y="-80" width="351" height="17"/>
+                                            <rect key="frame" x="41" y="156" width="351" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="azX-gv-4en">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -937,6 +936,7 @@ DQ
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="NDg-Ss-30i">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent">e</string>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="loginChecked:" target="Voe-Tx-rLC" id="zzH-QG-Xvy"/>
@@ -1006,6 +1006,7 @@ DQ
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="1VF-5c-vlE">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent">e</string>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="limitChecked:" target="Voe-Tx-rLC" id="tJ5-QM-URN"/>
@@ -1073,28 +1074,10 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
-                                <view key="view" id="ibf-El-uf3">
+                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fVW-WI-37t">
-                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Mgg-vn-fKK">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="webChecked:" target="Voe-Tx-rLC" id="v0y-O0-EdW"/>
-                                            </connections>
-                                        </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnS-P0-uJY">
-                                            <rect key="frame" x="42" y="145" width="351" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="mku-rY-ehn">
-                                                <font key="font" metaFont="systemSemibold" size="13"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6z2-KD-XC4">
                                             <rect key="frame" x="15" y="17" width="404" height="68"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="pUK-rD-b0w">
@@ -1118,8 +1101,22 @@ DQ
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
-                                        <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahn-od-ov8">
-                                            <rect key="frame" x="130" y="142" width="150" height="19"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aX-RG-SSD">
+                                            <rect key="frame" x="194" y="179" width="46" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Note" id="jDI-EA-GFN">
+                                                <font key="font" metaFont="systemMedium" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="RoX-Qj-Ro4">
+                                            <rect key="frame" x="55" y="168" width="325" height="5"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahn-od-ov8">
+                                            <rect key="frame" x="17" y="202" width="150" height="19"/>
                                             <buttonCell key="cell" type="roundRect" title="Enable Website Logins" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gFI-iH-6Ci">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                                 <font key="font" metaFont="cellTitle"/>
@@ -1129,9 +1126,17 @@ DQ
                                             </connections>
                                         </button>
                                         <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MUV-4O-SYz">
-                                            <rect key="frame" x="288" y="144" width="16" height="16"/>
+                                            <rect key="frame" x="175" y="204" width="16" height="16"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="rIs-gw-9um"/>
                                         </imageView>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VTs-JP-Kqk">
+                                            <rect key="frame" x="21" y="128" width="393" height="34"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" title="Enabling the website add-on will disable the login window add-on. Authentication at System Pasword Prompts will be disabled." id="k6c-zW-ofE">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1312,9 +1317,9 @@ credentials entered.</string>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svT-M7-0zk">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svT-M7-0zk">
                         <rect key="frame" x="122" y="164" width="332" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="RUU-Jh-mhE">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="RUU-Jh-mhE">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1323,9 +1328,9 @@ credentials entered.</string>
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="SfT-4z-q28"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR5-K6-NqK">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR5-K6-NqK">
                         <rect key="frame" x="122" y="124" width="332" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="6ML-kQ-lyK">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="6ML-kQ-lyK">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1334,17 +1339,17 @@ credentials entered.</string>
                             <outlet property="delegate" destination="Voe-Tx-rLC" id="BiN-AF-e3w"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEa-On-INm">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEa-On-INm">
                         <rect key="frame" x="122" y="84" width="332" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Optional)" bezelStyle="round" id="Nic-PT-s8x">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Optional)" bezelStyle="round" id="Nic-PT-s8x">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbA-45-31g">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbA-45-31g">
                         <rect key="frame" x="122" y="44" width="332" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="ZAw-64-Ay3">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="(Required)" bezelStyle="round" id="ZAw-64-Ay3">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
