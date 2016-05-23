@@ -281,7 +281,7 @@ script AppDelegate
 	end main
 	
 	on applicationWillFinishLaunching:aNotification
-		set dependencies to {"printf", "openssl", "ls", "diskutil", "awk", "base64", "sudo", "cp", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm", "egrep", "chflags", "killall", "date", "dscacheutil"}
+		set dependencies to {"printf", "openssl", "ls", "diskutil", "awk", "base64", "sudo", "cp", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm", "egrep", "chflags", "killall", "date", "dscacheutil", "test"}
 		set notInstalledString to ""
 		repeat with i in dependencies
 			set status to do shell script i & "; printf $?"
