@@ -163,28 +163,30 @@ script AppDelegate
 			error number 105
 		end if
 	end auth
-	(*
-    on searchWPage(theUrl)
-        set ufields to {"accountname", "username", "email"}
-        set pfields to {"password", "Passwd"}
-        
-        set theContents to do shell script "curl " & theUrl
-        
-        repeat with field in ufields
-            set logintype to do shell script "printf '" & theContents & "' | egrep '(input.id." & field & ")'"
-            if logintype is not "" then exit repeat
+    
+    on PageElements(theUrl)
+        global UnixPath
+        set ufields to {"*accountname", "*sername", "*mail"}
+        set pfields to {"*assword", "*asswd", "test"}
+        set wwwFields to do shell script "curl -sL '" & theUrl & "' | perl " & UnixPath & "/Contents/Resources/formfind.pl | grep Input | egrep -ov '(HIDDEN|RADIO)' | awk '{ print $2 }' | tr -d '\"' | sed \"s/^id=//\" | egrep -v '(sesskey|cookies|testcookies|search)'"
+        set wwwFields to paragraphs of wwwFields
+        repeat with elementid in wwwFields
+            repeat with field in ufields
+                try
+                    set ufid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
+                    exit repeat
+                end try
+            end repeat
+		repeat with field in pfields
+                try
+                    set pfid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
+                    exit repeat
+                end try
+            end repeat
         end repeat
-            
-        repeat with field in ufields
-            set passwdtype to do shell script "printf '" & theContents & "' | egrep '(input.id." & field & ")'"
-            if passwdtype is not "" then exit repeat
-        end repeat
-        
-        log logintype
-        log passwdtype
-        
-    end searchWPage
-    *)
+        return {ufid, pfid}
+    end PageElements
+
 	on inputByID(theId, theValue)
 		tell application "Safari"
 			do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
@@ -203,14 +205,8 @@ script AppDelegate
 		tell application "Safari"
 			set website to get URL of front document
 		end tell
-		
-		if website contains "idmsa.apple.com" then
-			try
-				inputByID("accountname", username)
-				inputByID("accountpassword", passwd)
-				clickID("submitButton2")
-			end try
-		else if website contains "accounts.google.com" then
+        
+		if website contains "accounts.google.com" then
 			try
 				inputByID("Email", username)
 				clickID("next")
@@ -218,11 +214,12 @@ script AppDelegate
 				inputByID("Passwd", passwd)
 				clickID("signIn")
 			end try
-		else if website contains "sebs-moodle.district70.org" then
+		else
+            set PageIDs to PageElements(website)
 			try
-				inputByID("login_username", username)
+				inputByID((item 1 of PageIDs), username)
 				clickID("next")
-				inputByID("login_password", passwd)
+				inputByID((item 2 of PageIDs), passwd)
 				clickID("submit")
 			end try
 		end if

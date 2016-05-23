@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DA148E11CF2AA3500D57271 /* formfind.pl in Resources */ = {isa = PBXBuildFile; fileRef = 1DA148E01CF2AA3500D57271 /* formfind.pl */; };
 		2FA8FD681C1E9BD80034522C /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA8FD671C1E9BD80034522C /* AppleScriptObjC.framework */; };
 		2FA8FD6C1C1E9BD80034522C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8FD6B1C1E9BD80034522C /* main.m */; };
 		2FA8FD6E1C1E9BD80034522C /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8FD6D1C1E9BD80034522C /* AppDelegate.applescript */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DA148E01CF2AA3500D57271 /* formfind.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = formfind.pl; sourceTree = "<group>"; };
 		2FA8FD641C1E9BD80034522C /* SkeleKey-Applet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Applet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA8FD671C1E9BD80034522C /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		2FA8FD6B1C1E9BD80034522C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 				2FA8FD691C1E9BD80034522C /* SkeleKey-Applet */,
 				2FA8FD661C1E9BD80034522C /* Frameworks */,
 				2FA8FD651C1E9BD80034522C /* Products */,
+				1DA148E01CF2AA3500D57271 /* formfind.pl */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FA8FD701C1E9BD80034522C /* Assets.xcassets in Resources */,
+				1DA148E11CF2AA3500D57271 /* formfind.pl in Resources */,
 				2FA8FD731C1E9BD80034522C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
