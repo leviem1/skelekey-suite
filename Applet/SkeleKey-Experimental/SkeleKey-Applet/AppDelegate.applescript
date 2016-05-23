@@ -236,6 +236,7 @@ script AppDelegate
 				quit
 			end if
 			set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
+            set webFile to UnixPath & "Contents/Resources/.webenabled"
 			set volumepath to (do shell script "printf '" & volumepath & "' | awk -F '/' '{print $3}'")
 			set volumepath to "/Volumes/" & volumepath
 			set volumepath2 to volumepath & "/"
@@ -250,6 +251,11 @@ script AppDelegate
 			else if (item 5 of authcred) is "WEBYES" then
 				expCheck(item 3 of authcred)
 				execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
+                try
+                    do shell script "test -e " & webFile
+                on error
+                    error number 106
+                end try
 				web(item 1 of authcred, item 2 of authcred)
 			end if
 		on error number errorNumber
@@ -267,6 +273,8 @@ script AppDelegate
 				return
 			else if errorNumber is 105 then
 				display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 106 then
+                display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				return
 			end if
 		end try

@@ -59,6 +59,7 @@ script AppDelegate
 	property webState : ""
 	property beta_mode : true
     property loginFile : ""
+    property webFile : ""
 	
 	################
 	#  ESSENTIALS  #
@@ -142,9 +143,9 @@ script AppDelegate
 	on loginComponentMover:sender
 		try
 			do shell script "mkdir -p ~/Desktop/SkeleKey-LoginWindow"
-			do shell script "cp '" & UnixPath & "/Contents/Resources/SKLWH.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SKLWH.pkg"
+			do shell script "cp '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
 		on error
-			display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SKLWH.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
+			display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SkeleKey_LoginWindow.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
 	end loginComponentMover:
 	
@@ -152,7 +153,7 @@ script AppDelegate
 	on loginComponentInstaller:sender
 		global UnixPath
 		try
-			do shell script "open -a Installer.app '" & UnixPath & "/Contents/Resources/SKLWH.pkg'"
+			do shell script "open -a Installer.app '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg'"
 		on error
 			display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
@@ -187,10 +188,13 @@ script AppDelegate
 	
 	#Web Checked
 	on webChecked:sender
+        global webFile
 		if (webEnabled's state()) is 0 then
 			housekeeping("Web Unchecked")
+            set webFile to false
 		else if (webEnabled's state()) is 1 then
 			housekeeping("Web Checked")
+            set webFile to true
 		end if
 	end webChecked:
 	
@@ -400,6 +404,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		global webState
 		global execlimit
         global loginFile
+        global webFile
 		
 		set usernameValue to "" & (stringValue() of username)
 		
@@ -464,9 +469,14 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 			if webState is "" then set webState to "none"
 			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)
-            if loginFile is true then
+            if webFile is true then
+                do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.webenabled'"
+            end if
+            
+            if loginFile is true and webFile is false then
                 do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
             end if
+            
 
 			try
 				set theNumber to 1
