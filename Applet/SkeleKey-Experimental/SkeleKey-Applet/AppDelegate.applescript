@@ -166,9 +166,13 @@ script AppDelegate
     
     on PageElements(theUrl)
         global UnixPath
-        set ufields to {"*accountname", "*sername", "*mail"}
-        set pfields to {"*assword", "*asswd", "test"}
-        set wwwFields to do shell script "curl -sL '" & theUrl & "' | perl " & UnixPath & "/Contents/Resources/formfind.pl | grep Input | egrep -ov '(HIDDEN|RADIO)' | awk '{ print $2 }' | tr -d '\"' | sed \"s/^id=//\" | egrep -v '(sesskey|cookies|testcookies|search)'"
+        set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId"}
+        set pfields to {"*assword", "*asswd", "*pw", "*pass", "*ass", "*pwd"}
+        tell application "Safari"
+            set myDoc to document of front window
+            set mySrc to source of myDoc
+        end tell
+        set wwwFields to do shell script "echo " & (quoted form of mySrc) & " | perl " & UnixPath & "/Contents/Resources/formfind.pl | grep Input | egrep -ov '(HIDDEN|RADIO)' | awk '{ print $2 }' | tr -d '\"' | sed \"s/^id=//\" | egrep -v '(sesskey|cookies|testcookies|search)'"
         set wwwFields to paragraphs of wwwFields
         repeat with elementid in wwwFields
             repeat with field in ufields
