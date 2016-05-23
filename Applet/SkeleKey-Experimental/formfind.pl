@@ -6,7 +6,7 @@
 # stdout.
 #
 # Author: Daniel Stenberg <daniel@haxx.se>
-# Version: 0.2 Nov 18, 2002
+# Version: 0.3 May 22, 2016
 #
 # HISTORY
 #
