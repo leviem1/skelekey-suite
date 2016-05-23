@@ -131,10 +131,17 @@ script AppDelegate
         global loginFile
 		if (loginEnabled's state()) is 0 then
 			housekeeping("Login Unchecked")
-            set loginFile to false
+            webPushBtn's setEnabled:1
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            webStatus's setEnabled:1
+            
 		else if (loginEnabled's state()) is 1 then
 			housekeeping("Login Checked")
-            set loginFile to true
+            webPushBtn's setEnabled:0
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+            webStatus's setEnabled:0
+            set webState to "none"
+            set webFile to false
 		end if
 	end loginChecked:
 	
@@ -193,10 +200,13 @@ script AppDelegate
 			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
 			set webState to "none"
             set webFile to false
+            loginEnabled's setEnabled:1
 		else if (webPushBtn's state()) is 1 then
 			webStatus's setImage:(NSImage's imageNamed:"NSStatusAvailable")
 			set webState to "WEBYES"
             set webFile to true
+            loginEnabled's setEnabled:0
+            housekeeping("Login Unchecked")
 		end if
 	end webPushBtnEnable:
 	
@@ -633,14 +643,17 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 			set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
 			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
 		else if flavor is "Login Unchecked" then
+            global loginFile
 			stateInformerLogin's setHidden:false
 			loginComponentInfo2's setHidden:true
 			loginComponentInstaller's setHidden:true
-			
+			set loginFile to false
 		else if flavor is "Login Checked" then
+            global loginFile
 			stateInformerLogin's setHidden:true
 			loginComponentInfo2's setHidden:false
 			loginComponentInstaller's setHidden:false
+            set loginFile to true
 		else if flavor is "Exec Unchecked" then
 			stateInformerLimit's setHidden:false
 			stepperTF's setHidden:true
