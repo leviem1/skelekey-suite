@@ -10,6 +10,7 @@ script AppDelegate
 	property parent : class "NSObject"
 	property NSImage : class "NSImage"
     property NSDate : class "NSDate"
+    property NSDateFormatter : class "NSDateFormatter"
 	-- IBOutlets
 	property mainWindow : missing value
 	property installWindow : missing value
@@ -43,22 +44,23 @@ script AppDelegate
 	property regEmail : missing value
 	property regOrg : missing value
 	property regSerial : missing value
-	property isBusy : false
-	property fromStart : true
-	property modeString : "Create a SkeleKey"
-	property exp_date_e : ""
 	property stepperTF : missing value
 	property stepper : missing value
-	property execlimit : ""
 	property loginComponentInstaller : missing value
 	property loginComponentInfo2 : missing value
 	property execlimitDesc : missing value
 	property webPushBtn : missing value
 	property webStatus : missing value
-	property webState : ""
-	property beta_mode : true
+    property isBusy : false
+    property fromStart : true
     property loginFile : false
     property webFile : false
+    property modeString : "Create a SkeleKey"
+    property exp_date_e : ""
+	property webState : ""
+    property execlimit : ""
+
+	property beta_mode : true
 	
 	################
 	#  ESSENTIALS  #
@@ -349,9 +351,12 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		global currDate
 		if modeString is "Create a SkeleKey" then
 			mainWindow's orderOut:sender
-			set currDate to current date
-			theDate's setDateValue:currDate
-			theDate's setMinDate:currDate
+            set currDateNS to NSDate's |date|
+            set myFormatter to current application's class "NSDateFormatter"'s alloc()'s init()
+            myFormatter's setDateFormat:"yyyy-MM-dd hh:mm:ss"
+            set currDate to myFormatter's stringFromDate_(currDateNS)
+            theDate's setDateValue:currDateNS
+			theDate's setMinDate:currDateNS
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
