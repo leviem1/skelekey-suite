@@ -39,7 +39,6 @@ script AppDelegate
 	property stateInformerDate : missing value
 	property stateInformerLogin : missing value
 	property stateInformerLimit : missing value
-	property stateInformerWeb : missing value
 	property regEmail : missing value
 	property regOrg : missing value
 	property regSerial : missing value
@@ -394,6 +393,102 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		end if
 	end destvolume:
 	
+    on housekeeping(flavor)
+        if flavor is "Main Window" then
+            global fileName2
+            fileName's setStringValue:""
+            fileName's setToolTip:""
+            startButton's setEnabled:false
+            set fileName2 to ""
+            else if flavor is "Install Window" then
+            global usernameValue
+            global password1Value
+            global password2Value
+            username's setStringValue:""
+            password1's setStringValue:""
+            password2's setStringValue:""
+            set usernameValue to ""
+            set password1Value to ""
+            set password2Value to ""
+            theDate's setEnabled:false
+            theDate's setHidden:true
+            theDateID's setHidden:true
+            installButton's setEnabled:false
+            installButton's setHidden:false
+            dateEnabled's setState:0
+            stateInformerDate's setHidden:false
+            stateInformerLimit's setHidden:false
+            stateInformerLogin's setHidden:false
+            set exp_date_e to ""
+            loginEnabled's setState:0
+            loginComponentInfo2's setHidden:true
+            loginComponentInstaller's setHidden:true
+            limitEnabled's setState:0
+            stepperTF's setHidden:true
+            execlimitDesc's setHidden:true
+            stepper's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepper's setStringValue:"0"
+            set execlimit to ""
+            set webState to "none"
+            checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
+            loginEnabled's setEnabled:1
+            else if flavor is "Removal Window" then
+            global delApp
+            delFileName's setStringValue:""
+            delFileName's setToolTip:""
+            delButton's setEnabled:false
+            set delApp to ""
+            else if flavor is "Date Unchecked" then
+            theDate's setEnabled:false
+            theDate's setHidden:true
+            theDateID's setHidden:true
+            stateInformerDate's setHidden:false
+            installButton's setHidden:false
+            set exp_date_e to ""
+            else if flavor is "Date Checked" then
+            global currDate
+            theDate's setEnabled:true
+            theDate's setHidden:false
+            theDateID's setHidden:false
+            stateInformerDate's setHidden:true
+            set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+            else if flavor is "Login Unchecked" then
+            global loginFile
+            stateInformerLogin's setHidden:false
+            loginComponentInfo2's setHidden:true
+            loginComponentInstaller's setHidden:true
+            set loginFile to false
+            else if flavor is "Login Checked" then
+            global loginFile
+            stateInformerLogin's setHidden:true
+            loginComponentInfo2's setHidden:false
+            loginComponentInstaller's setHidden:false
+            set loginFile to true
+            else if flavor is "Exec Unchecked" then
+            stateInformerLimit's setHidden:false
+            stepperTF's setHidden:true
+            execlimitDesc's setHidden:true
+            stepper's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepper's setStringValue:"0"
+            set execlimit to ""
+            else if flavor is "Exec Checked" then
+            stateInformerLimit's setHidden:true
+            stepperTF's setStringValue:"0"
+            stepperTF's setHidden:false
+            stepper's setHidden:false
+            stepper's setStringValue:"0"
+            execlimitDesc's setHidden:false
+            else if flavor is "Web Unchecked" then
+            webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
+            set webState to "none"
+            webPushBtn's setState:0
+            else if flavor is "Web Checked" then
+        end if
+    end housekeeping
+    
 	#Install Button Function
 	on installButton:sender
 		global fileName2
@@ -503,6 +598,11 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		end try
 		housekeeping("Main Window")
 		housekeeping("Install Window")
+        housekeeping("Install Window")
+        housekeeping("Login Unchecked")
+        housekeeping("Web Unchecked")
+        housekeeping("Exec Unchecked")
+        housekeeping("Date Unchecked")
 		installWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(installWindow, mainWindow)
@@ -577,115 +677,14 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		end if
 	end welcomeNext:
 	
-	on housekeeping(flavor)
-		if flavor is "Main Window" then
-			global fileName2
-			fileName's setStringValue:""
-			fileName's setToolTip:""
-			startButton's setEnabled:false
-			set fileName2 to ""
-		else if flavor is "Install Window" then
-			global usernameValue
-			global password1Value
-			global password2Value
-			username's setStringValue:""
-			password1's setStringValue:""
-			password2's setStringValue:""
-			set usernameValue to ""
-			set password1Value to ""
-			set password2Value to ""
-			theDate's setEnabled:false
-			theDate's setHidden:true
-			theDateID's setHidden:true
-			installButton's setEnabled:false
-			installButton's setHidden:false
-			dateEnabled's setState:0
-			stateInformerDate's setHidden:false
-			stateInformerLimit's setHidden:false
-			stateInformerWeb's setHidden:false
-			stateInformerLogin's setHidden:false
-			set exp_date_e to ""
-			loginEnabled's setState:0
-			loginComponentInfo2's setHidden:true
-			loginComponentInstaller's setHidden:true
-			limitEnabled's setState:0
-			stepperTF's setHidden:true
-			execlimitDesc's setHidden:true
-			stepper's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepper's setStringValue:"0"
-			set execlimit to ""
-			webPushBtn's setHidden:true
-			webStatus's setHidden:true
-			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-			set webState to "none"
-			webPushBtn's setState:0
-			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
-		else if flavor is "Removal Window" then
-			global delApp
-			delFileName's setStringValue:""
-			delFileName's setToolTip:""
-			delButton's setEnabled:false
-			set delApp to ""
-		else if flavor is "Date Unchecked" then
-			global currDate
-			theDate's setEnabled:false
-			theDate's setHidden:true
-			theDateID's setHidden:true
-			stateInformerDate's setHidden:false
-			installButton's setHidden:false
-			set exp_date_e to ""
-		else if flavor is "Date Checked" then
-			theDate's setEnabled:true
-			theDate's setHidden:false
-			theDateID's setHidden:false
-			stateInformerDate's setHidden:true
-			set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
-			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
-		else if flavor is "Login Unchecked" then
-            global loginFile
-			stateInformerLogin's setHidden:false
-			loginComponentInfo2's setHidden:true
-			loginComponentInstaller's setHidden:true
-			set loginFile to false
-		else if flavor is "Login Checked" then
-            global loginFile
-			stateInformerLogin's setHidden:true
-			loginComponentInfo2's setHidden:false
-			loginComponentInstaller's setHidden:false
-            set loginFile to true
-		else if flavor is "Exec Unchecked" then
-			stateInformerLimit's setHidden:false
-			stepperTF's setHidden:true
-			execlimitDesc's setHidden:true
-			stepper's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepper's setStringValue:"0"
-			set execlimit to ""
-		else if flavor is "Exec Checked" then
-			stateInformerLimit's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepperTF's setHidden:false
-			stepper's setHidden:false
-			stepper's setStringValue:"0"
-			execlimitDesc's setHidden:false
-		else if flavor is "Web Unchecked" then
-			stateInformerWeb's setHidden:false
-			webPushBtn's setHidden:true
-			webStatus's setHidden:true
-			webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
-			set webState to "none"
-			webPushBtn's setState:0
-		else if flavor is "Web Checked" then
-			stateInformerWeb's setHidden:true
-			webPushBtn's setHidden:false
-			webStatus's setHidden:false
-		end if
-	end housekeeping
-	
 	#Install Window Back Button
 	on backButtonInstaller:sender
 		housekeeping("Install Window")
+        housekeeping("Login Unchecked")
+        housekeeping("Web Unchecked")
+        housekeeping("Exec Unchecked")
+        housekeeping("Date Unchecked")
+        
 		installWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(installWindow, mainWindow)
