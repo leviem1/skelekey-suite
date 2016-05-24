@@ -9,6 +9,7 @@
 script AppDelegate
 	property parent : class "NSObject"
 	property NSImage : class "NSImage"
+    property NSDate : class "NSDate"
 	-- IBOutlets
 	property mainWindow : missing value
 	property installWindow : missing value
@@ -63,15 +64,18 @@ script AppDelegate
 	#  ESSENTIALS  #
 	################
 	
-	#Window Math Function (Thanks to Holly Lakin for helping us with the math in this function)
+	#Window Math Function (Thanks to Aaron Duran and Holly Lakin for helping us with the math in this function)
 	on windowMath(window1, window2)
-		set origin to origin of window1's frame()
-		set windowSize to |size| of window1's frame()
-		set x to x of origin
-		set y to y of origin
-		set yAdd to height of windowSize
-		set y to y + yAdd
-		window2's setFrameTopLeftPoint:{x, y}
+        set origin to origin of window1's frame()
+        set windowSize to |size| of window1's frame()
+        set windowSize2 to |size| of window2's frame()
+        set x to x of origin
+        set y to y of origin
+        set y to y + (height of windowSize) / 2
+        set y to y + (height of windowSize2) / 2
+        set x to x + (width of windowSize) / 2
+        set x to x - (width of windowSize2) / 2
+        window2's setFrameTopLeftPoint:{x, y}
 	end windowMath
 	
 	#Number Ninja Function
