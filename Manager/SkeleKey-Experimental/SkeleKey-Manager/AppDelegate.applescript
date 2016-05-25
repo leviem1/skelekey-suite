@@ -153,6 +153,7 @@ script AppDelegate
 	
 	#Move Login Window PKG to User's Desktop
 	on loginComponentMover:sender
+        global UnixPath
 		try
 			do shell script "mkdir -p ~/Desktop/SkeleKey-LoginWindow"
 			do shell script "cp '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
