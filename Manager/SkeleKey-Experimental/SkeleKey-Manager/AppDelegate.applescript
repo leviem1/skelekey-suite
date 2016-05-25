@@ -59,6 +59,7 @@ script AppDelegate
     property exp_date_e : ""
 	property webState : ""
     property execlimit : ""
+    property oldExec : 1
 
 	property beta_mode : true
 	
@@ -181,12 +182,6 @@ script AppDelegate
 		end if
 	end limitChecked:
 	
-	#Stepper Button Logic
-	on stepper:sender
-		global execlimit
-		set execlimit to (stringValue() of stepperTF) as string
-	end stepper:
-	
 	#Execution Limit External Fileout Logic
 	on execlimit_ext(user, limit, drive)
 		set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
@@ -196,6 +191,35 @@ script AppDelegate
 			display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
 	end execlimit_ext
+    
+    #Hack-around for sender difficuly
+    on stepperAction:sender
+        fixField()
+    end stepperAction
+    
+    #Text Change Execution Limit
+    on fixField()
+        global execlimit
+        try
+            set oldExec to ((stringValue() of stepperTF) as string) as number
+            if oldExec is greater than 999999 then
+                beep
+                stepper's setDoubleValue:999999
+                stepperTF's setStringValue:"999999"
+            end if
+            stepper's setDoubleValue:oldExec
+            set execlimit to oldExec
+        on error
+            if ((stringValue() of stepperTF) as string) is not "" then
+                beep
+                stepperTF's setStringValue:(oldExec as string)
+                stepper's setDoubleValue:oldExec
+            else
+                set oldExec to 1
+                stepper's setDoubleValue:1
+            end if
+        end try
+    end fixField
 	
 	#Web Support Enable
 	on webPushBtnEnable:sender
@@ -338,11 +362,13 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 	
 	#Text Field Checker
 	on controlTextDidChange:aNotification
-		set theObj to tag of object of aNotification
-		if theObj is equal to tag of password1 or theObj is equal to tag of password2 then
+		set theObj to (tag of object of aNotification as string)
+		if theObj is equal to "5" then
 			checkPasswords()
-		else
+		else if theObj is equal to "4" then
 			checkRegistration()
+        else if theObj is equal to "3" then
+        fixField()
 		end if
 	end controlTextDidChange:
 	
@@ -357,6 +383,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             set currDate to myFormatter's stringFromDate_(currDateNS)
             theDate's setDateValue:currDateNS
 			theDate's setMinDate:currDateNS
+            stepperTF's setStringValue:"1"
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
