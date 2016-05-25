@@ -198,21 +198,20 @@ script AppDelegate
         fixField()
     end stepperAction
     
-    #Text Change Execution Limit
+    #Execution Limit Text Field Checker
     on fixField()
         global execlimit
         try
             set oldExec to ((stringValue() of stepperTF) as string) as number
             if oldExec is greater than 999999 then
-                beep
                 stepper's setDoubleValue:999999
                 stepperTF's setStringValue:"999999"
+                set oldExec to 999999
             end if
             stepper's setDoubleValue:oldExec
             set execlimit to oldExec
         on error
             if ((stringValue() of stepperTF) as string) is not "" then
-                beep
                 stepperTF's setStringValue:(oldExec as string)
                 stepper's setDoubleValue:oldExec
             else
@@ -369,7 +368,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		else if theObj is equal to "4" then
 			checkRegistration()
         else if theObj is equal to "3" then
-        fixField()
+            fixField()
 		end if
 	end controlTextDidChange:
 	
@@ -384,7 +383,6 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             set currDate to myFormatter's stringFromDate_(currDateNS)
             theDate's setDateValue:currDateNS
 			theDate's setMinDate:currDateNS
-            stepperTF's setStringValue:"1"
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -437,7 +435,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             fileName's setToolTip:""
             startButton's setEnabled:false
             set fileName2 to ""
-            else if flavor is "Install Window" then
+        else if flavor is "Install Window" then
             global usernameValue
             global password1Value
             global password2Value
@@ -470,20 +468,20 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             set webState to "none"
             checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
             loginEnabled's setEnabled:1
-            else if flavor is "Removal Window" then
+        else if flavor is "Removal Window" then
             global delApp
             delFileName's setStringValue:""
             delFileName's setToolTip:""
             delButton's setEnabled:false
             set delApp to ""
-            else if flavor is "Date Unchecked" then
+        else if flavor is "Date Unchecked" then
             theDate's setEnabled:false
             theDate's setHidden:true
             theDateID's setHidden:true
             stateInformerDate's setHidden:false
             installButton's setHidden:false
             set exp_date_e to ""
-            else if flavor is "Date Checked" then
+        else if flavor is "Date Checked" then
             global currDate
             theDate's setEnabled:true
             theDate's setHidden:false
@@ -491,19 +489,19 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             stateInformerDate's setHidden:true
             set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
             set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
-            else if flavor is "Login Unchecked" then
+        else if flavor is "Login Unchecked" then
             global loginFile
             stateInformerLogin's setHidden:false
             loginComponentInfo2's setHidden:true
             loginComponentInstaller's setHidden:true
             set loginFile to false
-            else if flavor is "Login Checked" then
+        else if flavor is "Login Checked" then
             global loginFile
             stateInformerLogin's setHidden:true
             loginComponentInfo2's setHidden:false
             loginComponentInstaller's setHidden:false
             set loginFile to true
-            else if flavor is "Exec Unchecked" then
+        else if flavor is "Exec Unchecked" then
             stateInformerLimit's setHidden:false
             stepperTF's setHidden:true
             execlimitDesc's setHidden:true
@@ -511,18 +509,18 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             stepperTF's setStringValue:"0"
             stepper's setStringValue:"0"
             set execlimit to ""
-            else if flavor is "Exec Checked" then
+        else if flavor is "Exec Checked" then
             stateInformerLimit's setHidden:true
-            stepperTF's setStringValue:"0"
+            stepperTF's setStringValue:"1"
             stepperTF's setHidden:false
             stepper's setHidden:false
-            stepper's setStringValue:"0"
+            stepper's setDoubleValue:1
             execlimitDesc's setHidden:false
-            else if flavor is "Web Unchecked" then
+        else if flavor is "Web Unchecked" then
             webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             set webState to "none"
             webPushBtn's setState:0
-            else if flavor is "Web Checked" then
+        else if flavor is "Web Checked" then
         end if
     end housekeeping
     
@@ -539,9 +537,9 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         global webFile
 		
 		set usernameValue to "" & (stringValue() of username)
-		
 		set password1Value to "" & (stringValue() of password1)
 		set password2Value to "" & (stringValue() of password2)
+        
 		set md5 to " md5 | "
 		set md5_e to " md5"
 		set base64 to " base64 | "
@@ -560,6 +558,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
 		set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
 		set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
+        
 		set zero to md5 & base64_e
 		set one to sha256 & sha512256_e
 		set two to sha224 & sha384_e
@@ -573,6 +572,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
 		set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
 		set encstring to ""
 		set epass to ""
+        
 		if usernameValue is "" then
 			display dialog "Please enter a username!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
 			return

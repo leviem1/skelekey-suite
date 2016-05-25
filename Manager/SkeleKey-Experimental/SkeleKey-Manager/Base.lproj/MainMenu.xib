@@ -578,7 +578,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8y-rW-a5E">
-                        <rect key="frame" x="163" y="57" width="4" height="217"/>
+                        <rect key="frame" x="163" y="57" width="5" height="217"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -598,7 +598,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="338" height="432"/>
+                                    <rect key="frame" x="0.0" y="180" width="338" height="336"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="338" height="217"/>
@@ -668,7 +668,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.69302325581395352" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="323" y="1" width="16" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -1029,7 +1029,7 @@ DQ
                                             <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="999999" doubleValue="1" id="htz-KT-xlf"/>
                                             <connections>
                                                 <action selector="stepperAction:" target="Voe-Tx-rLC" id="RqD-Un-KcP"/>
-                                                <binding destination="ANp-PN-Mfv" name="value" keyPath="values.stepperValue" id="bEM-zU-pw2"/>
+                                                <binding destination="ANp-PN-Mfv" name="value" keyPath="values.stepperValue" id="p9m-zW-btw"/>
                                             </connections>
                                         </stepper>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOZ-BM-yPo">
