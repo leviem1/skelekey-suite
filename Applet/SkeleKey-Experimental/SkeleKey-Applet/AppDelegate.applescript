@@ -163,34 +163,34 @@ script AppDelegate
 			error number 105
 		end if
 	end auth
-    
-    on PageElements(theUrl)
-        global UnixPath
-        set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId"}
-        set pfields to {"*assword", "*asswd", "*pw", "*pass", "*ass", "*pwd"}
-        tell application "Safari"
-            set myDoc to document of front window
-            set mySrc to source of myDoc
-        end tell
-        set wwwFields to do shell script "echo " & (quoted form of mySrc) & " | perl " & UnixPath & "/Contents/Resources/formfind.pl | grep Input | egrep -ov '(HIDDEN|RADIO)' | awk '{ print $2 }' | tr -d '\"' | sed \"s/^id=//\" | egrep -v '(sesskey|cookies|testcookies|search)'"
-        set wwwFields to paragraphs of wwwFields
-        repeat with elementid in wwwFields
-            repeat with field in ufields
-                try
-                    set ufid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
-                    exit repeat
-                end try
-            end repeat
-		repeat with field in pfields
-                try
-                    set pfid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
-                    exit repeat
-                end try
-            end repeat
-        end repeat
-        return {ufid, pfid}
-    end PageElements
-
+	
+	on PageElements(theUrl)
+		global UnixPath
+		set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId"}
+		set pfields to {"*assword", "*asswd", "*pw", "*pass", "*ass", "*pwd"}
+		tell application "Safari"
+			set myDoc to document of front window
+			set mySrc to source of myDoc
+		end tell
+		set wwwFields to do shell script "echo " & (quoted form of mySrc) & " | perl " & UnixPath & "/Contents/Resources/formfind.pl | grep Input | egrep -ov '(HIDDEN|RADIO)' | awk '{ print $2 }' | tr -d '\"' | sed \"s/^id=//\" | egrep -v '(sesskey|cookies|testcookies|search)'"
+		set wwwFields to paragraphs of wwwFields
+		repeat with elementid in wwwFields
+			repeat with field in ufields
+				try
+					set ufid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
+					exit repeat
+				end try
+			end repeat
+			repeat with field in pfields
+				try
+					set pfid to do shell script "echo " & elementid & " | grep -o '\\<." & field & "\\>'"
+					exit repeat
+				end try
+			end repeat
+		end repeat
+		return {ufid, pfid}
+	end PageElements
+	
 	on inputByID(theId, theValue)
 		tell application "Safari"
 			do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
@@ -209,7 +209,7 @@ script AppDelegate
 		tell application "Safari"
 			set website to get URL of front document
 		end tell
-        
+		
 		if website contains "accounts.google.com" then
 			try
 				inputByID("Email", username)
@@ -219,7 +219,7 @@ script AppDelegate
 				clickID("signIn")
 			end try
 		else
-            set PageIDs to PageElements(website)
+			set PageIDs to PageElements(website)
 			try
 				inputByID((item 1 of PageIDs), username)
 				clickID("next")
@@ -240,7 +240,7 @@ script AppDelegate
 				quit
 			end if
 			set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-            set webFile to UnixPath & "Contents/Resources/.webenabled"
+			set webFile to UnixPath & "Contents/Resources/.webenabled"
 			set volumepath to (do shell script "printf '" & volumepath & "' | awk -F '/' '{print $3}'")
 			set volumepath to "/Volumes/" & volumepath
 			set volumepath2 to volumepath & "/"
@@ -253,14 +253,19 @@ script AppDelegate
 				auth(item 1 of authcred, item 2 of authcred)
 				#Web Only Run
 			else if (item 5 of authcred) is "WEBYES" then
-				expCheck(item 3 of authcred)
-				execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
-                try
-                    do shell script "test -e " & webFile
-                on error
-                    error number 106
-                end try
-				web(item 1 of authcred, item 2 of authcred)
+				set osver to do shell script "sw_vers -productVersion"
+				if osver does not contain "10.11" then
+					expCheck(item 3 of authcred)
+					execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
+					try
+						do shell script "test -e " & webFile
+					on error
+						error number 106
+					end try
+					web(item 1 of authcred, item 2 of authcred)
+				else
+					error number 107
+				end if
 			end if
 		on error number errorNumber
 			if errorNumber is 101 then
@@ -277,8 +282,10 @@ script AppDelegate
 				return
 			else if errorNumber is 105 then
 				display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
-            else if errorNumber is 106 then
-                display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+			else if errorNumber is 106 then
+				display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+			else if errorNumber is 107 then
+				display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				return
 			end if
 		end try
