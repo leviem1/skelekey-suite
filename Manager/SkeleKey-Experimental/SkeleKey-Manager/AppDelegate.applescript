@@ -207,6 +207,10 @@ script AppDelegate
                 stepper's setDoubleValue:999999
                 stepperTF's setStringValue:"999999"
                 set oldExec to 999999
+            else if oldExec is less than 1 then
+                stepper's setDoubleValue:1
+                stepperTF's setStringValue:"1"
+                set oldExec to 1
             end if
             stepper's setDoubleValue:oldExec
             set execlimit to oldExec
@@ -520,7 +524,6 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
             set webState to "none"
             webPushBtn's setState:0
-        else if flavor is "Web Checked" then
         end if
     end housekeeping
     
