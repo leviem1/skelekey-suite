@@ -254,7 +254,7 @@ script AppDelegate
 				#Web Only Run
 			else if (item 5 of authcred) is "WEBYES" then
 				set osver to do shell script "sw_vers -productVersion"
-				if osver does not contain "10.11" then
+				if osver contains "10.11" then
 					expCheck(item 3 of authcred)
 					execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
 					try

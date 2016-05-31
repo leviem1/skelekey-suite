@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.3.3
+--VERSION 0.3.5
 #VARIABLES
 set validVols to {}
 set drive_names to {}
@@ -80,7 +80,7 @@ try
 	#say "moving along"
 	
 	if loggedusers is not "" and lwuid is not "0" and discoverVol is not "" then
-		return 1
+		#return 1
 	end if
 	do shell script "say -v Samantha Starting Skeley Key Login Window"
 	#CODE
