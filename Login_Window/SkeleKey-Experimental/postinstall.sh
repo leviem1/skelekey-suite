@@ -7,7 +7,7 @@ if [[ $osver == "10.10"* ]]; then #if Yosemite
     defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label -string "com.skelekey.SkeleKey-LoginWindow.plist"
 	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array -string "/bin/sh"
 	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array-add "/Library/Scripts/com.skelekey.SkeleKey.Launcher.sh"
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist WatchPaths -array-add "/Volumes"
+	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist StartOnMount -bool true
 	#Allow disks to mount at login window
 	sudo defaults write /Library/Preferences/SystemConfiguration/autodiskmount AutomountDisksWithoutUserLogin -bool true
 	#Setup Accessibility Preferences
@@ -30,11 +30,11 @@ elif [[ $osver == "10.11"* ]]; then #if ElCapitan
 	#Create Launcher Script
 	echo -e  '#!/bin/bash\nsudo osascript /Library/Scripts/login_window.scpt' > /Library/Scripts/com.skelekey.SkeleKey.Launcher.sh
 	#Create LaunchJob
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label "com.skelekey.SkeleKey-LoginWindow.plist" ProgramArguments "/bin/sh" "/Library/Scripts/com.skelekey.SkeleKey.Launcher.sh" WatchPaths "/Volumes"
+	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label "com.skelekey.SkeleKey-LoginWindow.plist"
     defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label -string "com.skelekey.SkeleKey-LoginWindow.plist"
     defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array -string "/bin/sh"
     defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array-add "/Library/Scripts/com.skelekey.SkeleKey.Launcher.sh"
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist WatchPaths -array-add "/Volumes"
+    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist StartOnMount -bool true
 	#Allow disks to mount at login window
 	sudo defaults write /Library/Preferences/SystemConfiguration/autodiskmount AutomountDisksWithoutUserLogin -bool true
 	#Setup Accessibility Preferences

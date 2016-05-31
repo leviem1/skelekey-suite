@@ -113,7 +113,7 @@ try
 	#####################
 	repeat with vol in drive_names
 		try
-			set uuid to do shell script "diskutil info /Volumes/" & vol & " | grep 'Volume UUID' | awk '{print $3}' | rev"
+			set uuid to do shell script "diskutil info '/Volumes/" & vol & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
 			set drive_uuids to drive_uuids & uuid
 		on error
 			quit
@@ -238,9 +238,9 @@ try
 		end tell
 		if drive_ is not "Macintosh HD" or ".DS_Store" then
 			try
-				do shell script "diskutil umount /Volumes/" & drive_
+				do shell script "diskutil umount '/Volumes/" & drive_ & "'"
 			on error
-				do shell script "diskutil unmountDisk /Volumes/" & drive_
+				do shell script "diskutil unmountDisk '/Volumes/" & drive_ & "'"
 			end try
 		end if
 	else --graphical item login window
@@ -313,9 +313,9 @@ try
 		end if
 		if drive_ is not "Macintosh HD" or ".DS_Store" then
 			try
-				do shell script "diskutil umount /Volumes/" & drive_
+				do shell script "diskutil umount '/Volumes/" & drive_ & "'"
 			on error
-				do shell script "diskutil unmountDisk /Volumes/" & drive_
+				do shell script "diskutil unmountDisk '/Volumes/" & drive_ & "'"
 			end try
 		end if
 	end if
