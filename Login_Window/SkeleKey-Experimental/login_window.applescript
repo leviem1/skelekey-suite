@@ -80,7 +80,7 @@ try
 	#say "moving along"
 	
 	if loggedusers is not "" and lwuid is not "0" and discoverVol is not "" then
-		#return 1
+		return 1
 	end if
 	do shell script "say -v Samantha Starting Skeley Key Login Window"
 	#CODE
@@ -101,6 +101,7 @@ try
 	repeat with vol in validVols
 		try
 			set findSKA to do shell script "cd '/Volumes/" & vol & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled"
+			set findSKA to paragraphs of findSKA
 			if (length of findSKA) is greater than or equal to 2 then
 				do shell script "say -v Samantha Multiple login window skeley keys detected!"
 				quit
