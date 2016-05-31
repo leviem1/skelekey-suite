@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.3.5
+--VERSION 0.3.6
 #VARIABLES
 set validVols to {}
 set drive_names to {}

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D28230D1CF2B92800382156 /* SkeleKey_LoginWindow.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 1D28230C1CF2B92800382156 /* SkeleKey_LoginWindow.pkg */; };
 		1D6F52D01CE6FA0000AC0100 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2FD939931C1BAAC500B3F46D /* AppIcon.icns */; };
 		2FA8FD5A1C1E72C00034522C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FD939911C1BA9F200B3F46D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2FD9397E1C1AC25E00B3F46D /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD9397D1C1AC25E00B3F46D /* AppleScriptObjC.framework */; };
@@ -33,7 +32,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D28230C1CF2B92800382156 /* SkeleKey_LoginWindow.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; path = SkeleKey_LoginWindow.pkg; sourceTree = "<group>"; };
 		2FD9397A1C1AC25E00B3F46D /* SkeleKey-Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD9397D1C1AC25E00B3F46D /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		2FD939811C1AC25E00B3F46D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 		2FD939901C1BA9CA00B3F46D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1D28230C1CF2B92800382156 /* SkeleKey_LoginWindow.pkg */,
 				2FD939931C1BAAC500B3F46D /* AppIcon.icns */,
 				2FD939951C1BADCB00B3F46D /* dsa_pub.pem */,
 			);
@@ -176,7 +173,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FD939861C1AC25E00B3F46D /* Assets.xcassets in Resources */,
-				1D28230D1CF2B92800382156 /* SkeleKey_LoginWindow.pkg in Resources */,
 				2FD939961C1BADCB00B3F46D /* dsa_pub.pem in Resources */,
 				1D6F52D01CE6FA0000AC0100 /* AppIcon.icns in Resources */,
 				2FD939891C1AC25E00B3F46D /* MainMenu.xib in Resources */,
