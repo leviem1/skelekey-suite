@@ -472,6 +472,8 @@ script AppDelegate
 			set webState to "none"
 			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
 			loginEnabled's setEnabled:1
+            webPushBtn's setEnabled:1
+            webStatus's setEnabled:1
 		else if flavor is "Removal Window" then
 			global delApp
 			delFileName's setStringValue:""

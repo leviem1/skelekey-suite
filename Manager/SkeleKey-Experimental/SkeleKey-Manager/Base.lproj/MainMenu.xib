@@ -578,7 +578,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8y-rW-a5E">
-                        <rect key="frame" x="163" y="57" width="4" height="217"/>
+                        <rect key="frame" x="163" y="57" width="5" height="217"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -997,7 +997,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
-                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
+                                <view key="view" id="9eh-em-h1U">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1075,7 +1075,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
-                                <view key="view" id="ibf-El-uf3">
+                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
