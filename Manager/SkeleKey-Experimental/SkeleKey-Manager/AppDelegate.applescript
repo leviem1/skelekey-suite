@@ -589,6 +589,13 @@ script AppDelegate
 			return
 		end if
 		
+        if loginFile is true and webFile is false then
+            set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
+            if findSKA is not "" then
+                display dialog "This USB Drive already has a SkeleKey with the Login Window add-on enabled! This SkeleKey already has the Login Window add-on enabled:\n" & (findSKA as string) with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
+            end if
+        end if
+        
 		try
 			do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
 			set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
