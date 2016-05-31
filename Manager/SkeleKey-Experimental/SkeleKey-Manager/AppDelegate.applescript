@@ -602,11 +602,7 @@ script AppDelegate
             if exp_date_e is "" then set exp_date_e to "none"
             if execlimit is "" then set execlimit to "none"
             if webState is "" then set webState to "none"
-            do shell script "printf '" & usernameValue & "
-            " & password2Value & "
-            " & exp_date_e & "
-            " & execlimit & "
-            " & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+            do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
             execlimit_ext(usernameValue, execlimit, fileName2)
             if webFile is true then
                 do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.webenabled'"
@@ -615,8 +611,7 @@ script AppDelegate
             if loginFile is true and webFile is false then
                 do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
             end if
-            
-            
+ 
             try
                 set theNumber to 1
                 
