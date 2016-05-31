@@ -101,7 +101,10 @@ try
 	repeat with vol in validVols
 		try
 			set findSKA to do shell script "cd '/Volumes/" & vol & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled"
-			if findSKA is not "" then
+			if (length of findSKA) is greater than or equal to 2 then
+				do shell script "say -v Samantha Multiple login window skeley keys detected!"
+				quit
+			else if findSKA is not "" then
 				set drive_names to drive_names & vol
 			end if
 		on error
