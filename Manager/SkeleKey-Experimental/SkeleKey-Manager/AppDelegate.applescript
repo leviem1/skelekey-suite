@@ -468,7 +468,7 @@ script AppDelegate
 			stepper's setHidden:true
 			stepperTF's setStringValue:"0"
 			stepper's setStringValue:"0"
-			set execlimit to ""
+			set execlimit to "1"
 			set webState to "none"
 			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
 			loginEnabled's setEnabled:1
@@ -514,7 +514,7 @@ script AppDelegate
 			stepper's setHidden:true
 			stepperTF's setStringValue:"0"
 			stepper's setStringValue:"0"
-			set execlimit to ""
+			set execlimit to "1"
 		else if flavor is "Exec Checked" then
 			stateInformerLimit's setHidden:true
 			stepperTF's setStringValue:"1"
