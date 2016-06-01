@@ -618,7 +618,7 @@ script AppDelegate
 				set epass to (characters 1 thru 2047 of epass) as string
 			end if
 			if exp_date_e is "" then set exp_date_e to "none"
-			if execlimit is "" then set execlimit to "none"
+            if (limitEnabled's state()) is 0 then set execlimit to "none"
 			if webState is "" then set webState to "none"
 			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)

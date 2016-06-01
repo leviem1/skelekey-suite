@@ -131,7 +131,7 @@ script AppDelegate
 				quit
 			else if numEL is greater than 0 then
 				set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
-				do shell script "printf '" & newNumEL & "' > " & drive & ".SK_EL_" & usernameValue & ".enc.bin" with administrator privileges
+                do shell script "printf '" & newNumEL & "' > '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'" with administrator privileges
 			end if
 		end if
 	end execlimit_ext
