@@ -96,7 +96,7 @@ script AppDelegate
 		if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
 			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
 			do shell script "chflags hidden '" & UnixPath & "'"
-            do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf \"" & UnixPath & "\"; srm -rf \"" & drive & ".SK_EL_" & usernameValue & ".enc.bin\"' > /dev/null &"
+            do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
 		end if
 	end expCheck
 	
@@ -152,7 +152,6 @@ script AppDelegate
 		set fullnames to {}
 		
 		set localusers to paragraphs of (do shell script "dscl . list /Users | egrep -v '(daemon|Guest|nobody|^_.*)'") as list
-		
 		repeat with acct in localusers
 			set fn to do shell script "dscacheutil -q user -a name '" & acct & "' | grep 'gecos' | sed -e 's/.*gecos: \\(.*\\)/\\1/'"
 			set fullnames to fullnames & fn

@@ -56,7 +56,7 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="11L-OT-St8" customClass="SUUpdater"/>
+        <customObject id="3jD-oz-Ikd" userLabel="Updater" customClass="SUUpdater"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="SkeleKey Manager" id="FYR-1e-wcc">
@@ -71,17 +71,23 @@
                             </menuItem>
                             <menuItem title="Check For Updates..." keyEquivalent="u" id="NRe-cm-Xd8">
                                 <connections>
-                                    <action selector="checkForUpdates:" target="11L-OT-St8" id="T1a-bv-y8g"/>
+                                    <action selector="checkForUpdates:" target="3jD-oz-Ikd" id="aRI-Fu-fal"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Login Window" id="I4W-TF-ewt">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Login Window" id="dIg-iP-8kM">
                                     <items>
-                                        <menuItem title="Reveal Package" id="zLi-jr-Weo">
+                                        <menuItem title="Reveal Package..." id="zLi-jr-Weo">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="loginComponentMover:" target="Voe-Tx-rLC" id="2we-hw-gc7"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Install Package..." id="fnU-vi-sDb" userLabel="Install Package">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="loginComponentInstaller:" target="Voe-Tx-rLC" id="yz1-0x-ZBw"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -598,7 +604,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="352"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="448"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
@@ -668,7 +674,7 @@ Although it may seem like a daunting task to protect your organization's passwor
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.87878787878787878" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -927,7 +933,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Login Window" identifier="2" id="PRE-IW-VZ3">
-                                <view key="view" id="wjw-Pr-bmR">
+                                <view key="view" ambiguous="YES" id="wjw-Pr-bmR">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1075,7 +1081,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
-                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
+                                <view key="view" id="ibf-El-uf3">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
