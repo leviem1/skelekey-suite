@@ -127,6 +127,7 @@ script AppDelegate
 	
 	#Display Expiration Date Function
 	on displayData:sender
+        global exp_date_e
 		set exp_date to theDate's dateValue()
 		set exp_date to theDate's dateValue()'s |description| as Unicode text
 		set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
@@ -379,6 +380,7 @@ script AppDelegate
 	#Main Window Start Button Function
 	on buttonClicked:sender
 		global currDate
+        global exp_date_e
 		if modeString is "Create a SkeleKey" then
 			mainWindow's orderOut:sender
 			set currDateNS to NSDate's |date|
@@ -387,6 +389,7 @@ script AppDelegate
 			set currDate to myFormatter's stringFromDate:currDateNS
 			theDate's setDateValue:currDateNS
 			theDate's setMinDate:currDateNS
+            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & currDate & "\" +\"%s\""
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -489,12 +492,12 @@ script AppDelegate
 			set exp_date_e to ""
 		else if flavor is "Date Checked" then
 			global currDate
+            global exp_date_e
 			theDate's setEnabled:true
 			theDate's setHidden:false
 			theDateID's setHidden:false
 			stateInformerDate's setHidden:true
-			set newDate to (year of currDate) & "-" & ((month of currDate) as integer) & "-" & (day of currDate) & space & (time string of currDate) as text
-			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (newDate as Unicode text) & "\" +\"%s\""
+			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (currDate as Unicode text) & "\" +\"%s\""
 		else if flavor is "Login Unchecked" then
 			global loginFile
 			stateInformerLogin's setHidden:false
@@ -540,11 +543,9 @@ script AppDelegate
 		global execlimit
 		global loginFile
 		global webFile
-		
 		set usernameValue to "" & (stringValue() of username)
 		set password1Value to "" & (stringValue() of password1)
 		set password2Value to "" & (stringValue() of password2)
-		
 		set md5 to " md5 | "
 		set md5_e to " md5"
 		set base64 to " base64 | "
@@ -563,7 +564,6 @@ script AppDelegate
 		set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
 		set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
 		set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
-		
 		set zero to md5 & base64_e
 		set one to sha256 & sha512256_e
 		set two to sha224 & sha384_e
@@ -577,7 +577,6 @@ script AppDelegate
 		set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
 		set encstring to ""
 		set epass to ""
-		
 		if usernameValue is "" then
 			display dialog "Please enter a username!" with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
 			return
@@ -588,7 +587,6 @@ script AppDelegate
 			password2's setStringValue:""
 			return
 		end if
-		
         if loginFile is true and webFile is false then
             set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
             if findSKA is not "" then
@@ -625,12 +623,9 @@ script AppDelegate
 			if webFile is true then
 				do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.webenabled'"
 			end if
-			
 			if loginFile is true and webFile is false then
 				do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
 			end if
-			
-			
 			try
 				set theNumber to 1
 				
@@ -654,6 +649,7 @@ script AppDelegate
 			display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
 			display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
+        display dialog exp_date_e
 		housekeeping("Main Window")
 		housekeeping("Install Window")
 		housekeeping("Login Unchecked")
@@ -843,7 +839,6 @@ script AppDelegate
 		on error
 			set isLicensed to false
 		end try
-		
 		try
 			set dontShowValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
 		on error
