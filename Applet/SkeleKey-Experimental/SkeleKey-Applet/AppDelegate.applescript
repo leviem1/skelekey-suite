@@ -96,7 +96,7 @@ script AppDelegate
 		if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
 			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
 			do shell script "chflags hidden '" & UnixPath & "'"
-			do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf " & UnixPath & "' > /dev/null &"
+            do shell script "nohup sh -c 'killall SkeleKey-Applet; srm -rf \"" & UnixPath & "\"; srm -rf \"" & drive & ".SK_EL_" & usernameValue & ".enc.bin\"' > /dev/null &"
 		end if
 	end expCheck
 	
@@ -285,7 +285,7 @@ script AppDelegate
 			else if errorNumber is 106 then
 				display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 			else if errorNumber is 107 then
-				display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+				display dialog "The SkeleKey Web add-on is only available on systems running at least 10.11!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				return
 			end if
 		end try

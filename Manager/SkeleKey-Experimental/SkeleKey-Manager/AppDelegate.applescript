@@ -58,7 +58,7 @@ script AppDelegate
 	property modeString : "Create a SkeleKey"
 	property exp_date_e : ""
 	property webState : ""
-	property execlimit : ""
+	property execlimit : 1
 	property oldExec : 1
 	
 	property beta_mode : true
@@ -605,7 +605,6 @@ script AppDelegate
                 return
             end if
         end if
-        
 		try
 			do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
 			set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
