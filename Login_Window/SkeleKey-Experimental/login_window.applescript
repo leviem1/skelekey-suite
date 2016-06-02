@@ -82,7 +82,7 @@ try
 	if loggedusers is not "" and lwuid is not "0" and discoverVol is not "" then
 		return 1
 	end if
-	do shell script "say -v Samantha Starting Skeley Key Login Window"
+	
 	#CODE
 	################################
 	#   Find USB Vols, then search for SK Applet        #
@@ -112,6 +112,7 @@ try
 			quit
 		end try
 	end repeat
+	do shell script "say -v Samantha Starting Skeley Key Login Window"
 	#####################
 	#   Find Matching USB UUIDs    #
 	#####################
@@ -164,6 +165,9 @@ try
 		set drive_ to drive
 	end repeat
 	#say "test3"
+	
+	
+	
 	#########################
 	#   Attempt to authenticate local users  #
 	#########################

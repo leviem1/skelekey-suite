@@ -127,7 +127,7 @@ script AppDelegate
 	
 	#Display Expiration Date Function
 	on displayData:sender
-        global exp_date_e
+		global exp_date_e
 		set exp_date to theDate's dateValue()
 		set exp_date to theDate's dateValue()'s |description| as Unicode text
 		set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
@@ -380,7 +380,7 @@ script AppDelegate
 	#Main Window Start Button Function
 	on buttonClicked:sender
 		global currDate
-        global exp_date_e
+		global exp_date_e
 		if modeString is "Create a SkeleKey" then
 			mainWindow's orderOut:sender
 			set currDateNS to NSDate's |date|
@@ -389,7 +389,7 @@ script AppDelegate
 			set currDate to myFormatter's stringFromDate:currDateNS
 			theDate's setDateValue:currDateNS
 			theDate's setMinDate:currDateNS
-            set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & currDate & "\" +\"%s\""
+			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & currDate & "\" +\"%s\""
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -475,8 +475,8 @@ script AppDelegate
 			set webState to "none"
 			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
 			loginEnabled's setEnabled:1
-            webPushBtn's setEnabled:1
-            webStatus's setEnabled:1
+			webPushBtn's setEnabled:1
+			webStatus's setEnabled:1
 		else if flavor is "Removal Window" then
 			global delApp
 			delFileName's setStringValue:""
@@ -492,7 +492,7 @@ script AppDelegate
 			set exp_date_e to ""
 		else if flavor is "Date Checked" then
 			global currDate
-            global exp_date_e
+			global exp_date_e
 			theDate's setEnabled:true
 			theDate's setHidden:false
 			theDateID's setHidden:false
@@ -587,22 +587,23 @@ script AppDelegate
 			password2's setStringValue:""
 			return
 		end if
-        if loginFile is true and webFile is false then
-            set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
-            if findSKA is not "" then
-                display dialog "This USB Drive already has a SkeleKey with the Login Window add-on enabled! This SkeleKey already has the Login Window add-on enabled:\n" & (findSKA as string) with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
-                housekeeping("Main Window")
-                housekeeping("Install Window")
-                housekeeping("Login Unchecked")
-                housekeeping("Web Unchecked")
-                housekeeping("Exec Unchecked")
-                housekeeping("Date Unchecked")
-                installWindow's orderOut:sender
-                mainWindow's makeKeyAndOrderFront:me
-                windowMath(installWindow, mainWindow)
-                return
-            end if
-        end if
+		if loginFile is true and webFile is false then
+			set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
+			if findSKA is not "" then
+				display dialog "This USB Drive already has a SkeleKey with the Login Window add-on enabled! This SkeleKey already has the Login Window add-on enabled:
+" & (findSKA as string) with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
+				housekeeping("Main Window")
+				housekeeping("Install Window")
+				housekeeping("Login Unchecked")
+				housekeeping("Web Unchecked")
+				housekeeping("Exec Unchecked")
+				housekeeping("Date Unchecked")
+				installWindow's orderOut:sender
+				mainWindow's makeKeyAndOrderFront:me
+				windowMath(installWindow, mainWindow)
+				return
+			end if
+		end if
 		try
 			do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
 			set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
@@ -615,8 +616,9 @@ script AppDelegate
 			if (length of epass) is greater than 2048 then
 				set epass to (characters 1 thru 2047 of epass) as string
 			end if
-			if exp_date_e is "" then set exp_date_e to "none"
-            if (limitEnabled's state()) is 0 then set execlimit to "none"
+			if (dateEnabled's state()) is 0 then set exp_date_e to "none"
+			if (limitEnabled's state()) is 0 then set execlimit to "none"
+			
 			if webState is "" then set webState to "none"
 			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)
@@ -649,7 +651,6 @@ script AppDelegate
 			display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
 			display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
-        display dialog exp_date_e
 		housekeeping("Main Window")
 		housekeeping("Install Window")
 		housekeeping("Login Unchecked")
