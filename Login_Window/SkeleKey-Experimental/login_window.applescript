@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.3.6
+--VERSION 0.3.7
 #VARIABLES
 set validVols to {}
 set drive_names to {}
@@ -51,7 +51,8 @@ set seven to sha384 & base64_e
 set eight to base64 & md5_e
 set nine to sha512256 & md5 & rev_e
 set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
-
+set execlimit_ext to ""
+set exp_date_e to ""
 #FUNCTIONS
 on returnNumbersInString(inputString)
 	set inputString to quoted form of inputString
@@ -109,7 +110,7 @@ try
 				set drive_names to drive_names & vol
 			end if
 		on error
-			quit
+			#quit
 		end try
 	end repeat
 	do shell script "say -v Samantha Starting Skeley Key Login Window"
@@ -161,13 +162,45 @@ try
 			set encContents to (do shell script "openssl enc -aes-256-cbc -d -in '/Volumes/" & drive & "/" & skname & "-SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\"")
 			set ucreds to ucreds & (paragraph 1 of encContents)
 			set pcreds to pcreds & (paragraph 2 of encContents)
+			set exp_date_e to paragraph 3 of encContents
+			set execlimit_bin to paragraph 4 of encContents
 		end repeat
 		set drive_ to drive
 	end repeat
 	#say "test3"
+	##############
+	#   Expiration Date   #
+	##############
+	set current_date_e to do shell script "date -u '+%s'"
+	if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
+		do shell script "say -v Samantha This Skeley Key has reached its expiration date!"
+		quit
+	end if
 	
-	
-	
+	##############
+	#   Execution Limit  #
+	#############
+	set execlimit_ext to do shell script "cat '/Volumes/" & drive_ & "/.SK_EL_" & ucreds & ".enc.bin' | rev | base64 -D | rev"
+	if execlimit_ext is not equal to execlimit_bin then
+		if execlimit_ext is less than execlimit_bin then
+			set numEL to execlimit_ext
+		else if execlimit_ext is greater than execlimit_bin then
+			set numEL to execlimit_bin
+		end if
+	else
+		set numEL to execlimit_bin
+	end if
+	if numEL is not "none" then
+		if numEL is less than or equal to 0 then
+			do shell script "say -v Samantha This Skeley Key has reached its execution limit!"
+			quit
+		else if numEL is greater than 0 then
+			set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
+			do shell script "printf '" & newNumEL & "' > '/Volumes/" & drive_ & "/.SK_EL_" & ucreds & ".enc.bin'"
+		end if
+	end if
+	#say "test3.5"
+	#######
 	#########################
 	#   Attempt to authenticate local users  #
 	#########################
@@ -330,4 +363,13 @@ try
 	#say "test6"
 on error
 	do shell script "say -v Samantha Cannot log in"
+	try
+		if drive_ is not "Macintosh HD" or ".DS_Store" then
+			try
+				do shell script "diskutil umount '/Volumes/" & drive_ & "'"
+			on error
+				do shell script "diskutil unmountDisk '/Volumes/" & drive_ & "'"
+			end try
+		end if
+	end try
 end try
