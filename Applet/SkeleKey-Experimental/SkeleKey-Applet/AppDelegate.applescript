@@ -94,7 +94,7 @@ script AppDelegate
 		global UnixPath
 		set current_date_e to do shell script "date -u '+%s'"
 		if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
-			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 			do shell script "chflags hidden '" & UnixPath & "'"
 			do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
 		end if
@@ -110,7 +110,19 @@ script AppDelegate
 	
 	on execlimit_ext(usernameValue, drive, execlimit_bin)
 		global UnixPath
-		
+        
+        try
+            set existence_EL to do shell script "test -e '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'"
+        on error
+            set existence_EL to "error"
+        end try
+    
+        if execlimit_bin is not "none" and existence_EL is "error" then
+            display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            do shell script "chflags hidden '" & UnixPath & "'"
+            do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
+        end if
+        
 		set execlimit_ext to do shell script "cat '" & drive & ".SK_EL_" & usernameValue & ".enc.bin' | rev | base64 -D | rev"
 		
 		if execlimit_ext is not equal to execlimit_bin then
@@ -125,7 +137,7 @@ script AppDelegate
 		
 		if numEL is not "none" then
 			if numEL is less than or equal to 0 then
-				display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+				display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				do shell script "chflags hidden '" & UnixPath & "'"
 				do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
 				quit
@@ -258,7 +270,7 @@ script AppDelegate
 					expCheck(item 3 of authcred)
 					execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
 					try
-						do shell script "test -e " & webFile
+						do shell script "test -e '" & webFile & "'"
 					on error
 						error number 106
 					end try
