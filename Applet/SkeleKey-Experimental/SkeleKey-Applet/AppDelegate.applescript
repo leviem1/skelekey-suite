@@ -92,11 +92,12 @@ script AppDelegate
 	
 	on expCheck(expireDate, drive, usernameValue)
 		global UnixPath
+		global randName
 		set current_date_e to do shell script "date -u '+%s'"
 		if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
 			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 			do shell script "chflags hidden '" & UnixPath & "'"
-			do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
+			do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
 		end if
 	end expCheck
 	
@@ -108,22 +109,23 @@ script AppDelegate
 		end try
 	end checkadmin
 	
-	on execlimit_ext(usernameValue, drive, execlimit_bin)
+	on execlimit_ext(user, drive, execlimit_bin)
 		global UnixPath
-        
-        try
-            set existence_EL to do shell script "test -e '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'"
-        on error
-            set existence_EL to "error"
-        end try
-    
-        if execlimit_bin is not "none" and existence_EL is "error" then
-            display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
-            do shell script "chflags hidden '" & UnixPath & "'"
-            do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
-        end if
-        
-		set execlimit_ext to do shell script "cat '" & drive & ".SK_EL_" & usernameValue & ".enc.bin' | rev | base64 -D | rev"
+		global randName
+		set randName to do shell script "cat '" & drive & user & "-SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR' | rev | base64 -D | rev"
+		try
+			set existence_EL to do shell script "test -e '" & drive & ".SK_EL_" & randName & ".enc.bin'"
+		on error
+			set existence_EL to "error"
+		end try
+		
+		if execlimit_bin is not "none" and existence_EL is "error" then
+			display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+			do shell script "chflags hidden '" & UnixPath & "'"
+			do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+		end if
+		
+		set execlimit_ext to do shell script "cat '" & drive & ".SK_EL_" & randName & ".enc.bin' | rev | base64 -D | rev"
 		
 		if execlimit_ext is not equal to execlimit_bin then
 			if execlimit_ext is less than execlimit_bin then
@@ -139,11 +141,11 @@ script AppDelegate
 			if numEL is less than or equal to 0 then
 				display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
 				do shell script "chflags hidden '" & UnixPath & "'"
-				do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'\" > /dev/null &"
+				do shell script "nohup sh -c \"killall SkeleKey-Applet; srm -rf '" & UnixPath & "'; srm -rf '" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
 				quit
 			else if numEL is greater than 0 then
 				set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
-				do shell script "printf '" & newNumEL & "' > '" & drive & ".SK_EL_" & usernameValue & ".enc.bin'"
+				do shell script "printf '" & newNumEL & "' > '" & drive & ".SK_EL_" & randName & ".enc.bin'"
 			end if
 		end if
 	end execlimit_ext
@@ -268,7 +270,7 @@ script AppDelegate
 				set osver to do shell script "sw_vers -productVersion"
 				if osver contains "10.11" then
 					expCheck(item 3 of authcred)
-					execlimit_ext(item 1 of authcred, volumepath2, item 4 of authcred)
+					execlimit_ext(volumepath2, item 4 of authcred)
 					try
 						do shell script "test -e '" & webFile & "'"
 					on error

@@ -186,12 +186,15 @@ script AppDelegate
 	
 	#Execution Limit External Fileout Logic
 	on execlimit_ext(user, limit, drive)
+        global fileName2
+        set randFile to do shell script "openssl rand -hex 8"
 		set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
 		try
-			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & user & ".enc.bin'"
+			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & randFile & ".enc.bin'"
 		on error
 			display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
+        do shell script "printf '" & randFile & "' | rev | base64 | rev > '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR'"
 	end execlimit_ext
 	
 	#Hack-around for sender difficuly
