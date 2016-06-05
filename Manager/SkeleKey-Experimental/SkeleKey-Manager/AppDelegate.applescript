@@ -187,14 +187,15 @@ script AppDelegate
 	#Execution Limit External Fileout Logic
 	on execlimit_ext(user, limit, drive)
         global fileName2
-        set randFile to do shell script "openssl rand -hex 8"
+        global randName
+        set randName to do shell script "openssl rand -hex 8"
 		set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
 		try
-			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & randFile & ".enc.bin'"
+			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & randName & ".enc.bin'"
 		on error
 			display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
-        do shell script "printf '" & randFile & "' | rev | base64 | rev > '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR'"
+        do shell script "printf '" & randName & "' | rev | base64 | rev > '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR'"
 	end execlimit_ext
 	
 	#Hack-around for sender difficuly
@@ -688,6 +689,8 @@ script AppDelegate
 	#Removal Button Function
 	on delButton:sender
 		global delApp
+        global randName
+        
 		removeWindow's orderOut:sender
 		loadingWindow's makeKeyAndOrderFront:me
 		windowMath(removeWindow, loadingWindow)
@@ -699,7 +702,7 @@ script AppDelegate
             set unV to do shell script "printf '" & delApp & "' | awk -F'/' '{print $4}' | awk -F'-' '{print $1}'"
             set drive to do shell script "printf '" & delApp & "' | awk -F'/' '{print $3}'"
             try
-                do shell script "srm -rf '/Volumes/" & drive & "/.SK_EL_" & unV & ".enc.bin'"
+                do shell script "srm -rf '/Volumes/" & drive & "/.SK_EL_" & randName & ".enc.bin'"
             end try
             display dialog "Sucessfully securely removed app at location:
             " & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
