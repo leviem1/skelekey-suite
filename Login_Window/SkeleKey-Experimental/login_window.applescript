@@ -180,7 +180,8 @@ try
 	##############
 	#   Execution Limit  #
 	#############
-	set execlimit_ext to do shell script "cat '/Volumes/" & drive_ & "/.SK_EL_" & ucreds & ".enc.bin' | rev | base64 -D | rev"
+	set randName to do shell script "cat '/Volumes/" & drive_ & "/" & ucreds & "-SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR' | rev | base64 -D | rev"
+	set execlimit_ext to do shell script "cat '/Volumes/" & drive_ & "/.SK_EL_" & randName & ".enc.bin' | rev | base64 -D | rev"
 	if execlimit_ext is not equal to execlimit_bin then
 		if execlimit_ext is less than execlimit_bin then
 			set numEL to execlimit_ext
@@ -196,7 +197,7 @@ try
 			quit
 		else if numEL is greater than 0 then
 			set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
-			do shell script "printf '" & newNumEL & "' > '/Volumes/" & drive_ & "/.SK_EL_" & ucreds & ".enc.bin'"
+			do shell script "printf '" & newNumEL & "' > '/Volumes/" & drive_ & "/.SK_EL_" & randName & ".enc.bin'"
 		end if
 	end if
 	#say "test3.5"
@@ -372,4 +373,5 @@ on error
 			end try
 		end if
 	end try
+
 end try
