@@ -691,9 +691,14 @@ script AppDelegate
 		quitItem's setEnabled:false
 		set isBusy to true
 		delay 0.25
-		try
-			do shell script "srm -rf '" & delApp & "'"
-			display dialog "Sucessfully securely removed app at location:
+        try
+            do shell script "srm -rf '" & delApp & "'"
+            set unV to do shell script "printf '" & delApp & "' | awk -F'/' '{print $4}' | awk -F'-' '{print $1}'"
+            set drive to do shell script "printf '" & delApp & "' | awk -F'/' '{print $3}'"
+            try
+                do shell script "srm -rf '/Volumes/" & drive & "/.SK_EL_" & unV & ".enc.bin'"
+            end try
+            display dialog "Sucessfully securely removed app at location:
             " & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
 		on error
 			display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
