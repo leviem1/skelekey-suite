@@ -856,12 +856,12 @@ DQ
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
-                                <view key="view" ambiguous="YES" id="PHJ-qU-ZFR">
-                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                <view key="view" id="PHJ-qU-ZFR">
+                                    <rect key="frame" x="10" y="33" width="402" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
-                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <rect key="frame" x="15" y="-34" width="71" height="18"/>
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -872,7 +872,7 @@ DQ
                                             </connections>
                                         </button>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="172" y="153" width="198" height="27"/>
+                                            <rect key="frame" x="172" y="-83" width="198" height="27"/>
                                             <datePickerCell key="cell" state="on" alignment="left" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
@@ -890,7 +890,7 @@ DQ
                                             </connections>
                                         </datePicker>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
-                                            <rect key="frame" x="194" y="119" width="46" height="17"/>
+                                            <rect key="frame" x="194" y="-117" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
                                                 <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -898,7 +898,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-SM-4Ky">
-                                            <rect key="frame" x="15" y="17" width="404" height="85"/>
+                                            <rect key="frame" x="15" y="-219" width="404" height="85"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="S8d-L8-uyi">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This SkeleKey Suite add-on forces your SkeleKey Applet to stop authenticating at a specified date and time. After the predetermined date, the Applet will no longer authenticate with your credentials. It also securely self-erases if launched after the expiration date.</string>
@@ -907,13 +907,13 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jJq-vl-82p">
-                                            <rect key="frame" x="55" y="108" width="325" height="5"/>
+                                            <rect key="frame" x="55" y="-128" width="325" height="5"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjT-1Y-PLA">
-                                            <rect key="frame" x="66" y="156" width="100" height="17"/>
+                                            <rect key="frame" x="66" y="-80" width="100" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Expiration Date:" id="VDB-eX-hZR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -921,7 +921,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-cU-I1H">
-                                            <rect key="frame" x="41" y="156" width="351" height="17"/>
+                                            <rect key="frame" x="41" y="-80" width="351" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="azX-gv-4en">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1002,7 +1002,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Execution Limit" identifier="" id="3NJ-Dt-t75">
-                                <view key="view" id="9eh-em-h1U">
+                                <view key="view" ambiguous="YES" id="9eh-em-h1U">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>

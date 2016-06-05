@@ -473,8 +473,8 @@ script AppDelegate
 			stepperTF's setHidden:true
 			execlimitDesc's setHidden:true
 			stepper's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepper's setStringValue:"0"
+			stepperTF's setStringValue:"1"
+			stepper's setStringValue:"1"
 			set execlimit to "1"
 			set webState to "none"
 			checkIcon's setImage:(NSImage's imageNamed:"NSStatusPartiallyAvailable")
@@ -519,12 +519,14 @@ script AppDelegate
 			stepperTF's setHidden:true
 			execlimitDesc's setHidden:true
 			stepper's setHidden:true
-			stepperTF's setStringValue:"0"
-			stepper's setStringValue:"0"
+			stepperTF's setStringValue:"1"
+			stepper's setStringValue:"1"
 			set execlimit to "1"
 		else if flavor is "Exec Checked" then
 			stateInformerLimit's setHidden:true
-			stepperTF's setStringValue:"1"
+            stepperTF's setStringValue:"1"
+            stepper's setStringValue:"1"
+            set execlimit to "1"
 			stepperTF's setHidden:false
 			stepper's setHidden:false
 			stepper's setDoubleValue:1
