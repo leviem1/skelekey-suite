@@ -93,6 +93,7 @@ script AppDelegate
 	on expCheck(expireDate, drive, usernameValue)
 		global UnixPath
 		global randName
+		set randName to do shell script "cat '" & drive & usernameValue & "-SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR' | rev | base64 -D | rev"
 		set current_date_e to do shell script "date -u '+%s'"
 		if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
 			display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
