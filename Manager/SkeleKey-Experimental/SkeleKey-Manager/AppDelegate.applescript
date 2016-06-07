@@ -597,6 +597,7 @@ script AppDelegate
 			set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
 			if findSKA is not "" then
 				display dialog "This USB Drive already has a SkeleKey with the Login Window add-on enabled! This SkeleKey already has the Login Window add-on enabled:
+                
 " & (findSKA as string) with icon 2 buttons "Okay" with title "SkeleKey Manager" default button 1
 				housekeeping("Main Window")
 				housekeeping("Install Window")
