@@ -104,7 +104,7 @@ script AppDelegate
 	
 	#Take to Purchase Page Function
 	on purchaseBtn:sender
-		do shell script "open 'http://www.skelekey.com/#purchase'"
+		do shell script "/usr/bin/open 'http://www.skelekey.com/#purchase'"
 	end purchaseBtn:
 	
 	#Registration Window Quit Function
@@ -130,7 +130,7 @@ script AppDelegate
 		global exp_date_e
 		set exp_date to theDate's dateValue()
 		set exp_date to theDate's dateValue()'s |description| as Unicode text
-		set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
+		set exp_date_e to do shell script "/bin/date -u -j -f \"%Y-%m-%d %T\" \"" & exp_date & "\" +\"%s\""
 	end displayData:
 	
 	#Login Checked Sender
@@ -156,10 +156,10 @@ script AppDelegate
 	on loginComponentMover:sender
 		global UnixPath
 		try
-			do shell script "mkdir -p ~/Desktop/SkeleKey-LoginWindow"
-			do shell script "cp '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
+			do shell script "/bin/mkdir -p ~/Desktop/SkeleKey-LoginWindow"
+			do shell script "/bin/cp '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
 		on error
-			display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SkeleKey_LoginWindow.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
+			display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a fold titled 'SkeleKey-LoginWindow' containing a file titled 'SkeleKey_LoginWindow.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
 	end loginComponentMover:
 	
@@ -167,7 +167,7 @@ script AppDelegate
 	on loginComponentInstaller:sender
 		global UnixPath
 		try
-			do shell script "open -a Installer.app '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg'"
+			do shell script "/usr/bin/open -a Installer.app '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg'"
 		on error
 			display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
@@ -188,14 +188,14 @@ script AppDelegate
 	on execlimit_ext(user, limit, drive)
         global fileName2
         global randName
-        set randName to do shell script "openssl rand -hex 8"
-		set execlimitEL to do shell script "printf '" & limit & "' | rev | base64 | rev"
+        set randName to do shell script "/usr/bin/openssl rand -hex 8"
+		set execlimitEL to do shell script "/usr/bin/printf '" & limit & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev"
 		try
-			do shell script "printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & randName & ".enc.bin'"
+			do shell script "/usr/bin/printf '" & execlimitEL & "' > '" & drive & ".SK_EL_" & randName & ".enc.bin'"
 		on error
 			display dialog "Could not create SkeleKey with execution limit!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
-        do shell script "printf '" & randName & "' | rev | base64 | rev > '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR'"
+        do shell script "/usr/bin/printf '" & randName & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev > '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR'"
 	end execlimit_ext
 	
 	#Hack-around for sender difficuly
@@ -272,35 +272,35 @@ script AppDelegate
 	
 	#License Generator Function
 	on licensekeygen(myname, myemail, myorg)
-		set e_mn to do shell script "printf \"" & myname & "\" | rev"
-		set e_mn to do shell script "printf \"" & e_mn & "\" | md5"
-		set e_mn to do shell script "printf \"" & e_mn & "\" | base64"
-		set e_mn to do shell script "printf \"" & e_mn & "\" | fold -w4 | paste -sd'1' - "
+		set e_mn to do shell script "/usr/bin/printf \"" & myname & "\" | /usr/bin/rev"
+		set e_mn to do shell script "/usr/bin/printf \"" & e_mn & "\" | /sbin/md5"
+		set e_mn to do shell script "/usr/bin/printf \"" & e_mn & "\" | /usr/bin/base64"
+		set e_mn to do shell script "/usr/bin/printf \"" & e_mn & "\" | /usr/bin/fold -w4 | /usr/bin/paste -sd'1' - "
 		set e_mn to characters 7 thru 11 of e_mn as text
 		
-		set e_me to do shell script "printf \"" & myemail & "\" | base64"
-		set e_me to do shell script "printf \"" & e_me & "\" | rev"
-		set e_me to do shell script "printf \"" & e_me & "\" | md5"
-		set e_me to do shell script "printf \"" & e_me & "\" | fold -w3 | paste -sd'4' - "
+		set e_me to do shell script "/usr/bin/printf \"" & myemail & "\" | /usr/bin/base64"
+		set e_me to do shell script "/usr/bin/printf \"" & e_me & "\" | /usr/bin/rev"
+		set e_me to do shell script "/usr/bin/printf \"" & e_me & "\" | /sbin/md5"
+		set e_me to do shell script "/usr/bin/printf \"" & e_me & "\" | /usr/bin/fold -w3 | /usr/bin/paste -sd'4' - "
 		set e_me to characters 3 thru 7 of e_me as text
 		
-		set e_mo to do shell script "printf \"" & myorg & "\" | base64"
-		set e_mo to do shell script "printf \"" & e_mo & "\" | md5"
-		set e_mo to do shell script "printf \"" & e_mo & "\" | rev"
-		set e_mo to do shell script "printf \"" & e_mo & "\" | fold -w3 | paste -sd'K' - "
+		set e_mo to do shell script "/usr/bin/printf \"" & myorg & "\" | /usr/bin/base64"
+		set e_mo to do shell script "/usr/bin/printf \"" & e_mo & "\" | /sbin/md5"
+		set e_mo to do shell script "/usr/bin/printf \"" & e_mo & "\" | /usr/bin/rev"
+		set e_mo to do shell script "/usr/bin/printf \"" & e_mo & "\" | /usr/bin/fold -w3 | /usr/bin/paste -sd'K' - "
 		set e_mo to characters 16 thru 20 of e_mo as text
 		
-		set e_me2 to do shell script "printf \"" & myemail & "\" | md5"
-		set e_me2 to do shell script "printf \"" & e_me2 & "\" | md5"
-		set e_me2 to do shell script "printf \"" & e_me2 & "\" | base64"
-		set e_me2 to do shell script "printf \"" & e_me2 & "\" | fold -w4 | paste -sd'A' - "
+		set e_me2 to do shell script "/usr/bin/printf \"" & myemail & "\" | /sbin/md5"
+		set e_me2 to do shell script "/usr/bin/printf \"" & e_me2 & "\" | /sbin/md5"
+		set e_me2 to do shell script "/usr/bin/printf \"" & e_me2 & "\" | /usr/bin/base64"
+		set e_me2 to do shell script "/usr/bin/printf \"" & e_me2 & "\" | /usr/bin/fold -w4 | /usr/bin/paste -sd'A' - "
 		set e_me2 to characters 4 thru 8 of e_me2 as text
 		if myorg is not "" then
 			set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_mo as string
-			set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+			set lickey to do shell script "/usr/bin/printf '" & lickey & "' | /usr/bin/tr '[a-z]' '[A-Z]'"
 		else
 			set lickey to "SK-" & e_me & "-" & e_mn & "-" & e_me2 as string
-			set lickey to do shell script "printf '" & lickey & "' | tr '[a-z]' '[A-Z]'"
+			set lickey to do shell script "/usr/bin/printf '" & lickey & "' | /usr/bin/tr '[a-z]' '[A-Z]'"
 		end if
 		return lickey
 	end licensekeygen
@@ -331,7 +331,7 @@ script AppDelegate
 		global isLicensed
 		set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
 		try
-			set check_regSerialString_allowed to do shell script "printf $(curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & regSerialString & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
+			set check_regSerialString_allowed to do shell script "/usr/bin/printf $(/usr/bin/curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & regSerialString & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
 		on error
 			set check_regSerialString_allowed to "0"
 		end try
@@ -354,17 +354,22 @@ script AppDelegate
 			
 		else
 			set isLicensed to true
-			set plist_license_name_comp to do shell script "printf '" & regFirstNameString & "' | rev |  shasum -a 512 | awk '{print $1}'"
-			set plist_license_email_comp to do shell script "printf '" & regEmailString & "' | md5 |  shasum -a 512 | awk '{print $1}'"
-			set plist_license_org_comp to do shell script "printf '" & regOrgString & "' | rev |  shasum -a 512 | awk '{print $1}'"
-			set plist_license_serial_comp to do shell script "printf '" & regSerialString & "' | base64 |  shasum -a 512 | awk '{print $1}'"
+			set plist_license_name_comp to do shell script "/usr/bin/printf '" & regFirstNameString & "' | /usr/bin/rev |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+			set plist_license_email_comp to do shell script "/usr/bin/printf '" & regEmailString & "' | /sbin/md5 |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+			set plist_license_org_comp to do shell script "/usr/bin/printf '" & regOrgString & "' | /usr/bin/rev |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+			set plist_license_serial_comp to do shell script "/usr/bin/printf '" & regSerialString & "' | /usr/bin/base64 |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
 			set plist_license_key_comp to plist_license_serial_comp & plist_license_name_comp & plist_license_org_comp & plist_license_email_comp
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict 'full_name' '" & regFirstNameString & "'"
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'email_address' '" & regEmailString & "'"
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'organization' '" & regOrgString & "'"
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'serial_number' '" & regSerialString & "'"
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'verikey' '" & plist_license_key_comp & "'"
-			display dialog "Success! SkeleKey Manager is now licensed to: " & regFirstNameString & ". Return to the main window and use the app normally!" with title "SkeleKey Manager" buttons {"OK"}
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict 'full_name' '" & regFirstNameString & "'"
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'email_address' '" & regEmailString & "'"
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'organization' '" & regOrgString & "'"
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'serial_number' '" & regSerialString & "'"
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist license -dict-add 'verikey' '" & plist_license_key_comp & "'"
+            display dialog "Congratulations!
+            
+            SkeleKey Manager is now licensed to:
+            " & tab & regFirstNameString & " (" & regEmailString & ")
+            
+            Press \"OK\" to return to the main window with full functionality!" with title "SkeleKey Manager - Registration Success" buttons {"OK"} default button 1
 			registrationWindow's orderOut:sender
 		end if
 	end checkLicenseKey:
@@ -393,7 +398,7 @@ script AppDelegate
 			set currDate to myFormatter's stringFromDate:currDateNS
 			theDate's setDateValue:currDateNS
 			theDate's setMinDate:currDateNS
-			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & currDate & "\" +\"%s\""
+			set exp_date_e to do shell script "/bin/date -u -j -f \"%Y-%m-%d %T\" \"" & currDate & "\" +\"%s\""
 			installWindow's makeKeyAndOrderFront:me
 			installWindow's makeFirstResponder:username
 			windowMath(mainWindow, installWindow)
@@ -409,11 +414,11 @@ script AppDelegate
 		global fileName2
 		set validVols to {}
 		try
-			set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+			set discoverVol to do shell script "/bin/ls /Volumes | /usr/bin/grep -v 'Macintosh HD'"
 			set discoverVol to get paragraphs of discoverVol
 			repeat with vol in discoverVol
 				try
-					set isValid to do shell script "diskutil info '/Volumes/" & vol & "' | grep \"Protocol\" | awk '{print $2}'"
+					set isValid to do shell script "/usr/sbin/diskutil info '/Volumes/" & vol & "' | /usr/bin/grep \"Protocol\" | /usr/bin/awk '{print $2}'"
 				on error
 					set isValid to "False"
 				end try
@@ -501,7 +506,7 @@ script AppDelegate
 			theDate's setHidden:false
 			theDateID's setHidden:false
 			stateInformerDate's setHidden:true
-			set exp_date_e to do shell script "date -u -j -f \"%Y-%m-%d %T\" \"" & (currDate as Unicode text) & "\" +\"%s\""
+			set exp_date_e to do shell script "/bin/date -u -j -f \"%Y-%m-%d %T\" \"" & (currDate as Unicode text) & "\" +\"%s\""
 		else if flavor is "Login Unchecked" then
 			global loginFile
 			stateInformerLogin's setHidden:false
@@ -552,24 +557,24 @@ script AppDelegate
 		set usernameValue to "" & (stringValue() of username)
 		set password1Value to "" & (stringValue() of password1)
 		set password2Value to "" & (stringValue() of password2)
-		set md5 to " md5 | "
-		set md5_e to " md5"
-		set base64 to " base64 | "
-		set base64_e to " base64"
-		set rev to "rev | "
-		set rev_e to "rev"
-		set sha224 to "shasum -a 224 | awk '{print $1}' | "
-		set sha224_e to "shasum -a 224 | awk '{print $1}'"
-		set sha256 to "shasum -a 256 | awk '{print $1}' | "
-		set sha256_e to "shasum -a 256 | awk '{print $1}'"
-		set sha384 to "shasum -a 384 | awk '{print $1}' | "
-		set sha384_e to "shasum -a 384 | awk '{print $1}'"
-		set sha512 to "shasum -a 512 | awk '{print $1}' | "
-		set sha512_e to "shasum -a 512 | awk '{print $1}'"
-		set sha512224 to "shasum -a 512224 | awk '{print $1}' | "
-		set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
-		set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
-		set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
+		set md5 to " /sbin/md5 | "
+		set md5_e to " /sbin/md5"
+		set base64 to " /usr/bin/base64 | "
+		set base64_e to " /usr/bin/base64"
+		set rev to "/usr/bin/rev | "
+		set rev_e to "/usr/bin/rev"
+		set sha224 to "/usr/bin/shasum -a 224 | /usr/bin/awk '{print $1}' | "
+		set sha224_e to "/usr/bin/shasum -a 224 | /usr/bin/awk '{print $1}'"
+		set sha256 to "/usr/bin/shasum -a 256 | /usr/bin/awk '{print $1}' | "
+		set sha256_e to "/usr/bin/shasum -a 256 | /usr/bin/awk '{print $1}'"
+		set sha384 to "/usr/bin/shasum -a 384 | /usr/bin/awk '{print $1}' | "
+		set sha384_e to "/usr/bin/shasum -a 384 | /usr/bin/awk '{print $1}'"
+		set sha512 to "/usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}' | "
+		set sha512_e to "/usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+		set sha512224 to "/usr/bin/shasum -a 512224 | /usr/bin/awk '{print $1}' | "
+		set sha512224_e to "/usr/bin/shasum -a 512224 | /usr/bin/awk '{print $1}'"
+		set sha512256 to "/usr/bin/shasum -a 512256 | /usr/bin/awk '{print $1}' | "
+		set sha512256_e to "/usr/bin/shasum -a 512256 | /usr/bin/awk '{print $1}'"
 		set zero to md5 & base64_e
 		set one to sha256 & sha512256_e
 		set two to sha224 & sha384_e
@@ -594,7 +599,7 @@ script AppDelegate
 			return
 		end if
 		if loginFile is true and webFile is false then
-			set findSKA to do shell script "cd '" & fileName2 & "'; ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | awk '{print $1}' FS=/"
+			set findSKA to do shell script "cd '" & fileName2 & "'; /bin/ls -ldA1 *-SkeleKey-Applet.app/Contents/Resources/.loginenabled | /usr/bin/awk '{print $1}' FS=/"
 			if findSKA is not "" then
 				display dialog "This USB Drive already has a SkeleKey with the Login Window add-on enabled! This SkeleKey already has the Login Window add-on enabled:
                 
@@ -612,14 +617,14 @@ script AppDelegate
 			end if
 		end if
 		try
-			do shell script "cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
-			set uuid to do shell script "diskutil info '" & fileName2 & "' | grep 'Volume UUID' | awk '{print $3}' | rev"
+			do shell script "/bin/cp -R '" & UnixPath & "/Contents/Resources/SkeleKey-Applet.app' '" & fileName2 & "'"
+			set uuid to do shell script "/usr/sbin/diskutil info '" & fileName2 & "' | /usr/bin/grep 'Volume UUID' | /usr/bin/awk '{print $3}' | /usr/bin/rev"
 			set nums to returnNumbersInString(uuid)
 			repeat with char in nums
-				set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+				set encstring to do shell script "/usr/bin/printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
 				set epass to epass & encstring
 			end repeat
-			set epass to do shell script "printf \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+			set epass to do shell script "/usr/bin/printf \"" & epass & "\" | /usr/bin/fold -w160 | /usr/bin/paste -sd'%' - | /usr/bin/fold -w270 | /usr/bin/paste -sd'@' - | /usr/bin/fold -w51 | /usr/bin/paste -sd'*' - | /usr/bin/fold -w194 | /usr/bin/paste -sd'~' - | /usr/bin/fold -w64 | /usr/bin/paste -sd'2' - | /usr/bin/fold -w78 | /usr/bin/paste -sd'^' - | /usr/bin/fold -w38 | /usr/bin/paste -sd')' - | /usr/bin/fold -w28 | /usr/bin/paste -sd'(' - | /usr/bin/fold -w69 | /usr/bin/paste -sd'=' -  | /usr/bin/fold -w128 | /usr/bin/paste -sd'$3bs' -  "
 			if (length of epass) is greater than 2048 then
 				set epass to (characters 1 thru 2047 of epass) as string
 			end if
@@ -627,35 +632,35 @@ script AppDelegate
 			if (limitEnabled's state()) is 0 then set execlimit to "none"
 			
 			if webState is "" then set webState to "none"
-			do shell script "printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
+			do shell script "/usr/bin/printf '" & usernameValue & "\n" & password2Value & "\n" & exp_date_e & "\n" & execlimit & "\n" & webState & "' | /usr/bin/openssl enc -aes-256-cbc -e -out '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.p.enc.bin' -pass pass:\"" & epass & "\""
 			execlimit_ext(usernameValue, execlimit, fileName2)
 			if webFile is true then
-				do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.webenabled'"
+				do shell script "/usr/bin/touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.webenabled'"
 			end if
 			if loginFile is true and webFile is false then
-				do shell script "touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
+				do shell script "/usr/bin/touch '" & fileName2 & "SkeleKey-Applet.app/Contents/Resources/.loginenabled'"
 			end if
 			try
 				set theNumber to 1
 				
-				do shell script "test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
+				do shell script "/bin/test -e '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
 				repeat
 					try
 						set theNumber to theNumber + 1
-						do shell script "test -e '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
+						do shell script "/bin/test -e '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
 					on error
-						do shell script "mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
+						do shell script "/bin/mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & " " & theNumber & "-SkeleKey-Applet.app'"
 						exit repeat
 					end try
 				end repeat
 			on error
-				do shell script "mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
+				do shell script "/bin/mv -f '" & fileName2 & "SkeleKey-Applet.app' '" & fileName2 & usernameValue & "-SkeleKey-Applet.app'"
 			end try
-			display notification "Sucessfully created SkeleKey for for username: " & usernameValue with title "SkeleKey Manager"
+			display notification "Sucessfully created SkeleKey for username: " & usernameValue with title "SkeleKey Manager"
 			display dialog "Sucessfully created SkeleKey at location:
             " & fileName2 buttons "Continue" with title "SkeleKey Manager" default button 1
 		on error
-			display notification "Could not create SkeleKey" with title "SkeleKey Manager" subtitle "ERROR"
+			display notification "Could not create SkeleKey for username: " & usernameValue with title "SkeleKey Manager" subtitle "ERROR"
 			display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
 		end try
 		housekeeping("Main Window")
@@ -693,7 +698,6 @@ script AppDelegate
 	on delButton:sender
 		global delApp
         global randName
-        
 		removeWindow's orderOut:sender
 		loadingWindow's makeKeyAndOrderFront:me
 		windowMath(removeWindow, loadingWindow)
@@ -701,13 +705,13 @@ script AppDelegate
 		set isBusy to true
 		delay 0.25
         try
-            do shell script "srm -rf '" & delApp & "'"
-            set unV to do shell script "printf '" & delApp & "' | awk -F'/' '{print $4}' | awk -F'-' '{print $1}'"
-            set drive to do shell script "printf '" & delApp & "' | awk -F'/' '{print $3}'"
+            do shell script "/usr/bin/srm -rf '" & delApp & "'"
+            set unV to do shell script "/usr/bin/printf '" & delApp & "' | /usr/bin/awk -F'/' '{print $4}' | /usr/bin/awk -F'-' '{print $1}'"
+            set drive to do shell script "/usr/bin/printf '" & delApp & "' | /usr/bin/awk -F'/' '{print $3}'"
             try
-                do shell script "srm -rf '/Volumes/" & drive & "/.SK_EL_" & randName & ".enc.bin'"
+                do shell script "/usr/bin/srm -rf '/Volumes/" & drive & "/.SK_EL_" & randName & ".enc.bin'"
             end try
-            display dialog "Sucessfully securely removed app at location:
+            display dialog "Successful secure removal of application at location:
             " & delApp buttons "Continue" with title "SkeleKey Manager" default button 1
 		on error
 			display dialog "Could not securely remove app at location: " & delApp with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
@@ -726,11 +730,11 @@ script AppDelegate
 		end if
 		if (dontShow's state()) is 1 then
 			try
-				do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool true"
+				do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool true"
 			end try
 		else if (dontShow's state()) is 0 then
 			try
-				do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool false"
+				do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow -bool false"
 			end try
 		end if
 		tutorialWindow's orderOut:sender
@@ -752,7 +756,6 @@ script AppDelegate
 		housekeeping("Web Unchecked")
 		housekeeping("Exec Unchecked")
 		housekeeping("Date Unchecked")
-		
 		installWindow's orderOut:sender
 		mainWindow's makeKeyAndOrderFront:me
 		windowMath(installWindow, mainWindow)
@@ -790,17 +793,17 @@ script AppDelegate
 		global isLicensed
 		global UnixPath
 		set UnixPath to POSIX path of (path to current application as text)
-		set dependencies to {"printf", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "mv", "rm", "base64", "md5", "srm", "defaults", "test", "fold", "paste", "dscl", "/usr/libexec/PlistBuddy", "curl"}
+		set dependencies to {"/usr/bin/printf", "/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/srm", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
 		set notInstalledString to ""
 		if beta_mode is false then
 			try
-				do shell script "sudo printf elevate" with administrator privileges
+				do shell script "/usr/bin/sudo /usr/bin/printf elevate" with administrator privileges
 			on error
 				display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
 				quit
 			end try
 		end if
-		set cmd_existance to do shell script "command; printf $?"
+		set cmd_existance to do shell script "command; /usr/bin/printf $?"
 		if cmd_existance is not "" then
 			repeat with i in dependencies
 				try
@@ -827,42 +830,42 @@ script AppDelegate
 			set licensedValue_serialnumber_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:serial_number\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
 			set licensedValue_verikey_real to do shell script "/usr/libexec/PlistBuddy -c \"print :license:verikey\" ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist"
 			try
-				set check_licensedValue_serialnumber to do shell script "printf $(curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & licensedValue_serialnumber_real & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
+				set check_licensedValue_serialnumber to do shell script "/usr/bin/printf $(/usr/bin/curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & licensedValue_serialnumber_real & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
 			on error
 				set check_licensedValue_serialnumber to "0"
 			end try
 			if check_licensedValue_serialnumber is "0" then
-				set licensedValue_fullname_gen to do shell script "printf '" & licensedValue_fullname_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-				set licensedValue_emailaddress_gen to do shell script "printf '" & licensedValue_emailaddress_real & "' | md5 |  shasum -a 512 | awk '{print $1}'"
-				set licensedValue_organization_gen to do shell script "printf '" & licensedValue_organization_real & "' | rev |  shasum -a 512 | awk '{print $1}'"
-				set licensedValue_serialnumber_gen to do shell script "printf '" & licensedValue_serialnumber_real & "' | base64 |  shasum -a 512 | awk '{print $1}'"
+				set licensedValue_fullname_gen to do shell script "/usr/bin/printf '" & licensedValue_fullname_real & "' | /usr/bin/rev |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+				set licensedValue_emailaddress_gen to do shell script "/usr/bin/printf '" & licensedValue_emailaddress_real & "' | /sbin/md5 |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+				set licensedValue_organization_gen to do shell script "/usr/bin/printf '" & licensedValue_organization_real & "' | /usr/bin/rev |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+				set licensedValue_serialnumber_gen to do shell script "/usr/bin/printf '" & licensedValue_serialnumber_real & "' | /usr/bin/base64 |  /usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
 				set licensedValue_verikey_gen to licensedValue_serialnumber_gen & licensedValue_fullname_gen & licensedValue_organization_gen & licensedValue_emailaddress_gen
 				if licensedValue_verikey_gen is equal to licensedValue_verikey_real then
 					set isLicensed to true
 				else
 					set isLicensed to false
 					try
-						do shell script "defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
+						do shell script "/usr/bin/defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
 					end try
 				end if
 			else
 				set isLicensed to false
 				try
-					do shell script "defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
+					do shell script "/usr/bin/defaults delete ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist \"license\""
 				end try
 			end if
 		on error
 			set isLicensed to false
 		end try
 		try
-			set dontShowValue to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
+			set dontShowValue to do shell script "/usr/bin/defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist dontShow"
 		on error
 			set dontShowValue to "0"
 		end try
 		try
-			set hasWelcomed to do shell script "defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed"
+			set hasWelcomed to do shell script "/usr/bin/defaults read ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed"
 		on error
-			do shell script "defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed -bool true"
+			do shell script "/usr/bin/defaults write ~/Library/Preferences/com.skelekey.SkeleKey-Manager.plist hasWelcomed -bool true"
 			set hasWelcomed to "0"
 		end try
 		if hasWelcomed is "0" then
