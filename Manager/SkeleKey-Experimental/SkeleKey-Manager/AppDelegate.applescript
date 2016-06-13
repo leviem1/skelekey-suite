@@ -682,7 +682,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             end try
             display notification "Sucessfully created SkeleKey for username: " & usernameValue with title "SkeleKey Manager"
             display dialog "Sucessfully created SkeleKey at location:
-" & fileName2 buttons "Continue" with title "SkeleKey Manager" default button 1
+            " & fileName2 buttons "Continue" with title "SkeleKey Manager" default button 1
         on error
             display notification "Could not create SkeleKey for username: " & usernameValue with title "SkeleKey Manager" subtitle "ERROR"
             display dialog "Could not create SkeleKey at location: " & fileName2 with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
@@ -830,7 +830,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         if beta_mode is false then
             try
                 do shell script "/usr/bin/sudo printf elevate" with administrator privileges
-                on error
+            on error
                 display dialog "SkeleKey needs administrator privileges to run!" buttons "Quit" default button 1 with title "SkeleKey-Manager" with icon 0
                 quit
             end try
@@ -848,12 +848,12 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             if notInstalledString is not "" then
                 display dialog "The following required resources are not installed:
                 
-                " & notInstalledString buttons "Quit" default button 1 with title "SkeleKey Manager" with icon 0
-                
+" & notInstalledString buttons "Quit" default button 1 with title "SkeleKey Manager" with icon 0
                 quit
             end if
         else
             display dialog "The system file 'command' is misssing!"
+            quit
         end if
 
         try
