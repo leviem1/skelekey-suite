@@ -67,10 +67,10 @@ script AppDelegate
         set uuid to do shell script "/usr/sbin/diskutil info $'" & volumepath & "' | /usr/bin/grep 'Volume UUID' | /usr/bin/awk '{print $3}' | /usr/bin/rev"
         set nums to returnNumbersInString(uuid)
         repeat with char in nums
-            set encstring to do shell script "/usr/bin/printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+            set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
             set epass to epass & encstring
         end repeat
-        set epass to do shell script "/usr/bin/printf \"" & epass & "\" | /usr/bin/fold -w160 | /usr/bin/paste -sd'%' - | /usr/bin/fold -w270 | /usr/bin/paste -sd'@' - | /usr/bin/fold -w51 | /usr/bin/paste -sd'*' - | /usr/bin/fold -w194 | /usr/bin/paste -sd'~' - | /usr/bin/fold -w64 | /usr/bin/paste -sd'2' - | /usr/bin/fold -w78 | /usr/bin/paste -sd'^' - | /usr/bin/fold -w38 | /usr/bin/paste -sd')' - | /usr/bin/fold -w28 | /usr/bin/paste -sd'(' - | /usr/bin/fold -w69 | /usr/bin/paste -sd'=' -  | /usr/bin/fold -w128 | /usr/bin/paste -sd'$3bs' -  "
+        set epass to do shell script "printf \"" & epass & "\" | /usr/bin/fold -w160 | /usr/bin/paste -sd'%' - | /usr/bin/fold -w270 | /usr/bin/paste -sd'@' - | /usr/bin/fold -w51 | /usr/bin/paste -sd'*' - | /usr/bin/fold -w194 | /usr/bin/paste -sd'~' - | /usr/bin/fold -w64 | /usr/bin/paste -sd'2' - | /usr/bin/fold -w78 | /usr/bin/paste -sd'^' - | /usr/bin/fold -w38 | /usr/bin/paste -sd')' - | /usr/bin/fold -w28 | /usr/bin/paste -sd'(' - | /usr/bin/fold -w69 | /usr/bin/paste -sd'=' -  | /usr/bin/fold -w128 | /usr/bin/paste -sd'$3bs' -  "
         if (length of epass) is greater than 2048 then
             set epass to (characters 1 thru 2047 of epass) as string
         end if
@@ -108,7 +108,7 @@ script AppDelegate
     
     on checkadmin(username, passwd)
         try
-            do shell script "/usr/bin/sudo /usr/bin/printf elevate" user name username password passwd with administrator privileges
+            do shell script "/usr/bin/sudo printf elevate" user name username password passwd with administrator privileges
         on error
             error number 101
         end try
@@ -148,8 +148,8 @@ script AppDelegate
                 do shell script "/usr/bin/nohup sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
                 quit
             else if numEL is greater than 0 then
-                set newNumEL to do shell script "/usr/bin/printf '" & (numEL - 1) & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev"
-                do shell script "/usr/bin/printf '" & newNumEL & "' > $'" & drive & ".SK_EL_" & randName & ".enc.bin'"
+                set newNumEL to do shell script "printf '" & (numEL - 1) & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev"
+                do shell script "printf '" & newNumEL & "' > $'" & drive & ".SK_EL_" & randName & ".enc.bin'"
             end if
         end if
     end execlimit_ext
@@ -183,7 +183,7 @@ script AppDelegate
     
     on PageElements(theUrl)
         global UnixPath
-        set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId"}
+        set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId", "*_login"}
         set pfields to {"*assword", "*asswd", "*pw", "*pass", "*ass", "*pwd"}
         tell application "Safari"
             set mySrc to document of front window
