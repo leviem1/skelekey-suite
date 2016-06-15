@@ -181,9 +181,9 @@ script AppDelegate
         
         try
             do shell script "/bin/mkdir -p ~/Desktop/SkeleKey-LoginWindow"
-            do shell script "/bin/cp '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
+            do shell script "/bin/cp $'" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg' ~/Desktop/SkeleKey-LoginWindow; open -R ~/Desktop/SkeleKey-LoginWindow/SkeleKey_LoginWindow.pkg"
         on error
-            display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a fold titled 'SkeleKey-LoginWindow' containing a file titled 'SkeleKey_LoginWindow.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
+            display dialog "Could not copy installation package to your Desktop! Please make sure your Desktop doesn't have a folder titled 'SkeleKey-LoginWindow' containing a file titled 'SkeleKey_LoginWindow.pkg and try again.'" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
     end loginComponentMover:
    
@@ -193,11 +193,23 @@ script AppDelegate
         global UnixPath
         
         try
-            do shell script "/usr/bin/open -a Installer.app '" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg'"
+            do shell script "/usr/bin/open -a Installer.app $'" & UnixPath & "/Contents/Resources/SkeleKey_LoginWindow.pkg'"
         on error
             display dialog "Could not open installation package! Please re-download SkeleKey Manager." with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
         end try
     end loginComponentInstaller:
+    
+    
+    #Opens Web support PDF
+    on webHelp:sender
+        global UnixPath
+        
+        try
+            do shell script "open $'" & UnixPath & "/Contents/Resources/SkeleKey Web Quick Start.pdf'"
+        on error
+            display dialog "Missing resource!" with icon 0 buttons "Okay" with title "SkeleKey Manager" default button 1
+        end try
+    end webHelp
     
     
     #Execution Checked Sender
@@ -268,6 +280,7 @@ script AppDelegate
     on webPushBtnEnable:sender
         global webState
         global webFile
+        global UnixPath
         
         if (webPushBtn's state()) is 0 then
             webStatus's setImage:(NSImage's imageNamed:"NSStatusUnavailable")
@@ -280,6 +293,8 @@ script AppDelegate
             set webFile to true
             loginEnabled's setEnabled:0
             housekeeping("Login Unchecked")
+            set learnMore to button returned of (display dialog "Make sure that your browser is set up to allow this feature to work!" with title "SkeleKey Manager" buttons {"Learn More...", "Continue"} default button 2)
+            if learnMore is "Learn More..." then do shell script "open $'" & UnixPath & "/Contents/Resources/SkeleKey Web Quick Start.pdf'"
         end if
     end webPushBtnEnable:
     
