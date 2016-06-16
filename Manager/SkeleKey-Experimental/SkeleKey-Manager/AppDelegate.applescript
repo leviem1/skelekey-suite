@@ -82,7 +82,7 @@ script AppDelegate
     end windowMath
     
     
-    #Number Ninja Function
+    #Number Filter
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
         do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString
@@ -133,6 +133,7 @@ script AppDelegate
     #############
     #  ADD-Ons  #
     #############
+    
     #Date Checked Sender
     on dateChecked:sender
         global currDate
@@ -155,7 +156,7 @@ script AppDelegate
     end displayData:
     
     
-    #Login Checked Sender
+    #Login Window Checked Sender
     on loginChecked:sender
         global loginFile
         
@@ -200,7 +201,7 @@ script AppDelegate
     end loginComponentInstaller:
     
     
-    #Opens Web support PDF
+    #Open Web Support PDF
     on webHelp:sender
         global UnixPath
         
@@ -241,7 +242,7 @@ script AppDelegate
     end execlimit_ext
     
     
-    #Hack-around for sender difficuly
+    #Execution Limit Field Fix
     on stepperAction:sender
         fixField()
     end stepperAction:
@@ -302,6 +303,7 @@ script AppDelegate
     ##########
     #  BASE  #
     ##########
+    
     #Password Value Check Function
     on checkPasswords()
         global isLicensed
@@ -529,7 +531,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         end if
     end destvolume:
     
-    
+    #Housekeeping Function
     on housekeeping(flavor)
         if flavor is "Main Window" then
             global fileName2
@@ -1047,7 +1049,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
     end applicationWillFinishLaunching:
     
     
-    #On Termination Function
+    #Application Quit Function
     on applicationShouldTerminate:sender
         if isBusy is true then
             return NSTerminateCancel
