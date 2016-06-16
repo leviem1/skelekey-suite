@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.4.0
+--VERSION 0.4.1
 #VARIABLES
 set findSKA to {}
 set epass to {}
@@ -74,13 +74,13 @@ try
 	set loggedusers to do shell script "last | grep -v '\\<_.*\\>' | grep 'logged in' | awk {'print $1'}"
 	set lwuid to do shell script "ps -ef | grep loginwindow | grep -v grep | awk '{print $1}'"
 	try
-		set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD'"
+		set discoverVol to do shell script "ls /Volumes | grep -v 'Macintosh HD' | grep -v '.DS_Store'"
 		set discoverVol to get paragraphs of discoverVol
 	on error
 		return 1
 	end try
 	
-	if loggedusers is not "" and lwuid is not "0" and discoverVol is not "" then
+	if (loggedusers is not "" and lwuid is not "0") or ((length of discoverVol) is 0) or ((length of discoverVol) is 1 and discoverVol contains "Recovery HD") then
 		return 2
 	end if
 	
