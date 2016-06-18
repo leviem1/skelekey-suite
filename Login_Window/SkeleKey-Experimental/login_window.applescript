@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.4.1
+--VERSION 0.4.2
 #VARIABLES
 set findSKA to {}
 set epass to {}
@@ -169,6 +169,18 @@ try
 	set current_date_e to do shell script "date -u '+%s'"
 	if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
 		do shell script "say -v Samantha This Skeley Key has reached its expiration date!"
+		try
+			if drive_name is not "Macintosh\\ HD" or ".DS_Store" then
+				try
+					do shell script "diskutil umount $'/Volumes/" & drive_name & "'"
+				on error
+					try
+						do shell script "diskutil unmountDisk $'/Volumes/" & drive_name & "'"
+					end try
+				end try
+			end if
+		end try
+		
 		return 5
 	end if
 	
@@ -191,6 +203,18 @@ try
 	if numEL is not "none" then
 		if numEL is less than or equal to 0 then
 			do shell script "say -v Samantha This Skeley Key has reached its execution limit!"
+			try
+				if drive_name is not "Macintosh\\ HD" or ".DS_Store" then
+					try
+						do shell script "diskutil umount $'/Volumes/" & drive_name & "'"
+					on error
+						try
+							do shell script "diskutil unmountDisk $'/Volumes/" & drive_name & "'"
+						end try
+					end try
+				end if
+			end try
+			
 			return 6
 		else if numEL is greater than 0 then
 			set newNumEL to do shell script "printf '" & (numEL - 1) & "' | rev | base64 | rev"
