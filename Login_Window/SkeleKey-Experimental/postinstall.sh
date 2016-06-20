@@ -1,15 +1,6 @@
 #!/bin/bash
 osver=$(sw_vers -productVersion)
 if [[ $osver == "10.10"* ]]; then #if Yosemite
-	#Create Launcher Script
-	echo -e  '#!/bin/bash\nsudo osascript /Library/Scripts/login_window.scpt' > /Library/Scripts/com.skelekey.SkeleKey.Launcher.sh
-	#Create LaunchJob
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label -string "com.skelekey.SkeleKey-LoginWindow.plist"
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array -string "/bin/sh"
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array-add "/Library/Scripts/com.skelekey.SkeleKey.Launcher.sh"
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist StartOnMount -bool true
-	#Allow disks to mount at login window
-	sudo defaults write /Library/Preferences/SystemConfiguration/autodiskmount AutomountDisksWithoutUserLogin -bool true
 	#Setup Accessibility Preferences
 	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/MacOS/ARDAgent',1,1,1,NULL)"
 	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/System/Library/CoreServices/RemoteManagement/ARDAgent.app',1,1,1,NULL)"
@@ -27,16 +18,6 @@ if [[ $osver == "10.10"* ]]; then #if Yosemite
     #Create Launch Daemon
     sudo launchctl load -w /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist
 elif [[ $osver == "10.11"* ]]; then #if ElCapitan
-	#Create Launcher Script
-	echo -e  '#!/bin/bash\nsudo osascript /Library/Scripts/login_window.scpt' > /Library/Scripts/com.skelekey.SkeleKey.Launcher.sh
-	#Create LaunchJob
-	defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label "com.skelekey.SkeleKey-LoginWindow.plist"
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist Label -string "com.skelekey.SkeleKey-LoginWindow.plist"
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array -string "/bin/sh"
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist ProgramArguments -array-add "/Library/Scripts/com.skelekey.SkeleKey.Launcher.sh"
-    defaults write /Library/LaunchDaemons/com.skelekey.SkeleKey-LoginWindow.plist StartOnMount -bool true
-	#Allow disks to mount at login window
-	sudo defaults write /Library/Preferences/SystemConfiguration/autodiskmount AutomountDisksWithoutUserLogin -bool true
 	#Setup Accessibility Preferences
 	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/MacOS/ARDAgent',1,1,1,NULL,NULL)"
 	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/System/Library/CoreServices/RemoteManagement/ARDAgent.app',1,1,1,NULL,NULL)"
