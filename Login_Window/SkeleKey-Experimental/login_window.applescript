@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.4.2
+--VERSION 0.4.3
 #VARIABLES
 set findSKA to {}
 set epass to {}
@@ -108,9 +108,7 @@ try
 			set findSKA to findSKA & (paragraphs of findSKAvol)
 			if (length of findSKA) is greater than or equal to 2 then
 				do shell script "say -v Samantha Multiple login window skeley keys detected!"
-				try
-					tell application "Finder" to eject the disks
-				end try
+				do shell script "df | grep \"/Volumes\" | awk '{ print $1 }' | while read disk; do diskutil unmount \"$disk\"; done"
 				return 1
 			else if findSKA is not "" then
 				set drive_name to vol
