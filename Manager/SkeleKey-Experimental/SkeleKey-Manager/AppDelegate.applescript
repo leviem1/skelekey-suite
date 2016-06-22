@@ -401,7 +401,7 @@ script AppDelegate
         set lickey to licensekeygen(regFirstNameString, regEmailString, regOrgString)
         
         try
-            set check_regSerialString_allowed to do shell script "printf $(/usr/bin/curl $'http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & regSerialString & "' -A \"SkeleKey-Manager-LRLDBS\" -s)"
+            set check_regSerialString_allowed to do shell script "printf $(/usr/bin/curl -m 5 --connect-timeout 3 $'http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & regSerialString & "' -A \"SkeleKey-Manager-LRLDBS\" -s)"
         on error
             set check_regSerialString_allowed to "0"
         end try
@@ -994,7 +994,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
             set licensedValue_verikey_real to replace_chars(licensedValue_verikey_real, "'", "\\'")
             
             try
-                set check_licensedValue_serialnumber to do shell script "printf $(/usr/bin/curl \"http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & licensedValue_serialnumber_real & "\" -A \"SkeleKey-Manager-LRLDBS\" -s)"
+                set check_licensedValue_serialnumber to do shell script "printf $(/usr/bin/curl -m 5 --connect-timeout 3 $'http://www.skelekey.com/wp-content/uploads/lr_updates/lr_db_search.php?sn=" & licensedValue_serialnumber_real & "' -A \"SkeleKey-Manager-LRLDBS\" -s)"
             on error
                 set check_licensedValue_serialnumber to "0"
             end try
