@@ -61,7 +61,7 @@ script AppDelegate
     property execlimit : 1
     property oldExec : 1
     
-    property beta_mode : true
+    property beta_mode : false
     
     ################
     #  ESSENTIALS  #
