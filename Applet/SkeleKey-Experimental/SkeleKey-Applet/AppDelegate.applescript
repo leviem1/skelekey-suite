@@ -9,9 +9,10 @@
 script AppDelegate
     property parent : class "NSObject"
     
+    #Return Numbers in UUID
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
-        do shell script "/usr/bin/sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
+        do shell script "/usr/bin/sed s/[a-zA-Z\\']//g <<< " & inputString
         set nums to the result
         set numlist to {}
         repeat with i from 1 to length of nums
@@ -24,6 +25,7 @@ script AppDelegate
         return numlist
     end returnNumbersInString
     
+    #Replace Characters Function
     on replace_chars(this_text, search_string, replacement_string)
         set AppleScript's text item delimiters to the search_string
         set the item_list to every text item of this_text
@@ -33,6 +35,7 @@ script AppDelegate
         return this_text
     end replace_chars
     
+    #Decrypt encrypted binary file
     on decryptinfo(volumepath, authinfobin)
         set md5 to " /sbin/md5 | "
         set md5_e to " /sbin/md5"
@@ -82,6 +85,7 @@ script AppDelegate
         return {{paragraph 1 of encContents, username}, paragraph 2 of encContents, paragraph 3 of encContents, paragraph 4 of encContents, paragraph 5 of encContents}
     end decryptinfo
     
+    #Set OS X accessibility permissions
     on assistiveaccess(username, passwd, osver)
         try
             if osver contains "10.11" then
@@ -94,6 +98,7 @@ script AppDelegate
         end try
     end assistiveaccess
     
+    #Check if applet is expired
     on expCheck(expireDate, drive, usernameValue)
         global UnixPath
         global randName
@@ -106,6 +111,7 @@ script AppDelegate
         end if
     end expCheck
     
+    #Check if local user has admin credentials
     on checkadmin(username, passwd)
         try
             do shell script "/usr/bin/sudo printf elevate" user name username password passwd with administrator privileges
@@ -114,6 +120,7 @@ script AppDelegate
         end try
     end checkadmin
     
+    #Check if applet has reached it's maximum run count
     on execlimit_ext(user, drive, execlimit_bin)
         global UnixPath
         global randName
@@ -154,6 +161,7 @@ script AppDelegate
         end if
     end execlimit_ext
     
+    #Authenticate in the GUI with credentials
     on guiauth(usern, pass)
         try
             tell application "System Events" to tell process "SecurityAgent"
@@ -166,6 +174,7 @@ script AppDelegate
         end try
     end guiauth
     
+    #Authenticate with Security Agent
     on auth(username, passwd)
         set fullnames to {}
         
@@ -181,6 +190,7 @@ script AppDelegate
         end if
     end auth
     
+    #Find form elements in web page
     on PageElements(theUrl)
         global UnixPath
         set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId", "*_login"}
@@ -208,17 +218,21 @@ script AppDelegate
         return {ufid, pfid}
     end PageElements
     
+    #Input user information in fields
     on inputByID(theId, theValue)
         tell application "Safari"
             do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
         end tell
     end inputByID
+    
+    #Click login / submit elements
     on clickID(theId)
         tell application "Safari"
             do JavaScript "document.getElementById('" & theId & "').click();" in document 1
         end tell
     end clickID
     
+    #Authenticate with SkeleKey Web
     on web(username, passwd)
         tell application "System Events" to (name of processes) contains "Safari"
         set safariRunning to result
@@ -248,6 +262,7 @@ script AppDelegate
         end if
     end web
     
+    #Main function -- decides which type of run, conducts order of operation
     on main()
         global UnixPath
         try
@@ -304,6 +319,7 @@ script AppDelegate
         end try
     end main
     
+    #Dependency check on launch
     on applicationWillFinishLaunching:aNotification
         set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/srm", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
         set notInstalledString to ""
