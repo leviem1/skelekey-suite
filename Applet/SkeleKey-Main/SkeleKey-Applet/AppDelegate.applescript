@@ -9,18 +9,10 @@
 script AppDelegate
     property parent : class "NSObject"
     
-    on replace_chars(this_text, search_string, replacement_string)
-        set AppleScript's text item delimiters to the search_string
-        set the item_list to every text item of this_text
-        set AppleScript's text item delimiters to the replacement_string
-        set this_text to the item_list as string
-        set AppleScript's text item delimiters to ""
-        return this_text
-    end replace_chars
-    
+    #Return Numbers in UUID
     on returnNumbersInString(inputString)
         set inputString to quoted form of inputString
-        do shell script "sed s/[a-zA-Z\\']//g <<< " & inputString --take out the alpha characters
+        do shell script "/usr/bin/sed s/[a-zA-Z\\']//g <<< " & inputString
         set nums to the result
         set numlist to {}
         repeat with i from 1 to length of nums
@@ -33,25 +25,36 @@ script AppDelegate
         return numlist
     end returnNumbersInString
     
+    #Replace Characters Function
+    on replace_chars(this_text, search_string, replacement_string)
+        set AppleScript's text item delimiters to the search_string
+        set the item_list to every text item of this_text
+        set AppleScript's text item delimiters to the replacement_string
+        set this_text to the item_list as string
+        set AppleScript's text item delimiters to ""
+        return this_text
+    end replace_chars
+    
+    #Decrypt encrypted binary file
     on decryptinfo(volumepath, authinfobin)
-        set md5 to " md5 | "
-        set md5_e to " md5"
-        set base64 to " base64 | "
-        set base64_e to " base64"
-        set rev to "rev | "
-        set rev_e to "rev"
-        set sha224 to "shasum -a 224 | awk '{print $1}' | "
-        set sha224_e to "shasum -a 224 | awk '{print $1}'"
-        set sha256 to "shasum -a 256 | awk '{print $1}' | "
-        set sha256_e to "shasum -a 256 | awk '{print $1}'"
-        set sha384 to "shasum -a 384 | awk '{print $1}' | "
-        set sha384_e to "shasum -a 384 | awk '{print $1}'"
-        set sha512 to "shasum -a 512 | awk '{print $1}' | "
-        set sha512_e to "shasum -a 512 | awk '{print $1}'"
-        set sha512224 to "shasum -a 512224 | awk '{print $1}' | "
-        set sha512224_e to "shasum -a 512224 | awk '{print $1}'"
-        set sha512256 to "shasum -a 512256 | awk '{print $1}' | "
-        set sha512256_e to "shasum -a 512256 | awk '{print $1}'"
+        set md5 to " /sbin/md5 | "
+        set md5_e to " /sbin/md5"
+        set base64 to " /usr/bin/base64 | "
+        set base64_e to " /usr/bin/base64"
+        set rev to "/usr/bin/rev | "
+        set rev_e to "/usr/bin/rev"
+        set sha224 to "/usr/bin/shasum -a 224 | /usr/bin/awk '{print $1}' | "
+        set sha224_e to "/usr/bin/shasum -a 224 | /usr/bin/awk '{print $1}'"
+        set sha256 to "/usr/bin/shasum -a 256 | /usr/bin/awk '{print $1}' | "
+        set sha256_e to "/usr/bin/shasum -a 256 | /usr/bin/awk '{print $1}'"
+        set sha384 to "/usr/bin/shasum -a 384 | /usr/bin/awk '{print $1}' | "
+        set sha384_e to "/usr/bin/shasum -a 384 | /usr/bin/awk '{print $1}'"
+        set sha512 to "/usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}' | "
+        set sha512_e to "/usr/bin/shasum -a 512 | /usr/bin/awk '{print $1}'"
+        set sha512224 to "/usr/bin/shasum -a 512224 | /usr/bin/awk '{print $1}' | "
+        set sha512224_e to "/usr/bin/shasum -a 512224 | /usr/bin/awk '{print $1}'"
+        set sha512256 to "/usr/bin/shasum -a 512256 | /usr/bin/awk '{print $1}' | "
+        set sha512256_e to "/usr/bin/shasum -a 512256 | /usr/bin/awk '{print $1}'"
         set zero to md5 & base64_e
         set one to sha256 & sha512256_e
         set two to sha224 & sha384_e
@@ -63,121 +66,289 @@ script AppDelegate
         set eight to base64 & md5_e
         set nine to sha512256 & md5 & rev_e
         set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
-        set encstring to ""
         set epass to ""
-        set uuid to do shell script "diskutil info " & volumepath & " | grep 'Volume UUID' | awk '{print $3}' | rev"
+        set uuid to do shell script "/usr/sbin/diskutil info $'" & volumepath & "' | /usr/bin/grep 'Volume UUID' | /usr/bin/awk '{print $3}' | /usr/bin/rev"
         set nums to returnNumbersInString(uuid)
-        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
         repeat with char in nums
-            set encstring to do shell script "echo \"" & uuid & "\" | " & (item (char + 1) of algorithms)
+            set encstring to do shell script "printf \"" & uuid & "\" | " & (item (char + 1) of algorithms)
             set epass to epass & encstring
         end repeat
-        set epass to do shell script "echo \"" & epass & "\" | fold -w160 | paste -sd'%' - | fold -w270 | paste -sd'@' - | fold -w51 | paste -sd'*' - | fold -w194 | paste -sd'~' - | fold -w64 | paste -sd'2' - | fold -w78 | paste -sd'^' - | fold -w38 | paste -sd')' - | fold -w28 | paste -sd'(' - | fold -w69 | paste -sd'=' -  | fold -w128 | paste -sd'$3bs' -  "
+        set epass to do shell script "printf \"" & epass & "\" | /usr/bin/fold -w160 | /usr/bin/paste -sd'%' - | /usr/bin/fold -w270 | /usr/bin/paste -sd'@' - | /usr/bin/fold -w51 | /usr/bin/paste -sd'*' - | /usr/bin/fold -w194 | /usr/bin/paste -sd'~' - | /usr/bin/fold -w64 | /usr/bin/paste -sd'2' - | /usr/bin/fold -w78 | /usr/bin/paste -sd'^' - | /usr/bin/fold -w38 | /usr/bin/paste -sd')' - | /usr/bin/fold -w28 | /usr/bin/paste -sd'(' - | /usr/bin/fold -w69 | /usr/bin/paste -sd'=' -  | /usr/bin/fold -w128 | /usr/bin/paste -sd'$3bs' -  "
         if (length of epass) is greater than 2048 then
             set epass to (characters 1 thru 2047 of epass) as string
         end if
-        set username to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '1q;d'")
-        set passwd to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '2q;d'")
-        set exp_date_e to (do shell script "openssl enc -aes-256-cbc -d -in " & authinfobin & " -pass pass:\"" & epass & "\" | sed '3q;d'")
-        return {username, passwd, exp_date_e}
+        set encContents to (do shell script "/usr/bin/openssl enc -aes-256-cbc -d -in $'" & authinfobin & "' -pass pass:\"" & epass & "\"")
+        
+        set username to paragraph 1 of encContents
+        set username to replace_chars(username, "\\", "\\\\")
+        set username to replace_chars(username, "'", "\\'")
+        return {{paragraph 1 of encContents, username}, paragraph 2 of encContents, paragraph 3 of encContents, paragraph 4 of encContents, paragraph 5 of encContents}
     end decryptinfo
     
-    on assistiveaccess(username, passwd)
-        do shell script "sw_vers -productVersion"
+    #Set OS X accessibility permissions
+    on assistiveaccess(username, passwd, osver)
         try
-            if result contains "10.11" then
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.skelekey.SkeleKey-Applet',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
+            if osver contains "10.11" then
+                do shell script "/usr/bin/sudo /usr/bin/sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.skelekey.SkeleKey-Applet',0,1,1,NULL,NULL)\"" user name username password passwd with administrator privileges
             else
-                do shell script "sudo sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.skelekey.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
+                do shell script "/usr/bin/sudo /usr/bin/sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \"INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.skelekey.SkeleKey-Applet',0,1,1,NULL)\"" user name username password passwd with administrator privileges
             end if
         on error
             error number 102
         end try
     end assistiveaccess
     
-    on checkadmin(username, passwd, exp_date_e)
+    #Check if applet is expired
+    on expCheck(expireDate, drive, usernameValue)
         global UnixPath
-        set current_date_e to do shell script "date -u '+%s'"
-        if current_date_e is greater than or equal to exp_date_e and exp_date_e is not "none" then
-            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-            do shell script "chflags hidden " & UnixPath
-            do shell script "nohup sh -c \"killall SkeleKey-Applet && sleep 1 && srm -rf " & UnixPath & "\" > /dev/null &"
+        global randName
+        set randName to do shell script "/bin/cat $'" & drive & usernameValue & "-SkeleKey-Applet.app/Contents/Resources/.SK_EL_STR' | /usr/bin/rev | /usr/bin/base64 -D | /usr/bin/rev"
+        set current_date_e to do shell script "/bin/date -u '+%s'"
+        if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
+            display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
+            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
         end if
+    end expCheck
+    
+    #Check if local user has admin credentials
+    on checkadmin(username, passwd)
         try
-            do shell script "sudo echo elevate" user name username password passwd with administrator privileges
-            
+            do shell script "/usr/bin/sudo printf elevate" user name username password passwd with administrator privileges
         on error
             error number 101
         end try
     end checkadmin
     
-    on auth(username, passwd)
-        set localusers to paragraphs of (do shell script "dscl . list /Users | grep -v ^_.* | grep -v 'daemon' | grep -v 'Guest' | grep -v 'nobody'") as list
-        if username is not in localusers then
-            display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
+    #Check if applet has reached it's maximum run count
+    on execlimit_ext(user, drive, execlimit_bin)
+        global UnixPath
+        global randName
+        try
+            set existence_EL to do shell script "/bin/test -e $'" & drive & ".SK_EL_" & randName & ".enc.bin'"
+        on error
+            set existence_EL to "error"
+        end try
+        
+        if execlimit_bin is not "none" and existence_EL is "error" then
+            display dialog "This SkeleKey has reached it's maximum run count!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
+            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+        end if
+        
+        set execlimit_ext to do shell script "/bin/cat $'" & drive & ".SK_EL_" & randName & ".enc.bin' | /usr/bin/rev | /usr/bin/base64 -D | /usr/bin/rev"
+        
+        if execlimit_ext is not equal to execlimit_bin then
+            if execlimit_ext is less than execlimit_bin then
+                set numEL to execlimit_ext
+            else if execlimit_ext is greater than execlimit_bin then
+                set numEL to execlimit_bin
+            end if
         else
-            try
-                tell application "System Events" to tell process "SecurityAgent"
-                set value of text field 1 of window 1 to username
-                set value of text field 2 of window 1 to passwd
+            set numEL to execlimit_bin
+        end if
+        
+        if numEL is not "none" then
+            if numEL is less than or equal to 0 then
+                display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+                do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
+                do shell script "/usr/bin/nohup sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+                quit
+            else if numEL is greater than 0 then
+                set newNumEL to do shell script "printf '" & (numEL - 1) & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev"
+                do shell script "printf '" & newNumEL & "' > $'" & drive & ".SK_EL_" & randName & ".enc.bin'"
+            end if
+        end if
+    end execlimit_ext
+    
+    #Authenticate in the GUI with credentials
+    on guiauth(usern, pass)
+        try
+            tell application "System Events" to tell process "SecurityAgent"
+                set value of text field 1 of window 1 to usern
+                set value of text field 2 of window 1 to pass
                 click button 2 of window 1
-                end tell
-            on error
-                error number 103
-            end try
+            end tell
+        on error
+            error number 103
+        end try
+    end guiauth
+    
+    #Authenticate with Security Agent
+    on auth(username, passwd)
+        set fullnames to {}
+        
+        set localusers to paragraphs of (do shell script "/usr/bin/dscl . list /Users | /usr/bin/egrep -v '(daemon|Guest|nobody|^_.*)'") as list
+        repeat with acct in localusers
+            set fn to do shell script "/usr/bin/dscacheutil -q user -a name '" & acct & "' | /usr/bin/grep 'gecos' | /usr/bin/sed -e 's/.*gecos: \\(.*\\)/\\1/'"
+            set fullnames to fullnames & fn
+        end repeat
+        if (fullnames contains username) or (localusers contains username) then
+            guiauth(username, passwd)
+        else
+            error number 105
         end if
     end auth
-
+    
+    #Find form elements in web page
+    on PageElements(theUrl)
+        global UnixPath
+        set ufields to {"*accountname", "*sername", "*mail", "*ser", "*appleId", "*_login"}
+        set pfields to {"*assword", "*asswd", "*pw", "*pass", "*ass", "*pwd"}
+        tell application "Safari"
+            set mySrc to document of front window
+            set mySrc to source of mySrc
+        end tell
+        set wwwFields to do shell script "/bin/echo " & (quoted form of mySrc) & " | perl $'" & UnixPath & "/Contents/Resources/formfind.pl' | /usr/bin/grep Input | /usr/bin/egrep -ov '(HIDDEN|RADIO)' | /usr/bin/awk '{ print $2 }' | tr -d '\"' | /usr/bin/sed \"s/^id=//\" | /usr/bin/egrep -v '(sesskey|cookies|testcookies|search)'"
+        set wwwFields to paragraphs of wwwFields
+        repeat with elementid in wwwFields
+            repeat with field in ufields
+                try
+                    set ufid to do shell script "/bin/echo " & elementid & " | /usr/bin/grep -o '\\<." & field & "\\>'"
+                    exit repeat
+                end try
+            end repeat
+            repeat with field in pfields
+                try
+                    set pfid to do shell script "/bin/echo " & elementid & " | /usr/bin/grep -o '\\<." & field & "\\>'"
+                    exit repeat
+                end try
+            end repeat
+        end repeat
+        return {ufid, pfid}
+    end PageElements
+    
+    #Input user information in fields
+    on inputByID(theId, theValue)
+        tell application "Safari"
+            do JavaScript "  document.getElementById('" & theId & "').value ='" & theValue & "';" in document 1
+        end tell
+    end inputByID
+    
+    #Click login / submit elements
+    on clickID(theId)
+        tell application "Safari"
+            do JavaScript "document.getElementById('" & theId & "').click();" in document 1
+        end tell
+    end clickID
+    
+    #Authenticate with SkeleKey Web
+    on web(username, passwd)
+        tell application "System Events" to (name of processes) contains "Safari"
+        set safariRunning to result
+        
+        if safariRunning is false then error number 108
+        
+        tell application "Safari"
+            set website to get URL of front document
+        end tell
+        
+        if website contains "accounts.google.com" then
+            try
+                inputByID("Email", username)
+                clickID("next")
+                delay 0.25
+                inputByID("Passwd", passwd)
+                clickID("signIn")
+            end try
+        else
+            set PageIDs to PageElements(website)
+            try
+                inputByID((item 1 of PageIDs), username)
+                clickID("next")
+                inputByID((item 2 of PageIDs), passwd)
+                clickID("submit")
+            end try
+        end if
+    end web
+    
+    #Main function -- decides which type of run, conducts order of operation
     on main()
         global UnixPath
         try
             set UnixPath to POSIX path of (path to current application as text)
-            set volumepath to UnixPath
-            set UnixPath to replace_chars(UnixPath, "//", "/")
-            set UnixPath to replace_chars(UnixPath, " ", "\\ ")
+            set UnixPath to replace_chars(UnixPath, "\\", "\\\\")
+            set UnixPath to replace_chars(UnixPath, "'", "\\'")
             set volumepath to POSIX path of ((path to current application as text) & "::")
+            set volumepath to replace_chars(volumepath, "\\", "\\\\")
+            set volumepath to replace_chars(volumepath, "'", "\\'")
+            if volumepath does not contain "/Volumes/" then
+                display dialog "SkeleKey Applet is not located on a USB Device!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+                quit
+            end if
             set authinfobin to UnixPath & "Contents/Resources/.p.enc.bin"
-            set volumepath to (do shell script "echo \"" & volumepath & "\" | awk -F '/' '{print $3}'")
-            set volumepath to "/Volumes/" & volumepath
-            set volumepath to replace_chars(volumepath, " ", "\\ ")
+            set webFile to UnixPath & "Contents/Resources/.webenabled"
             set authcred to decryptinfo(volumepath, authinfobin)
-            checkadmin(item 1 of authcred, item 2 of authcred, item 3 of authcred)
-            assistiveaccess(item 1 of authcred, item 2 of authcred)
-            auth(item 1 of authcred, item 2 of authcred)
+            set volumepath to volumepath & "/"
+            expCheck(item 3 of authcred, volumepath, item 2 of (item 1 of authcred))
+            execlimit_ext(item 2 of (item 1 of authcred), volumepath, item 4 of authcred)
+            set osver to do shell script "/usr/bin/sw_vers -productVersion"
+            #Regular Run
+            if (item 5 of authcred) is "none" then
+                checkadmin(item 1 of (item 1 of authcred), item 2 of authcred)
+                assistiveaccess(item 1 of (item 1 of authcred), item 2 of authcred, osver)
+                auth(item 1 of (item 1 of authcred), item 2 of authcred)
+            #Web Only Run
+            else if ((item 5 of authcred) is "WEBYES") and (osver contains "10.11") then
+                try
+                    do shell script "/bin/test -e $'" & webFile & "'"
+                on error
+                    error number 106
+                end try
+                web(item 1 of (item 1 of authcred), item 2 of authcred)
+            else
+                error number 107
+            end if
         on error number errorNumber
             if errorNumber is 101 then
-                display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-                return
+                display dialog "SkeleKey only authenticates users with admin privileges. Maybe the wrong password was entered?" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             else if errorNumber is 102 then
-                display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-                return
+                display dialog "Failed to set accessibility permissions" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             else if errorNumber is 103 then
-                display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting...." with icon 0 buttons "Quit" with title "SkeleKey-Applet" default button 1
-                return
+                display dialog "Error! No authentication window found! Is the prompt on the screen? Quitting..." with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 104 then
+                display dialog "Safari is not running! Please open Safari to use the SkeleKey Web Add-on!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 105 then
+                display dialog "User account is not on this computer!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 106 then
+                display dialog "This SkeleKey Applet does not have Website Support Enabled!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            else if errorNumber is 107 then
+                display dialog "The SkeleKey Web add-on is only available on systems running at least 10.11!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             end if
+            return
         end try
     end main
-
+    
+    #Dependency check on launch
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"echo", "openssl", "ls", "diskutil", "grep", "awk", "base64", "sudo", "cp", "bash", "sed", "sqlite3", "md5", "rev", "fold", "paste", "sw_vers", "grep", "dscl", "nohup test", "sh", "srm"}
+        set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/srm", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
         set notInstalledString to ""
-        repeat with i in dependencies
-            set status to do shell script i & "; echo $?"
-            if status is "127" then
-                set notInstalledString to notInstalledString & i & "\n"
+        set cmd_existance to do shell script "/usr/bin/command; printf $?"
+        if cmd_existance is not "" then
+            repeat with i in dependencies
+                try
+                    set status to do shell script "/usr/bin/command -v " & i
+                on error
+                    set notInstalledString to notInstalledString & i & "
+"
+                end try
+            end repeat
+            if notInstalledString is not "" then
+                display dialog "The following required resources are not installed:
+                
+" & notInstalledString buttons "Quit" default button 1 with title "SkeleKey Manager" with icon 0
+                quit
             end if
-        end repeat
-        if notInstalledString is not "" then
-            display alert "The following required items are not installed:\n\n" & notInstalledString buttons "Quit"
+        else
+            display dialog "The system file 'command' is misssing!"
             quit
         end if
         main()
         quit
     end applicationWillFinishLaunching:
-
+    
     on applicationShouldTerminate:sender
-        -- Insert code here to do any housekeeping before your application quits
         return current application's NSTerminateNow
     end applicationShouldTerminate:
-
+    
 end script
