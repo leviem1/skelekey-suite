@@ -124,7 +124,7 @@ script AppDelegate
         end try
         
         if execlimit_bin is not "none" and existence_EL is "error" then
-            display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
+            display dialog "This SkeleKey has reached it's maximum run count!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
             do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
         end if
