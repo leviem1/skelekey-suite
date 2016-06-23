@@ -1,7 +1,7 @@
 #!/bin/bash
 #--
 #--  postflight_lw.sh
-#--  SkeleKey-Manager
+#--  SkeleKey-LoginWindow
 #--
 #--  Created by Mark Hedrick on 02/25/16.
 #--  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.

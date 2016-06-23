@@ -1,6 +1,6 @@
 --
 --  login_window.scpt
---  SkeleKey-Manager
+--  SkeleKey-LoginWindow
 --
 --  Created by Mark Hedrick on 02/23/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
