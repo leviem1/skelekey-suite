@@ -419,7 +419,7 @@
         <window title="SkeleKey Manager - Applet Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ceD-Cp-ty0">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="121" y="123" width="480" height="145"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="L4M-6x-8c7">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="145"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -485,7 +485,7 @@ Gw
         <window title="SkeleKey Manager - Mode" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="PO6-qi-PJf">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="886" y="0.0" width="480" height="200"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="tfz-bb-9mF">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -574,7 +574,7 @@ DQ
         <window title="SkeleKey Manager - Welcome" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="xLt-ws-R6g" userLabel="Welcome Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="332"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="5oi-fF-NJo">
                 <rect key="frame" x="0.0" y="0.0" width="561" height="332"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -612,7 +612,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Oqf-k5-XMG">
-                                    <rect key="frame" x="0.0" y="180" width="323" height="544"/>
+                                    <rect key="frame" x="0.0" y="180" width="323" height="640"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="217"/>
@@ -623,9 +623,9 @@ DQ
 
 We would like to introduce to you our latest application: SkeleKey Manager. In an enterprise environment, it can be challenging for the IT department to service the needs of users while protecting administrator passwords. Not only is this a problem, but protecting the password from prying-eyes, word-of-mouth password leaks, and key loggers are challenges that all IT departments have faced at one time or another. 
 
-Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other storage mediums, including other USB devices. The SkeleKey Manager, SkeleKey applets, and optional add-ons  eliminate the need for an administrator to type in website, or local computer password. The authentication is all handled by the Applet, and runs in seconds!
+Although it may seem like a daunting task to protect your organization's passwords, our product, SkeleKey Manager, simplifies and secures this process. SkeleKey Manager is an application that transforms digital passwords into physical objects. By using SkeleKey Manager, you can create (or securely remove) a SkeleKey Applet on a portable USB device. The portable SkeleKey Applet is also very secure and can not be copied to other storage mediums, including other USB devices. The SkeleKey Manager, Applets, and optional add-ons eliminate the need for an administrator to type in website, or local computer password. The authentication is all handled by the Applet, and runs in seconds! With the latest addition to SkeleKey Manager being the add-on options, more features are available now than ever. From an expiration date, run count, website authentication functionality, and login window support, version 2.0 of SkeleKey Suite proves to be the most appealing and functional version yet.
 
-If you haven't already done so, please visit our website and purchase a license so that you enjoy the SkeleKey Suite.
+If you haven't already done so, please visit our website and purchase a license so that you enjoy the fully functional version of SkeleKey Suite.
 
 -Thank You from the SkeleKey Team
 www.skelekey.com</mutableString>
@@ -685,7 +685,7 @@ www.skelekey.com</mutableString>
                             <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="yE6-Mi-owZ">
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.49645390070921985" horizontal="NO" id="yE6-Mi-owZ">
                             <rect key="frame" x="324" y="1" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -732,7 +732,7 @@ Jason Walker
         <window title="SkeleKey Manager - Removal" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="XBI-rp-gAe">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="100"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="dKJ-UW-eKp">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -756,7 +756,7 @@ Jason Walker
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES"/>
             <rect key="contentRect" x="441" y="259" width="480" height="486"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="a8V-80-o4U">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="486"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -873,11 +873,11 @@ DQ
                         <tabViewItems>
                             <tabViewItem label="Expiration Date" identifier="1" id="WIq-83-6zM">
                                 <view key="view" id="PHJ-qU-ZFR">
-                                    <rect key="frame" x="10" y="33" width="434" height="236"/>
+                                    <rect key="frame" x="10" y="33" width="373" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-rW-Sab">
-                                            <rect key="frame" x="15" y="202" width="71" height="18"/>
+                                            <rect key="frame" x="15" y="-34" width="71" height="18"/>
                                             <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLz-YR-vxL">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -888,7 +888,7 @@ DQ
                                             </connections>
                                         </button>
                                         <datePicker hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c70-eM-acp">
-                                            <rect key="frame" x="172" y="153" width="198" height="27"/>
+                                            <rect key="frame" x="172" y="-83" width="198" height="27"/>
                                             <datePickerCell key="cell" state="on" alignment="left" id="xFn-3q-2JK">
                                                 <font key="font" metaFont="system"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="488847600">
@@ -906,7 +906,7 @@ DQ
                                             </connections>
                                         </datePicker>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO8-fJ-FN2">
-                                            <rect key="frame" x="194" y="119" width="46" height="17"/>
+                                            <rect key="frame" x="194" y="-117" width="46" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Details" id="OPc-y3-p4D">
                                                 <font key="font" metaFont="systemMedium" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -914,7 +914,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-SM-4Ky">
-                                            <rect key="frame" x="15" y="17" width="404" height="85"/>
+                                            <rect key="frame" x="15" y="-219" width="404" height="85"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" alignment="center" id="S8d-L8-uyi">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This SkeleKey Suite add-on forces your SkeleKey Applet to stop authenticating at a specified date and time. After the predetermined date, the Applet will no longer authenticate with your credentials. It also securely self-erases if launched after the expiration date.</string>
@@ -923,13 +923,13 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jJq-vl-82p">
-                                            <rect key="frame" x="55" y="108" width="325" height="5"/>
+                                            <rect key="frame" x="55" y="-128" width="325" height="5"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjT-1Y-PLA">
-                                            <rect key="frame" x="66" y="156" width="100" height="17"/>
+                                            <rect key="frame" x="66" y="-80" width="100" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Expiration Date:" id="VDB-eX-hZR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -937,7 +937,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-cU-I1H">
-                                            <rect key="frame" x="41" y="156" width="351" height="17"/>
+                                            <rect key="frame" x="41" y="-80" width="351" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Please enable before configuring optional components" id="azX-gv-4en">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -948,7 +948,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Login Window" identifier="2" id="PRE-IW-VZ3">
-                                <view key="view" ambiguous="YES" id="wjw-Pr-bmR">
+                                <view key="view" id="wjw-Pr-bmR">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1096,7 +1096,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Web" identifier="" id="qzP-N8-GWy">
-                                <view key="view" id="ibf-El-uf3">
+                                <view key="view" ambiguous="YES" id="ibf-El-uf3">
                                     <rect key="frame" x="10" y="33" width="434" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1172,7 +1172,7 @@ DQ
         <window title="SkeleKey Manager - Tutorial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HJU-0l-vvI" userLabel="Tutorial Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="207" width="561" height="318"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="3Fx-CF-sk9">
                 <rect key="frame" x="0.0" y="0.0" width="561" height="318"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1306,7 +1306,7 @@ credentials entered.</string>
         <window title="SkeleKey Manager - License Registration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="48N-vL-7qV">
             <windowStyleMask key="styleMask" titled="YES" texturedBackground="YES"/>
             <rect key="contentRect" x="121" y="123" width="480" height="246"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
             <view key="contentView" id="YgO-s5-hVP">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="246"/>
                 <autoresizingMask key="autoresizingMask"/>

@@ -131,7 +131,7 @@ script AppDelegate
     
     
     #############
-    #  ADD-Ons  #
+    #  Add-ons  #
     #############
     
     #Date Checked Sender
@@ -301,7 +301,7 @@ script AppDelegate
     
     
     ##########
-    #  BASE  #
+    #  Base  #
     ##########
     
     #Password Value Check Function
