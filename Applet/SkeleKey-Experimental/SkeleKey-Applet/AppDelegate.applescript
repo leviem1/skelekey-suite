@@ -65,7 +65,7 @@ script AppDelegate
         set seven to sha384 & base64_e
         set eight to base64 & md5_e
         set nine to sha512256 & md5 & rev_e
-        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+        set algorithms to {nine, eight, seven, six, five, four, three, two, one, zero}
         set epass to ""
         set uuid to do shell script "/usr/sbin/diskutil info $'" & volumepath & "' | /usr/bin/grep 'Volume UUID' | /usr/bin/awk '{print $3}' | /usr/bin/rev"
         set nums to returnNumbersInString(uuid)

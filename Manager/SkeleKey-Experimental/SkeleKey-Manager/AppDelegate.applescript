@@ -681,7 +681,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         set seven to sha384 & base64_e
         set eight to base64 & md5_e
         set nine to sha512256 & md5 & rev_e
-        set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+        set algorithms to {nine, eight, seven, six, five, four, three, two, one, zero}
         set encstring to ""
         set epass to ""
         

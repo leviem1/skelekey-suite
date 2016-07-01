@@ -5,7 +5,7 @@
 --  Created by Mark Hedrick on 02/21/16.
 --  Copyright (c) 2016 Mark Hedrick and Levi Muniz. All rights reserved.
 --
---VERSION 0.4.5
+--VERSION 0.4.6
 #VARIABLES
 set findSKA to {}
 set epass to {}
@@ -41,7 +41,7 @@ set six to sha384 & rev_e
 set seven to sha384 & base64_e
 set eight to base64 & md5_e
 set nine to sha512256 & md5 & rev_e
-set algorithms to {zero, one, two, three, four, five, six, seven, eight, nine}
+set algorithms to {nine, eight, seven, six, five, four, three, two, one, zero}
 set execlimit_ext to ""
 set exp_date_e to ""
 
