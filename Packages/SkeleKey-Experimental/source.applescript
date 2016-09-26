@@ -89,3 +89,4 @@ repeat with pkg in trusted_pkgs
 		display dialog "ERROR! Could not install " & pkg & "!" with title "SkeleKey-Packages" buttons "OK" default button 1
 	end try
 end repeat
+display dialog "Installations complete!"
