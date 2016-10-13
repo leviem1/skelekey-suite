@@ -107,7 +107,7 @@ script AppDelegate
         if current_date_e is greater than or equal to expireDate and expireDate is not "none" then
             display dialog "This SkeleKey has expired!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
-            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; $'" & UnixPath & "/Contents/Resources/srm' -rf $'" & UnixPath & "'; $'" & UnixPath & "/Contents/Resources/srm' -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
         end if
     end expCheck
     
@@ -133,7 +133,7 @@ script AppDelegate
         if execlimit_bin is not "none" and existence_EL is "error" then
             display dialog "This SkeleKey has reached it's maximum run count!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
             do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
-            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+            do shell script "/usr/bin/nohup /bin/sh -c \"/usr/bin/killall SkeleKey-Applet; $'" & UnixPath & "/Contents/Resources/srm' -rf $'" & UnixPath & "'; $'" & UnixPath & "/Contents/Resources/srm' -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
         end if
         
         set execlimit_ext to do shell script "/bin/cat $'" & drive & ".SK_EL_" & randName & ".enc.bin' | /usr/bin/rev | /usr/bin/base64 -D | /usr/bin/rev"
@@ -152,7 +152,7 @@ script AppDelegate
             if numEL is less than or equal to 0 then
                 display dialog "This SkeleKey has reached it's execution limit!" with icon 0 buttons "Quit" with title "SkeleKey Applet" default button 1
                 do shell script "/usr/bin/chflags hidden $'" & UnixPath & "'"
-                do shell script "/usr/bin/nohup sh -c \"/usr/bin/killall SkeleKey-Applet; /usr/bin/srm -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
+                do shell script "/usr/bin/nohup sh -c \"/usr/bin/killall SkeleKey-Applet; $'" & UnixPath & "/Contents/Resources/srm' -rf $'" & UnixPath & "'; /usr/bin/srm -rf $'" & drive & ".SK_EL_" & randName & ".enc.bin'\" > /dev/null &"
                 quit
             else if numEL is greater than 0 then
                 set newNumEL to do shell script "printf '" & (numEL - 1) & "' | /usr/bin/rev | /usr/bin/base64 | /usr/bin/rev"
@@ -321,7 +321,7 @@ script AppDelegate
     
     #Dependency check on launch
     on applicationWillFinishLaunching:aNotification
-        set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/srm", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
+        set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
         set notInstalledString to ""
         set cmd_existance to do shell script "/usr/bin/command; printf $?"
         if cmd_existance is not "" then

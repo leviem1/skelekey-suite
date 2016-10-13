@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1DA148E11CF2AA3500D57271 /* formfind.pl in Resources */ = {isa = PBXBuildFile; fileRef = 1DA148E01CF2AA3500D57271 /* formfind.pl */; };
+		2F385F581DAFE56C0006878A /* srm in Resources */ = {isa = PBXBuildFile; fileRef = 2F385F571DAFE56C0006878A /* srm */; };
 		2FA8FD681C1E9BD80034522C /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA8FD671C1E9BD80034522C /* AppleScriptObjC.framework */; };
 		2FA8FD6C1C1E9BD80034522C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8FD6B1C1E9BD80034522C /* main.m */; };
 		2FA8FD6E1C1E9BD80034522C /* AppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8FD6D1C1E9BD80034522C /* AppDelegate.applescript */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		1DA148E01CF2AA3500D57271 /* formfind.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = formfind.pl; sourceTree = "<group>"; };
+		2F385F571DAFE56C0006878A /* srm */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = srm; sourceTree = "<group>"; };
 		2FA8FD641C1E9BD80034522C /* SkeleKey-Applet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SkeleKey-Applet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA8FD671C1E9BD80034522C /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		2FA8FD6B1C1E9BD80034522C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				2FA8FD6F1C1E9BD80034522C /* Assets.xcassets */,
 				2FA8FD711C1E9BD80034522C /* MainMenu.xib */,
 				2FA8FD741C1E9BD80034522C /* Info.plist */,
+				2F385F571DAFE56C0006878A /* srm */,
 				2FA8FD6A1C1E9BD80034522C /* Supporting Files */,
 			);
 			path = "SkeleKey-Applet";
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FA8FD701C1E9BD80034522C /* Assets.xcassets in Resources */,
+				2F385F581DAFE56C0006878A /* srm in Resources */,
 				1DA148E11CF2AA3500D57271 /* formfind.pl in Resources */,
 				2FA8FD731C1E9BD80034522C /* MainMenu.xib in Resources */,
 			);

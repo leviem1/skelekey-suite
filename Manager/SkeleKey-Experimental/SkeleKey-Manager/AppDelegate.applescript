@@ -820,6 +820,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
     #Removal Button Function
     on delButton:sender
         global delApp
+        global UnixPath
         
         removeWindow's orderOut:sender
         loadingWindow's makeKeyAndOrderFront:me
@@ -830,13 +831,13 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         
         try
             set randName to do shell script "/bin/cat $'" & delApp & "Contents/Resources/.SK_EL_STR' | /usr/bin/rev | /usr/bin/base64 -D | /usr/bin/rev"
-            do shell script "/usr/bin/srm -rf $'" & delApp & "'"
+            do shell script "$'" & UnixPath & "/Contents/Resources/srm' -rf $'" & delApp & "'"
             set drive to do shell script "printf $'" & delApp & "' | /usr/bin/awk -F'/' '{print $3}'"
             set drive to replace_chars(drive, "\\", "\\\\")
             set drive to replace_chars(drive, "'", "\\'")
             
             try
-                if randName is not "" then do shell script "/usr/bin/srm -rf $'/Volumes/" & drive & "/.SK_EL_" & randName & ".enc.bin'"
+                if randName is not "" then do shell script "$'" & UnixPath & "/Contents/Resources/srm' -rf $'/Volumes/" & drive & "/.SK_EL_" & randName & ".enc.bin'"
             end try
             
             display dialog "Successful secure removal of application at location:
@@ -937,7 +938,7 @@ Please contact us at admin@skelekey.com if you have questions." with icon 0 with
         set UnixPath to POSIX path of (path to current application as text)
         set UnixPath to replace_chars(UnixPath, "\\", "\\\\")
         set UnixPath to replace_chars(UnixPath, "'", "\\'")
-        set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/srm", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
+        set dependencies to {"/usr/bin/openssl", "/bin/ls", "/usr/sbin/diskutil", "/usr/bin/grep", "/usr/bin/awk", "/usr/bin/base64", "/usr/bin/sudo", "/bin/cp", "/bin/bash", "/bin/mv", "/sbin/md5", "/usr/bin/defaults", "/bin/test", "/usr/bin/fold", "/usr/bin/paste", "/usr/bin/rev", "/usr/libexec/PlistBuddy", "/usr/bin/curl", "/usr/bin/shasum", "/usr/bin/tr", "/bin/date", "/bin/mkdir", "/usr/bin/open", "/usr/bin/touch", "/usr/bin/osascript"}
         set notInstalledString to ""
         
         if beta_mode is false then
