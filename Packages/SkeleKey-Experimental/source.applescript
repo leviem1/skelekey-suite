@@ -72,7 +72,7 @@ end try
 #Attempt to install all packages located in the pkgs folder assuming they are allowed below
 set allowed_pkgs to {"Capstone.pkg"}
 try
-	set pkg_names to do shell script "cd $'" & UnixPath2 & "'; ls *.pkg"
+	set pkg_names to do shell script "cd $'" & UnixPath2 & "'; ls | grep \\..pkg"
 	set pkg_names to paragraphs of pkg_names
 on error
 	display dialog "ERROR! Could not find payload!" with title "SkeleKey-Packages" buttons "OK" default button 1
